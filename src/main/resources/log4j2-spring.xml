@@ -10,7 +10,11 @@
         <!--这个输出控制台的配置-->
         <console name="Console" target="SYSTEM_OUT">
             <!--输出日志的格式-->
-            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+
+
+            <PatternLayout
+                    pattern=" %style{%d}{bright,green}  %highlight{%p}  ---  %style{%t}{bright,blue}  %style{%C}{bright,yellow} : %msg%n%style{%throwable}{red}"
+                    disableAnsi="false" noConsoleNoAnsi="false"/>
         </console>
         <console name="MybatisSql" target="SYSTEM_OUT">
             <!--输出日志的格式-->
