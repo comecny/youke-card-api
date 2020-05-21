@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.youke</groupId>
     <artifactId>youke-card-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>youke-card-api</name>
     <description>project for Spring Boot</description>
 
