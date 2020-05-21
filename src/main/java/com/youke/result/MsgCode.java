@@ -1,0 +1,66 @@
+package com.youke.result;
+
+public enum MsgCode {
+    SUCCESS(true, "成功"),
+    LAYOUT_SUCEESS(true,"退出登录成功"),
+    IINSERT_SUCCESS(true, "新增成功"),
+    UPDATE_SUCCESS(true, "修改成功"),
+    RECEIPT_SUCCESS(true, "接单成功"),
+    QUOTE_SUCCESS(true, "报价成功"),
+    REFUSE_SUCCESS(true, "拒单成功"),
+    FIND_SUCCESS(true,"查询成功"),
+    DISPATCH_SUCCESS(true,"派单成功"),
+    DELETE_SUCCESS(true,"删除成功"),
+    DRAFT_SAVE_SUCCESS(true, "保存草稿成功"),
+    SUBMIT_SUCEESS(true,"提交成功"),
+    LOGIN_SUCCESS(true, "登录成功"),
+    CONFIRM_SUCCESS(true, "验收成功"),
+    REGISTER_SUCCESS(true,"注册成功"),
+    SUBMIT_SUCCESS(true,"提交成功"),
+    EXPORT_SUCCESS(true,"导出成功"),
+    RETURNED_SUCCESS(true,"回款成功"),
+    DISTRIBUTION_SUCCESS(true,"分配成功"),
+    
+    LOGIN_FAIL(false,"用户或密码错误"),
+    REGISTER_FAIL(false,"注册失败"),
+    AUTHOR_FAIL(false,"未授权"),
+    DISPATCH_FAIL(false,"派失败"),
+    PHONE_FALL(false,"此号码已注册"),
+    INSERT_FAIL(false, "新增失败"),
+    FIND_FAIL(false, "查询失败"),
+    AUTHORIZATION_FAIL(false,"你没有此权限"),
+    UPDATE_FAIL(false, "修改失败"),
+    DELETE_FAIL(false, "删除失败"),
+    CONFIRM_FAIl(false, "验收失败"),
+    PASSWORD_FAIL(false,"密码不正确"),
+    COUNT_FIAL(false,"账号错误"),
+    QUOTE_FAIL(true, "报价失败"),
+    PRINT_COUNT_FIAL(false,"请输入账号"),
+    PASSWORD_NULL_FIAL(false,"密码不能为空"),
+    DEFUALT_FAIL(false, "请选择默认地址类型"),
+    SUBMIT_FAIL(false,"提交失败"),
+    EXPORT_FAIL(false,"导出失败"),
+    RETURNED_FAIL(false,"回款失败"),
+    DISTRIBUTION_FAIL(true,"分配失败"),
+    FAIL(false, "失败");
+    
+    private boolean status;
+    private String msg;
+
+    MsgCode(boolean status, String msg) {
+        this.status = status;
+        this.msg = msg;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+}
