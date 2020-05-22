@@ -49,7 +49,7 @@ public class CosUtil {
         String rtValue = null;
         FileOutputStream os = null;
         String filename = file.getOriginalFilename();
-        StringBuilder path = new StringBuilder("log/");
+        StringBuilder path = new StringBuilder("/static/");
         //获取时间戳
         Date fileDate = new Date();
         StringBuilder fileName = new StringBuilder(String.valueOf(fileDate.getTime()));
@@ -102,7 +102,7 @@ public class CosUtil {
                 e.printStackTrace();
         }finally {
             //删除本地文件并关闭客户端
-            DeleteFileUtil.delete(newFile.getAbsolutePath());
+          /*  DeleteFileUtil.delete(new File(filename).getAbsolutePath());*/
             cosclient.shutdown();
             //返回文件的网络访问url
             return rtValue;
@@ -118,8 +118,7 @@ public class CosUtil {
             config.put("bucket", bucket);
             config.put("region", region);
             config.put("allowPrefix", allowPrefix);
-            //密钥的权限列表，其他权限列表请看
-            //https://cloud.tencent.com/document/product/436/31923
+
             String[] allowActions = new String[]{
                     // 简单上传
                     "name/cos:PutObject",
