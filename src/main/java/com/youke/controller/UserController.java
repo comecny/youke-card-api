@@ -22,9 +22,8 @@ public class UserController {
 
     @PostMapping("user")
     @ApiOperation("查询用户")
-    public Result<List<User>> getUser(MultipartFile file){
+    public Result<List<User>> getUser(){
        List<User> user = userService.findAll();
-        String upload = CosUtil.upload(file);
         return new Result<List<User>>(user, MsgCode.FIND_SUCCESS);
     }
 
