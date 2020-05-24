@@ -3,7 +3,7 @@ package com.youke.dao;
 
 import com.youke.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +12,11 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    @Select("select * from user")
     List<User> findAll();
 
+    int insertUser(User user);
+
+    int updateUser(User user);
+
+    User getUser(@Param("id")Integer id);
 }

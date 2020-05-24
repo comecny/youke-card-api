@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.UserDao">
+
+    <resultMap id="UserResultMap" type="com.youke.entity.User">
+        <id column="id" property="id"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="avatar_url" property="avatarUrl"/>
+        <result column="gender" property="gender"/>
+        <result column="country" property="country"/>
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="phone" property="phone"/>
+        <result column="password" property="password"/>
+        <result column="shops_Sign" property="shopsSign" />
+        <result column="openid" property="openid" />
+        <result column="unionid" property="unionid" />
+        <result column="balance" property="balance" />
+    </resultMap>
+
+    <select id="findAll" resultMap="UserResultMap" parameterType="Map">
+    SELECT * FROM user
+    </select>
+
+    <select id="getUser" resultMap="UserResultMap" parameterType="int">
+    SELECT * FROM user WHERE id=#{id,jdbcType=INTEGER}
+    </select>
+
+  <!--  <select id="getUser" resultType="com.youke.entity.User" parameterType="int">
+    SELECT * FROM user WHERE id=#{id,jdbcType=INTEGER}
+    </select>-->
+
+    <insert id="insertUser" parameterType="com.youke.entity.User">
+    INSERT INTO
+    user
+    (nick_name,avatar_url,gender,country,province,city,phone,password,shops_Sign,openid,unionid,balance,create_time)
+    value
+    (#{nickName,jdbcType=VARCHAR},
+     #{avatarUrl,jdbcType=VARCHAR},
+     #{gender,jdbcType=VARCHAR},
+     #{country,jdbcType=VARCHAR},
+     #{province,jdbcType=VARCHAR},
+     #{city,jdbcType=VARCHAR},
+     #{phone,jdbcType=VARCHAR},
+     #{password,jdbcType=VARCHAR},
+     #{shopsSign,jdbcType=VARCHAR},
+     #{openid,jdbcType=VARCHAR},
+     #{unionid,jdbcType=VARCHAR},
+     #{balance,jdbcType=VARCHAR},
+     now())
+    </insert>
+
+    <update id="updateUser" parameterType="com.youke.entity.User">
+     UPDATE  user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="nickName != null">
+                nick_name=#{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="avatarUrl != null">
+                avatar_url=#{avatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender=#{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country= #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province=#{province,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone= #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password=#{password,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone= #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="shopsSign != null">
+                shops_sign= #{shopsSign,jdbcType=VARCHAR},
+            </if>
+            <if test="openid != null">
+                openid= #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="unionid != null">
+                unionid= #{unionid,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null">
+                balance= #{balance,jdbcType=VARCHAR},
+            </if>
+            update_time=now()
+        </trim>
+        <where>
+            id=#{id,jdbcType=INTEGER}
+        </where>
+    </update>
+
+</mapper>
