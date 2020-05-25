@@ -18,8 +18,7 @@ public class BackgroundMenuServiceImpl implements BackgroundMenuService {
     private BackgroundMenuMapper backgroundMenuMapper;
 
     @Override
-    public Map listMenu() {
-        Integer roleId = 1;
+    public Map listMenu(Integer roleId) {
         List<BackgroundMenu> listMneu = backgroundMenuMapper.listMneu(roleId);
 
         ArrayList<BackgroundMenu> total = new ArrayList<>();
@@ -41,8 +40,7 @@ public class BackgroundMenuServiceImpl implements BackgroundMenuService {
         return map;
     }
 
-
-        public static List<BackgroundMenu> getChilds(Integer id, List<BackgroundMenu> list){
+        private static List<BackgroundMenu> getChilds(Integer id, List<BackgroundMenu> list){
 
             //子菜单
             List<BackgroundMenu> childList = new ArrayList<>();

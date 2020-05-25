@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.common.exception.db.InsertException;
-import com.youke.dao.UserDao;
+import com.youke.dao.UserMapper;
 import com.youke.entity.User;
 import com.youke.vo.BackgroudUserVO;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +16,6 @@ import com.youke.dao.BackgroudUserMapper;
 import com.youke.entity.BackgroudUser;
 import com.youke.service.BackgroudUserService;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -28,7 +27,7 @@ public class BackgroudUserServiceImpl implements BackgroudUserService{
     private BackgroudUserMapper backgroudUserMapper;
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Override
     public int insertBackgroudUser(BackgroudUser backgroudUser) {
@@ -57,7 +56,7 @@ public class BackgroudUserServiceImpl implements BackgroudUserService{
 
         //最后去讲将前台user表中的后台用户标识设为1
         User user = User.builder().backUserSign(1).id(backgroudUser.getUserId()).build();
-        return userDao.updateUser(user);
+        return userMapper.updateUser(user);
     }
 
     @Override

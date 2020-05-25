@@ -6,6 +6,7 @@ import com.youke.service.BackgroundMenuService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,10 +19,10 @@ public class BackGroundMenuController {
     @Autowired
     private BackgroundMenuService menuService;
 
-    @GetMapping("listMenu")
+    @GetMapping("listMenu/{roleId}")
     @ApiOperation("菜单列表查询")
-    public Result<Map> listMenu(){
-      Map map = menuService.listMenu();
+    public Result<Map> listMenu(@PathVariable("roleId")Integer roleId){
+      Map map = menuService.listMenu(roleId);
         return new Result<Map>(map, MsgCode.FIND_SUCCESS);
     }
 }

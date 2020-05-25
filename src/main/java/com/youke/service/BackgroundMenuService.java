@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface BackgroundMenuService {
 
-    Map listMenu();
+    Map listMenu(Integer roleId);
 
 }

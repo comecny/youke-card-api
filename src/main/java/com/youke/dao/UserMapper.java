@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @Mapper
-public interface UserDao {
+public interface UserMapper {
 
     List<User> findAll();
 
