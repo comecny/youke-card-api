@@ -33,13 +33,12 @@ public class BackgroudUserServiceImpl implements BackgroudUserService{
     @Override
     public int insertBackgroudUser(BackgroudUser backgroudUser) {
         //先查是否存在可用的用户
-        QueryWrapper<BackgroudUser> backgroudUserQueryWrapper = new QueryWrapper<>();
-        backgroudUserQueryWrapper.setEntity(
-                BackgroudUser
-                .builder()
-                .status("0")
-                .backgroudUserName(backgroudUser.getBackgroudUserName())
-                .build());
+        QueryWrapper<BackgroudUser> backgroudUserQueryWrapper = new QueryWrapper<BackgroudUser>()
+                .setEntity(BackgroudUser
+                        .builder()
+                        .status("0")
+                        .backgroudUserName(backgroudUser.getBackgroudUserName())
+                        .build());
         Integer count = backgroudUserMapper.selectCount(backgroudUserQueryWrapper);
         if (count > 0) return -10;
 

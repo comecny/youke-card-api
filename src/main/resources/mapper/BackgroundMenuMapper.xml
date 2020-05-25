@@ -2,7 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.youke.dao.BackgroundMenuMapper">
 
-    <select id="listMneu" resultType="com.youke.entity.BackgroundMenu">
+    <resultMap id="BaseResultMap" type="com.youke.entity.BackgroundMenu" >
+        <id column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="index" property="index" />
+        <result column="title" property="title" />
+        <result column="icon" property="icon" />
+        <result column="path" property="path" />
+        <result column="weight" property="weight" />
+    </resultMap>
+
+    <select id="listMneu" resultMap="BaseResultMap">
         SELECT b.*
         FROM
         backgroud_menu_rel_role AS a

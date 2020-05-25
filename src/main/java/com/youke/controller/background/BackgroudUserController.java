@@ -43,6 +43,4 @@ public class BackgroudUserController {
         IPage<Map<String, Object>> paging = backgroudUserService.listBackGroudUserPaging(page,length);
         return new Result<IPage<Map<String, Object>>>(paging,MsgCode.FIND_SUCCESS);
     }
-
-
 }
