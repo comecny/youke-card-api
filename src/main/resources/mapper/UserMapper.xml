@@ -16,6 +16,7 @@
         <result column="openid" property="openid" />
         <result column="unionid" property="unionid" />
         <result column="balance" property="balance" />
+        <result column="back_user_sign" property="backUserSign" />
     </resultMap>
 
     <select id="findAll" resultMap="UserResultMap" parameterType="Map">
@@ -26,9 +27,9 @@
     SELECT * FROM user WHERE id=#{id,jdbcType=INTEGER}
     </select>
 
-  <!--  <select id="getUser" resultType="com.youke.entity.User" parameterType="int">
-    SELECT * FROM user WHERE id=#{id,jdbcType=INTEGER}
-    </select>-->
+    <!--  <select id="getUser" resultType="com.youke.entity.User" parameterType="int">
+      SELECT * FROM user WHERE id=#{id,jdbcType=INTEGER}
+      </select>-->
 
     <insert id="insertUser" parameterType="com.youke.entity.User">
     INSERT INTO
@@ -47,6 +48,7 @@
      #{openid,jdbcType=VARCHAR},
      #{unionid,jdbcType=VARCHAR},
      #{balance,jdbcType=VARCHAR},
+     #{backUserSign,jdbcType=INTEGER},
      now())
     </insert>
 
@@ -88,6 +90,9 @@
             </if>
             <if test="balance != null">
                 balance= #{balance,jdbcType=VARCHAR},
+            </if>
+            <if test="backUserSign != null">
+                back_user_sign= #{backUserSign,jdbcType=INTEGER},
             </if>
             update_time=now()
         </trim>

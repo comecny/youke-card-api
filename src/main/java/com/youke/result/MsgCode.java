@@ -11,7 +11,7 @@ public enum MsgCode {
     LOGIN_SUCCESS(true, "登录成功"),
     REGISTER_SUCCESS(true,"注册成功"),
     SUBMIT_SUCCESS(true,"提交成功"),
-
+    USER_EXIST(true,"用户已存在"),
 
     LOGIN_FAIL(false,"用户或密码错误"),
     REGISTER_FAIL(false,"注册失败"),
@@ -22,6 +22,7 @@ public enum MsgCode {
     AUTHORIZATION_FAIL(false,"你没有此权限"),
     UPDATE_FAIL(false, "修改失败"),
     DELETE_FAIL(false, "删除失败"),
+    DELETE_USE(false, "角色在使用中禁止删除"),
     CONFIRM_FAIl(false, "验收失败"),
     PASSWORD_FAIL(false,"密码不正确"),
     COUNT_FIAL(false,"账号错误"),

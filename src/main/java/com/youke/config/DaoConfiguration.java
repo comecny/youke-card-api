@@ -5,6 +5,7 @@ import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.wall.WallConfig;
 import com.alibaba.druid.wall.WallFilter;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -56,5 +57,13 @@ public class DaoConfiguration {
         config.setConditionAndAlwayTrueAllow(true);
         config.setSchemaCheck(false);
         return config;
+    }
+
+
+    @Bean
+    public PaginationInterceptor paginationInterceptor() { //分页插件
+        PaginationInterceptor page = new PaginationInterceptor();
+        page.setDialectType("mysql"); //指定数据库类型
+        return page;
     }
 }

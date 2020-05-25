@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.BackgroudUserMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.BackgroudUser">
+    <!--@mbg.generated-->
+    <!--@Table backgroud_user-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="backgroud_user_name" jdbcType="VARCHAR" property="backgroudUserName" />
+    <result column="bcakgroud_user_password" jdbcType="VARCHAR" property="bcakgroudUserPassword" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="OTHER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, backgroud_user_name, bcakgroud_user_password, create_time, update_time, 
+    `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from backgroud_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+    <select id="checkRole" resultType="java.lang.Integer">
+      select count(*) from backgroud_user_rel_role where b_user_role_id=#{bUserRoleId,jdbcType=INTEGER}
+    </select>
+
+  <resultMap id="ListpagingResultMap" type="com.youke.vo.BackgroudUserVO">
+    <result column="nick_name" property="nickName" />
+    <result column="avatar_url" property="avatarUrl" />
+    <result column="backgroud_user_name" property="backgroudUserName" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="id" property="backgroudUserId" />
+    <result column="role" property="role" />
+    <result column="roleId" property="roleId" />
+    <result column="describes" property="roleDescribes" />
+    <result column="userId" property="userId" />
+    <result column="bcakgroud_user_password" property="bcakgroudUserPassword" />
+  </resultMap>
+
+  <sql id="BackgroundUser_sql">
+     b.nick_name ,
+     b.avatar_url,
+     a.backgroud_user_name,
+     a.create_time,
+     a.id,
+     d.id AS roleId,
+     d.role,
+     d.describes,
+     b.id AS userId
+  </sql>
+
+  <select id="listBackGroudUserPaging" resultMap="ListpagingResultMap">
+   select
+    <include refid="BackgroundUser_sql" />
+    from backgroud_user AS a
+    left join user AS b on a.user_id=b.id
+    left join backgroud_user_rel_role AS c on a.id=c.b_user_id
+    left  join backgroud_user_role AS d on c.b_user_role_id=d.id
+    where b.status="0"
+  </select>
+
+  <select id="getUserInfo" resultMap="ListpagingResultMap" >
+    select
+    <include refid="BackgroundUser_sql" />,a.bcakgroud_user_password
+    from backgroud_user AS a
+    left join user AS b on a.user_id=b.id
+    left join backgroud_user_rel_role AS c on a.id=c.b_user_id
+    left  join backgroud_user_role AS d on c.b_user_role_id=d.id
+    where b.status="0"
+    and a.backgroud_user_name=#{username,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from backgroud_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.youke.entity.BackgroudUser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into backgroud_user (user_id, backgroud_user_name, bcakgroud_user_password, 
+      create_time, update_time, `status`
+      )
+    values (#{userId,jdbcType=INTEGER}, #{backgroudUserName,jdbcType=VARCHAR}, #{bcakgroudUserPassword,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=OTHER}
+      )
+  </insert>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.youke.entity.BackgroudUser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into backgroud_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="backgroudUserName != null">
+        backgroud_user_name,
+      </if>
+      <if test="bcakgroudUserPassword != null">
+        bcakgroud_user_password,
+      </if>
+        create_time,
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="backgroudUserName != null">
+        #{backgroudUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="bcakgroudUserPassword != null">
+        #{bcakgroudUserPassword,jdbcType=VARCHAR},
+      </if>
+        now(),
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+
+    <insert id="insertBackUserRelRole">
+    INSERT INTO
+    backgroud_user_rel_role
+    (b_user_role_id,b_user_id)
+    value
+    (#{bUserRoleId,jdbcType=INTEGER},#{bUserId,jdbcType=INTEGER})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.youke.entity.BackgroudUser">
+    <!--@mbg.generated-->
+    update backgroud_user
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="backgroudUserName != null">
+        backgroud_user_name = #{backgroudUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="bcakgroudUserPassword != null">
+        bcakgroud_user_password = #{bcakgroudUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=OTHER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.youke.entity.BackgroudUser">
+    <!--@mbg.generated-->
+    update backgroud_user
+    set user_id = #{userId,jdbcType=INTEGER},
+      backgroud_user_name = #{backgroudUserName,jdbcType=VARCHAR},
+      bcakgroud_user_password = #{bcakgroudUserPassword,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=OTHER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

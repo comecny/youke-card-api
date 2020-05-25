@@ -1,10 +1,14 @@
 package com.youke.entity;
 
-import lombok.Data;
+
+import lombok.*;
 
 import java.io.Serializable;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable {
 
     private static long serialVersionUID = 12314225123132L;
@@ -22,5 +26,6 @@ public class User implements Serializable {
     private String openid;
     private String unionid;
     private String balance;
+    private Integer backUserSign;
 
 }
