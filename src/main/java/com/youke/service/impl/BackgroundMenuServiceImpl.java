@@ -1,7 +1,10 @@
 package com.youke.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youke.dao.BackgroundMenuMapper;
 import com.youke.entity.BackgroundMenu;
+import com.youke.entity.BackgroundMenuRelRole;
 import com.youke.service.BackgroundMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +43,30 @@ public class BackgroundMenuServiceImpl implements BackgroundMenuService {
         return map;
     }
 
-        private static List<BackgroundMenu> getChilds(Integer id, List<BackgroundMenu> list){
+    @Override
+    public int insertRoleRelMenu(BackgroundMenuRelRole menuRelRole) {
+        return backgroundMenuMapper.insert(menuRelRole);
+    }
+
+    @Override
+    public int deleteRoleRelMenu(BackgroundMenuRelRole backgroundMenuRelRole) {
+        Wrapper<BackgroundMenuRelRole> Wrapper =
+                new QueryWrapper<BackgroundMenuRelRole>().setEntity(backgroundMenuRelRole);
+        return backgroundMenuMapper.delete(Wrapper);
+    }
+
+    @Override
+    public List<BackgroundMenuRelRole> listUserMenuByRoleId(Integer roleId) {
+        return backgroundMenuMapper.
+                selectList(new QueryWrapper<BackgroundMenuRelRole>()
+                        .select("b_menu_id")
+                        .setEntity(BackgroundMenuRelRole
+                                .builder()
+                                .bUserRoleId(roleId)
+                                .build()));
+    }
+
+    private static List<BackgroundMenu> getChilds(Integer id, List<BackgroundMenu> list){
 
             //子菜单
             List<BackgroundMenu> childList = new ArrayList<>();
