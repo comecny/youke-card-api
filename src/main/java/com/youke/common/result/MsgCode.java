@@ -1,4 +1,4 @@
-package com.youke.result;
+package com.youke.common.result;
 
 public enum MsgCode {
     SUCCESS(true, "成功"),

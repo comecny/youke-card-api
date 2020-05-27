@@ -2,8 +2,8 @@ package com.youke.controller.background;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.entity.BackgroudUser;
-import com.youke.result.MsgCode;
-import com.youke.result.Result;
+import com.youke.common.result.MsgCode;
+import com.youke.common.result.Result;
 import com.youke.service.BackgroudUserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

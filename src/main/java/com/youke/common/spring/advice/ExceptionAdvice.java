@@ -1,7 +1,7 @@
 package com.youke.common.spring.advice;
 
 
-import com.youke.result.BaseAPIExcution;
+import com.youke.common.result.BaseAPIExcution;
 import com.youke.utils.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

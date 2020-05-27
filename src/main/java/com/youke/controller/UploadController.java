@@ -1,7 +1,7 @@
 package com.youke.controller;
 
-import com.youke.result.MsgCode;
-import com.youke.result.Result;
+import com.youke.common.result.MsgCode;
+import com.youke.common.result.Result;
 import com.youke.utils.CosUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;

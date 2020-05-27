@@ -1,8 +1,8 @@
 package com.youke.controller;
 
 import com.youke.entity.User;
-import com.youke.result.MsgCode;
-import com.youke.result.Result;
+import com.youke.common.result.MsgCode;
+import com.youke.common.result.Result;
 import com.youke.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

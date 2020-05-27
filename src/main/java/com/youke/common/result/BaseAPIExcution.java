@@ -1,4 +1,4 @@
-package com.youke.result;
+package com.youke.common.result;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

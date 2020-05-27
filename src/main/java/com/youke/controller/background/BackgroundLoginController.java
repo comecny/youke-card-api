@@ -1,17 +1,14 @@
 package com.youke.controller.background;
 
 import com.youke.entity.BackgroundLogin;
-import com.youke.result.MsgCode;
-import com.youke.result.Result;
+import com.youke.common.result.MsgCode;
+import com.youke.common.result.Result;
 import com.youke.vo.BackgroudUserVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("background")

@@ -1,4 +1,4 @@
-package com.youke.result;
+package com.youke.common.result;
 
 public class Result<T> extends BaseAPIExcution<T> {
 

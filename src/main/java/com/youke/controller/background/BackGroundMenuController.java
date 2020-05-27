@@ -1,8 +1,8 @@
 package com.youke.controller.background;
 
 import com.youke.entity.BackgroundMenuRelRole;
-import com.youke.result.MsgCode;
-import com.youke.result.Result;
+import com.youke.common.result.MsgCode;
+import com.youke.common.result.Result;
 import com.youke.service.BackgroundMenuService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
