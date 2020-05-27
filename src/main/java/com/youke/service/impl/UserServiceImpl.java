@@ -5,6 +5,7 @@ import com.youke.common.exception.db.UpdateException;
 import com.youke.dao.UserMapper;
 import com.youke.entity.User;
 import com.youke.service.UserService;
+import com.youke.utils.JWTUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,7 +61,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User wxLogin(User user) {
-
         //先检查数据库中是否有用户名和密码
         String md5pwd = new Md5Hash(user.getPassword(), "youke_20200525DIchK487WCXRAQ", 2).toString();
         QueryWrapper<User> userQueryWrapper =
@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserService {
         int isSuccess = userMapper.updateUser(userInfo);
         if (isSuccess < 0) throw new UpdateException("登录时传入用户信息异常");
 
+        JWTUtils.jwtSign(String.valueOf(userInfo.getId()), userInfo.getPhone());
         return user;
     }
 }
