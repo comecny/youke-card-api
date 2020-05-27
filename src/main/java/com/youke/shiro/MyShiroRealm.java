@@ -1,7 +1,7 @@
 package com.youke.shiro;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.youke.dao.BackgroudUserMapper;
+import com.youke.entity.BackgroudPermissions;
+import com.youke.service.BackgroudUserService;
 import com.youke.vo.BackgroudUserVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,21 +10,23 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.Permission;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
-public class MyShiroRealm extends AuthorizingRealm {
+public class MyShiroRealm extends AuthorizingRealm  {
 
     static Logger logger = LogManager.getLogger(MyShiroRealm.class.getName());
 
     @Autowired
-    private BackgroudUserMapper backgroudUserMapper;
+    private BackgroudUserService backgroudUserService;
 
     /**
      * 认证
@@ -36,7 +38,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         logger.info("-----------------------------认证-------------------------------------");
         String username = (String)token.getPrincipal();
-        BackgroudUserVO userInfo = backgroudUserMapper.getUserInfo(username);
+        BackgroudUserVO userInfo = backgroudUserService.getUserInfo(username);
         if (userInfo == null || userInfo.getBcakgroudUserPassword() == null) return null;
 
         SimpleAuthenticationInfo authc = new SimpleAuthenticationInfo(
@@ -45,7 +47,7 @@ public class MyShiroRealm extends AuthorizingRealm {
                 ByteSource.Util.bytes("youke_20200525DIchK487WCXRAQ"),
                 this.getName()
         );
-        logger.info("-----------------------------认证完毕-------------------------------------");
+        logger.info("-----------------------------认证完毕------------------------------------");
         return authc;
     }
 
@@ -57,7 +59,19 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         logger.info("-------------------------------授权------------------------------------");
-        return null;
+        BackgroudUserVO userInfo =(BackgroudUserVO) principalCollection.getPrimaryPrincipal();
+        userInfo.getRole();
+        SimpleAuthorizationInfo authz = new SimpleAuthorizationInfo();
+        authz.addRole(userInfo.getRole());
+        ArrayList<String> list = new ArrayList<>();
+        List<BackgroudPermissions> listPermissins = userInfo.getListPermissins();
+        for (BackgroudPermissions listPermissin : listPermissins) {
+            list.add(listPermissin.getDescribes());
+        }
+        logger.info("该角色所有权限（）："+list);
+        authz.addStringPermissions(list);
+        return authz;
     }
+
 }
 

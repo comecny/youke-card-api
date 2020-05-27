@@ -1,9 +1,11 @@
 package com.youke.vo;
 
+import com.youke.entity.BackgroudPermissions;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class BackgroudUserVO implements Serializable {
@@ -20,4 +22,6 @@ public class BackgroudUserVO implements Serializable {
     private String role;
     private String roleDescribes;
     private String bcakgroudUserPassword;
+
+    private List<BackgroudPermissions> listPermissins;
 }

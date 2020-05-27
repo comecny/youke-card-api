@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.common.exception.db.InsertException;
+import com.youke.dao.BackgroudPermissionsMapper;
 import com.youke.dao.UserMapper;
+import com.youke.entity.BackgroudPermissions;
 import com.youke.entity.User;
 import com.youke.vo.BackgroudUserVO;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +18,7 @@ import com.youke.dao.BackgroudUserMapper;
 import com.youke.entity.BackgroudUser;
 import com.youke.service.BackgroudUserService;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -28,6 +31,9 @@ public class BackgroudUserServiceImpl implements BackgroudUserService{
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private BackgroudPermissionsMapper permissionsMapper;
 
     @Override
     public int insertBackgroudUser(BackgroudUser backgroudUser) {
@@ -65,4 +71,14 @@ public class BackgroudUserServiceImpl implements BackgroudUserService{
                 .setEntity(BackgroudUser.builder().status("0").build());
         return backgroudUserMapper.listBackGroudUserPaging(new Page<BackgroudUserVO>(page,length),userQueryWrapper);
     }
+
+    @Override
+    public BackgroudUserVO getUserInfo(String username) {
+        BackgroudUserVO userInfo = backgroudUserMapper.getUserInfo(username);
+        //通过roleid查出权限
+       List<BackgroudPermissions> list = permissionsMapper.listPermissionsByRoleId(userInfo.getRoleId());
+       userInfo.setListPermissins(list);
+       return userInfo;
+    }
+
 }

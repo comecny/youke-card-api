@@ -52,5 +52,4 @@ public class BackGroundMenuController {
         return new Result<List<BackgroundMenuRelRole>>(list,MsgCode.FIND_SUCCESS);
     }
 
-
 }

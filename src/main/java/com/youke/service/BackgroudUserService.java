@@ -11,4 +11,6 @@ public interface BackgroudUserService{
     int insertBackgroudUser(BackgroudUser backgroudUser);
 
     IPage<Map<String, Object>> listBackGroudUserPaging(Integer page, Integer length);
+
+    BackgroudUserVO getUserInfo(String username);
 }
