@@ -1,6 +1,9 @@
 package com.youke.entity;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.io.Serializable;
@@ -9,11 +12,14 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName(value = "user")
 public class User implements Serializable {
 
     private static long serialVersionUID = 12314225123132L;
 
+    @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
+
     private String nickName;
     private String avatarUrl;
     private String gender;

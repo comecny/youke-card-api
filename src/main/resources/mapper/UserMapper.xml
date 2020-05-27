@@ -34,7 +34,7 @@
     <insert id="insertUser" parameterType="com.youke.entity.User">
     INSERT INTO
     user
-    (nick_name,avatar_url,gender,country,province,city,phone,password,shops_Sign,openid,unionid,balance,create_time)
+    (nick_name,avatar_url,gender,country,province,city,phone,password,shops_Sign,openid,unionid,balance,back_user_sign,create_time)
     value
     (#{nickName,jdbcType=VARCHAR},
      #{avatarUrl,jdbcType=VARCHAR},
@@ -66,6 +66,9 @@
             </if>
             <if test="country != null">
                 country= #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city=#{city,jdbcType=VARCHAR},
             </if>
             <if test="province != null">
                 province=#{province,jdbcType=VARCHAR},

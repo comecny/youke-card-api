@@ -6,6 +6,7 @@ import com.youke.result.Result;
 import com.youke.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,4 +52,29 @@ public class UserController {
        return new Result<Void>(null,MsgCode.UPDATE_FAIL);
     }
 
+    @PostMapping("wxRegister")
+    @ApiOperation("小程序端注册")
+    public Result<Void> wxRegister(@RequestBody User user){
+       int success = userService.register(user);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.REGISTER_SUCCESS);
+       }if (success == -10){
+           return new Result<Void>(null,MsgCode.PRINT_COUNT_FIAL);
+        }if (success == -11){
+           return new Result<Void>(null,MsgCode.PASSWORD_NULL_FIAL);
+        }if (success == -12){
+           return new Result<Void>(null,MsgCode.USER_EXIST);
+        }
+       return new Result<Void>(null,MsgCode.REGISTER_FAIL);
+    }
+
+    @PostMapping("wxLogin")
+    @ApiOperation("小程序端登录")
+    public Result<User> wxLogin(@RequestBody User user){
+      User info = userService.wxLogin(user);
+      if (!ObjectUtils.isEmpty(info)){
+          return new Result<User>(info,MsgCode.LOGIN_SUCCESS);
+      }
+      return new Result<User>(null,MsgCode.LOGIN_FAIL);
+    }
 }

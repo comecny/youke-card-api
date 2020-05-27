@@ -1,5 +1,6 @@
 package com.youke.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.youke.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Repository
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     List<User> findAll();
 
