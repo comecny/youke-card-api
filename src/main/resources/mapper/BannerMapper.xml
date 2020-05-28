@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.BannerMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.Banner">
+    <!--@mbg.generated-->
+    <!--@Table banner-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="OTHER" property="status" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, url, remarks, weight, `type`, create_time, `status`, update_time
+  </sql>
+</mapper>

@@ -76,7 +76,8 @@ public class UserServiceImpl implements UserService {
         int isSuccess = userMapper.updateUser(userInfo);
         if (isSuccess < 0) throw new UpdateException("登录时传入用户信息异常");
 
-        JWTUtils.jwtSign(String.valueOf(userInfo.getId()), userInfo.getPhone());
-        return user;
+        String token = JWTUtils.jwtSign(String.valueOf(userInfo.getId()), userInfo.getPhone());
+        userInfo.setToken(token);
+        return userInfo;
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.ShopsMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.Shops">
+    <!--@mbg.generated-->
+    <!--@Table shops-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+    <result column="contacts_phone" jdbcType="VARCHAR" property="contactsPhone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address_area" jdbcType="VARCHAR" property="addressArea" />
+    <result column="address_detail" jdbcType="VARCHAR" property="addressDetail" />
+    <result column="business_license" jdbcType="VARCHAR" property="businessLicense" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="iamges" jdbcType="VARCHAR" property="iamges" />
+    <result column="auth_status" jdbcType="INTEGER" property="authStatus" />
+    <result column="member_fee_status" jdbcType="INTEGER" property="memberFeeStatus" />
+    <result column="shops_status" jdbcType="INTEGER" property="shopsStatus" />
+    <result column="shops_score" jdbcType="VARCHAR" property="shopsScore" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="OTHER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, company, contacts, contacts_phone, email, address_area, address_detail, 
+    business_license, introduction, iamges, auth_status, member_fee_status, shops_status, 
+    shops_score, weight, create_time, update_time, `status`
+  </sql>
+</mapper>

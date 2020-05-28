@@ -2,6 +2,7 @@ package com.youke.entity;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -33,5 +34,7 @@ public class User implements Serializable {
     private String unionid;
     private String balance;
     private Integer backUserSign;
+    @TableField(exist = false)
+    private String token;
 
 }

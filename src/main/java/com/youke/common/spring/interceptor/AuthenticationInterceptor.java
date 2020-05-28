@@ -1,7 +1,5 @@
 package com.youke.common.spring.interceptor;
 
-
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.youke.dao.UserMapper;
 import com.youke.entity.User;
@@ -18,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
