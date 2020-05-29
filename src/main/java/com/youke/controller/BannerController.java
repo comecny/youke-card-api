@@ -3,6 +3,7 @@ package com.youke.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
+import com.youke.config.BaseConfiguration;
 import com.youke.entity.Banner;
 import com.youke.service.BannerService;
 import com.youke.utils.DateUtil;

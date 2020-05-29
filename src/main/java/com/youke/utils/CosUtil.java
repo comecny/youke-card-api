@@ -9,12 +9,22 @@ import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.region.Region;
+import com.qcloud.vod.VodUploadClient;
 import com.tencent.cloud.CosStsClient;
+import com.youke.Application;
+import com.youke.config.BaseConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,21 +38,7 @@ import java.util.TreeMap;
 public class CosUtil {
 
     static Logger logger = LogManager.getLogger(com.youke.utils.CosUtil.class.getName());
-
-    //腾讯云的SecretId
-    private static String secretId ="AKID1yhBUdKEeuvjHdT2xe4Ml26MM9hUDdsw";
-    //腾讯云的SecretKey
-    private static String secretKey = "34pLlvvaFepzy84irlPuymZBX0jCyUC7";
-    //腾讯云的bucket (存储桶)
-    private static String bucket = "mytos-1302163130";
-    //腾讯云的region(bucket所在地区)
-    private static String region = "ap-nanjing";
-    //腾讯云的allowPrefix(允许上传的路径)
-    private static String allowPrefix = "*";
-    //腾讯云的临时密钥时长(单位秒)
-    private static String durationSeconds = "1800";
-    //腾讯云的访问基础链接:
-    private static String baseUrl ="https://mytos-1302163130.cos.ap-nanjing.myqcloud.com";
+    static BaseConfiguration baseConfiguration = Application.applicationContext.getBean(BaseConfiguration.class);
 
     public static String upload(MultipartFile file)  {
         String rtValue = null;
@@ -74,11 +70,11 @@ public class CosUtil {
 
         COSCredentials cred = new BasicCOSCredentials(tmpSecretId, tmpSecretKey);
 
-        ClientConfig clientConfig = new ClientConfig(new Region(region));
+        ClientConfig clientConfig = new ClientConfig(new Region(baseConfiguration.getRegion()));
 
         COSClient cosclient = new COSClient(cred, clientConfig);
 
-        String bucketName = bucket;
+        String bucketName = baseConfiguration.getBucket();
 
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, yuming1, newFile);
 
@@ -92,14 +88,10 @@ public class CosUtil {
             PutObjectResult putObjectResult = cosclient.putObject(putObjectRequest);
             // 成功：putobjectResult 会返回文件的 etag
             String etag = putObjectResult.getETag();
-            rtValue = baseUrl + path;
-            }catch (FileNotFoundException e) {
+            rtValue = baseConfiguration.getBaseUrl() + path;
+            } catch (IOException | CosServiceException e) {
                 e.printStackTrace();
-            }catch (IOException e) {
-                e.printStackTrace();
-            }catch (CosServiceException e) {
-                e.printStackTrace();
-        }finally {
+            } finally {
             //删除本地文件并关闭客户端
           /*  DeleteFileUtil.delete(new File(filename).getAbsolutePath());*/
             cosclient.shutdown();
@@ -111,12 +103,12 @@ public class CosUtil {
     private static JSONObject getTempKey() {
         TreeMap<String, Object> config = new TreeMap<String, Object>();
         try {//使用永久密钥生成临时密钥
-            config.put("SecretId", secretId);
-            config.put("SecretKey", secretKey);
-            config.put("durationSeconds", Integer.parseInt(durationSeconds));
-            config.put("bucket", bucket);
-            config.put("region", region);
-            config.put("allowPrefix", allowPrefix);
+            config.put("SecretId", baseConfiguration.getSecretId());
+            config.put("SecretKey", baseConfiguration.getSecretKey());
+            config.put("durationSeconds", Integer.parseInt(baseConfiguration.getDurationSeconds()));
+            config.put("bucket", baseConfiguration.getBucket());
+            config.put("region", baseConfiguration.getRegion());
+            config.put("allowPrefix", baseConfiguration.getAllowPrefix());
 
             String[] allowActions = new String[]{
                     // 简单上传

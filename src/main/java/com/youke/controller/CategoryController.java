@@ -1,11 +1,11 @@
 package com.youke.controller;
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.entity.Industry;
 import com.youke.service.IndustryService;
+import com.youke.service.ProductsAttributeService;
 import com.youke.utils.DateUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,9 @@ public class CategoryController {
 
     @Autowired
     private IndustryService industryService;
+
+    @Autowired
+    private ProductsAttributeService attributeService;
 
     @PostMapping("insertIndustry")
     @ApiOperation("新增行业分类")
@@ -62,6 +65,9 @@ public class CategoryController {
         return new Result<List<Industry>>(list,MsgCode.FIND_SUCCESS);
     }
 
-
-
+    @PostMapping("insertAttribute")
+    @ApiOperation("新增属性")
+    public Result<Void> insertAttribute(){
+        return new Result<Void>(null,MsgCode.IINSERT_SUCCESS);
+    }
 }
