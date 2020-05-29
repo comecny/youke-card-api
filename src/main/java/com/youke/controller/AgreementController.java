@@ -33,9 +33,14 @@ public class AgreementController {
     @GetMapping("listAgreement")
     @ApiOperation("查询协议列表")
     public Result<List<Agreement> > listAgreement(){
-        List<Agreement> list = agreementService.list(new QueryWrapper<Agreement>()
+        QueryWrapper<Agreement> queryWrapper = new QueryWrapper<Agreement>()
                 .setEntity(Agreement.builder().status("0").build())
-                .select(Agreement.class,info -> !info.getColumn().equals("create_time") && !info.getColumn().equals("update_time") && !info.getColumn().equals("status")));
+                .select(Agreement.class,
+                        info -> !info.getColumn().equals("create_time")
+                                && !info.getColumn().equals("update_time")
+                                && !info.getColumn().equals("status"));
+
+        List<Agreement> list = agreementService.list(queryWrapper);
         return new Result<List<Agreement>>(list,MsgCode.FIND_SUCCESS);
     }
 

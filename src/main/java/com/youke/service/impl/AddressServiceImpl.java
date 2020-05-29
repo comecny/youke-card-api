@@ -6,7 +6,10 @@ import com.youke.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youke.entity.Address;
 import com.youke.dao.AddressMapper;
@@ -27,7 +30,7 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
         Integer userId = address.getUserId();
         address.setCreateTime(DateUtil.nowDate());
         List<Address> addresses = addressMapper.selectList(new QueryWrapper<Address>()
-                .setEntity(Address.builder().userId(userId).build()));
+                .setEntity(Address.builder().userId(userId).status("0").build()));
         if (addresses.isEmpty()) {
             //如果不存在地址，当前输入过来的又是非默认地址，则
             address.setType(0);
@@ -39,7 +42,8 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
                 Integer s;
                 Address info = new Address();
                 addresses.stream()
-                        .filter(item -> item
+                        .filter(item ->
+                                item
                                 .getType()
                                 .compareTo(new Integer("0")) <= 0)
                         .forEach(str -> {
@@ -60,6 +64,22 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
                 return addressMapper.insert(address);
             }
         }
+    }
+
+    @Override
+    public List<Address> listAddressByUserId(Integer userId) {
+        QueryWrapper<Address> queryWrapper =
+                new QueryWrapper<Address>().setEntity(Address.builder().userId(userId).status("0").build());
+        List<Address> list = addressMapper.selectList(queryWrapper)
+                .stream()
+                .sorted(Comparator.comparing(Address::getType))
+                .collect(Collectors.toList());
+        return list;
+    }
+
+    @Override
+    public Address getAddressById(Integer id) {
+        return addressMapper.selectById(id);
     }
 
 
