@@ -36,7 +36,7 @@ public class MyShiroRealm extends AuthorizingRealm  {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        logger.info("-----------------------------认证-------------------------------------");
+        logger.debug("-----------------------------认证-------------------------------------");
         String username = (String)token.getPrincipal();
         BackgroudUserVO userInfo = backgroudUserService.getUserInfo(username);
         if (userInfo == null || userInfo.getBcakgroudUserPassword() == null) return null;
@@ -47,7 +47,7 @@ public class MyShiroRealm extends AuthorizingRealm  {
                 ByteSource.Util.bytes("youke_20200525DIchK487WCXRAQ"),
                 this.getName()
         );
-        logger.info("-----------------------------认证完毕------------------------------------");
+        logger.debug("-----------------------------认证完毕------------------------------------");
         return authc;
     }
 
@@ -58,7 +58,7 @@ public class MyShiroRealm extends AuthorizingRealm  {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        logger.info("-------------------------------授权------------------------------------");
+        logger.debug("-------------------------------授权------------------------------------");
         BackgroudUserVO userInfo =(BackgroudUserVO) principalCollection.getPrimaryPrincipal();
         userInfo.getRole();
         SimpleAuthorizationInfo authz = new SimpleAuthorizationInfo();

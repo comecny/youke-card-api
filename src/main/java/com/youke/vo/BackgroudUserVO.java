@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class BackgroudUserVO implements Serializable {
 
-    private static long serialVersionUID = 1231423132L;
+    private static final long serialVersionUID = 1L;
 
     private String nickName;
     private String avatarUrl;

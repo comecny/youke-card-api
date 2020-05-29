@@ -2,11 +2,13 @@ package com.youke.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class BackgroundMenu {
+public class BackgroundMenu implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     /**
      *后台菜单表id
      */

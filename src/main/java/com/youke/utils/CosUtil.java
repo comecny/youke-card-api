@@ -44,7 +44,6 @@ public class CosUtil {
     //腾讯云的访问基础链接:
     private static String baseUrl ="https://mytos-1302163130.cos.ap-nanjing.myqcloud.com";
 
-
     public static String upload(MultipartFile file)  {
         String rtValue = null;
         FileOutputStream os = null;

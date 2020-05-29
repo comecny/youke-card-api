@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BackgroudUser implements Serializable {
 
-    private static long serialVersionUID = 123142252452453132L;
+    private static final long serialVersionUID = 1L;
 
     /**
     * 后台用户id

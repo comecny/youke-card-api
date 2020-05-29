@@ -31,9 +31,9 @@ public class IndustryController {
         return new Result<Void>(null,MsgCode.INSERT_FAIL);
     }
 
-    @PutMapping("updateIndustry")
+    @PutMapping("updateIndustryById")
     @ApiOperation("修改行业分类")
-    public Result<Void> updateIndustry(@RequestBody Industry industry){
+    public Result<Void> updateIndustryById(@RequestBody Industry industry){
         industry.setUpdateTime(DateUtil.nowDate());
         boolean success = industryService.updateById(industry);
         if (success){
@@ -42,9 +42,9 @@ public class IndustryController {
         return new Result<Void>(null,MsgCode.UPDATE_FAIL);
     }
 
-    @DeleteMapping("deleteIndustry")
+    @DeleteMapping("deleteIndustryById")
     @ApiOperation("删除行业分类")
-    public Result<Void> deleteIndustry(@RequestBody Industry industry){
+    public Result<Void> deleteIndustryById(@RequestBody Industry industry){
         industry.setStatus("1");
         industry.setUpdateTime(DateUtil.nowDate());
         boolean success = industryService.updateById(industry);

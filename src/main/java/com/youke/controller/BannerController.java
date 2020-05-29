@@ -30,9 +30,9 @@ public class BannerController {
         return new Result<Void>(null,MsgCode.INSERT_FAIL);
     }
 
-    @PutMapping("updateBanner")
+    @PutMapping("updateBannerById")
     @ApiOperation("更新banner图")
-    public Result<Void> updateBanner(@RequestBody Banner banner){
+    public Result<Void> updateBannerById(@RequestBody Banner banner){
         banner.setUpdateTime(DateUtil.nowDate());
         boolean success = bannerService.updateById(banner);
         if (success){
@@ -41,9 +41,9 @@ public class BannerController {
         return new Result<Void>(null,MsgCode.UPDATE_FAIL);
     }
 
-    @DeleteMapping("deleteBanner")
+    @DeleteMapping("deleteBannerById")
     @ApiOperation("删除banner")
-    public Result<Void> deleteBanner(@RequestBody Banner banner){
+    public Result<Void> deleteBannerById(@RequestBody Banner banner){
         banner.setUpdateTime(DateUtil.nowDate());
         banner.setStatus("1");
         boolean success = bannerService.updateById(banner);
