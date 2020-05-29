@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.ProductsMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.Products">
+    <!--@mbg.generated-->
+    <!--@Table products-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="products_no" jdbcType="VARCHAR" property="productsNo" />
+    <result column="shops_id" jdbcType="INTEGER" property="shopsId" />
+    <result column="products_name" jdbcType="VARCHAR" property="productsName" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="major_picture" jdbcType="VARCHAR" property="majorPicture" />
+    <result column="min_picture" jdbcType="DECIMAL" property="minPicture" />
+    <result column="max_picture" jdbcType="DECIMAL" property="maxPicture" />
+    <result column="scribe_picture" jdbcType="DECIMAL" property="scribePicture" />
+    <result column="delive_place" jdbcType="VARCHAR" property="delivePlace" />
+    <result column="products_status" jdbcType="INTEGER" property="productsStatus" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, products_no, shops_id, products_name, introduction, major_picture, min_picture, 
+    max_picture, scribe_picture, delive_place, products_status, create_time, update_time, 
+    `status`
+  </sql>
+</mapper>

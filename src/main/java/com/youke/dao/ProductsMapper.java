@@ -1,11 +1,11 @@
 package com.youke.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.youke.entity.Shops;
+import com.youke.entity.Products;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-@Repository
 @Mapper
-public interface ShopsMapper extends BaseMapper<Shops> {
+@Repository
+public interface ProductsMapper extends BaseMapper<Products> {
 }

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("industry")
-public class IndustryController {
+@RequestMapping("category")
+public class CategoryController {
 
     @Autowired
     private IndustryService industryService;
@@ -61,5 +61,7 @@ public class IndustryController {
                 .setEntity(Industry.builder().status("0").build()));
         return new Result<List<Industry>>(list,MsgCode.FIND_SUCCESS);
     }
+
+
 
 }

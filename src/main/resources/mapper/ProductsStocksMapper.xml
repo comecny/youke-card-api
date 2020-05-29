@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.ProductsStocksMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.ProductsStocks">
+    <!--@mbg.generated-->
+    <!--@Table products_stocks-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="products_id" jdbcType="VARCHAR" property="productsId" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="stocks" jdbcType="VARCHAR" property="stocks" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, products_id, picture, price, stocks, create_time, update_time, `status`
+  </sql>
+</mapper>
