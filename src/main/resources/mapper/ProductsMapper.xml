@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.youke.dao.ProductsMapper">
-  <resultMap id="BaseResultMap" type="com.youke.entity.Products">
-    <!--@mbg.generated-->
-    <!--@Table products-->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="products_no" jdbcType="VARCHAR" property="productsNo" />
-    <result column="shops_id" jdbcType="INTEGER" property="shopsId" />
-    <result column="products_name" jdbcType="VARCHAR" property="productsName" />
-    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
-    <result column="major_picture" jdbcType="VARCHAR" property="majorPicture" />
-    <result column="min_picture" jdbcType="DECIMAL" property="minPicture" />
-    <result column="max_picture" jdbcType="DECIMAL" property="maxPicture" />
-    <result column="scribe_picture" jdbcType="DECIMAL" property="scribePicture" />
-    <result column="delive_place" jdbcType="VARCHAR" property="delivePlace" />
-    <result column="products_status" jdbcType="INTEGER" property="productsStatus" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
-    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
+
+  <resultMap id="BaseResultMap" type="com.youke.vo.ResqProductsVO" autoMapping="true">
+    <id column="pid"  property="id" />
+    <result column="products_no"  property="productsNo" />
+    <result column="shops_id" property="shopsId" />
+    <result column="products_name"  property="productsName" />
+    <result column="introduction"  property="introduction" />
+    <result column="major_picture"  property="majorPicture" />
+    <result column="min_picture"  property="minPicture" />
+    <result column="max_picture"  property="maxPicture" />
+    <result column="scribe_picture"  property="scribePicture" />
+    <result column="delive_place"  property="delivePlace" />
+    <result column="products_status" property="productsStatus" />
+
+    <collection property="resourcesVOS" javaType="java.util.ArrayList" ofType="com.youke.vo.ResqResourcesVO">
+      <id column="rid"  property="id" />
+      <result column="products_id" property="productsId" />
+      <result column="major_type"  property="majorType" />
+      <result column="type" property="type" />
+      <result column="url" property="url" />
+    </collection>
+
+     <collection property="attributesVOS" ofType="com.youke.vo.ResqAttributesVO" javaType="java.util.ArrayList">
+         <id column="aid" property="id" />
+         <result column="attribute_name" property="attributeName"/>
+         
+         <collection property="optionsVOS" ofType="com.youke.vo.ResqOptionsVO" javaType="java.util.ArrayList">
+             <id column="oid" property="id"/>
+            <result column="option_name" property="optionName" />
+         </collection>
+     </collection>
+
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
@@ -25,4 +40,37 @@
     max_picture, scribe_picture, delive_place, products_status, create_time, update_time, 
     `status`
   </sql>
+    <select id="getProductsById" resultMap="BaseResultMap">
+    SELECT
+        a.id AS pid,
+        a.products_no,
+        a.shops_id,
+        a.products_name,
+        a.introduction,
+        a.major_picture,
+        a.min_picture,
+        a.max_picture,
+        a.scribe_picture,
+        a.delive_place,
+        a.products_status,
+        b.id AS rid,
+        b.products_id,
+        b.major_type,
+        b.type,
+        b.url,
+        d.id AS aid,
+        d.attribute_name,
+        f.id AS oid,
+        f.option_name
+    FROM products AS a
+        LEFT JOIN products_resources AS b ON a.id=b.products_id
+        LEFT JOIN products_rel_attribute AS c ON a.id=c.products_id
+        LEFT JOIN products_attribute AS d ON c.attribute_id=d.id
+        LEFT JOIN products_attribute_rel_options AS e ON d.id=e.attribute_id
+        LEFT JOIN products_options AS f ON e.options_id=f.id
+    WHERE
+        a.id=#{productsId,jdbcType=INTEGER}
+        AND
+        a.id=e.products_id
+    </select>
 </mapper>

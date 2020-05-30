@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
@@ -57,6 +58,7 @@ public class ProductsResources implements Serializable {
      */
     @TableField(value = "create_time")
     @ApiModelProperty(value="创建时间")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String createTime;
 
     private static final long serialVersionUID = 1L;

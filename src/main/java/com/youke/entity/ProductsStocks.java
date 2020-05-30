@@ -33,7 +33,7 @@ public class ProductsStocks implements Serializable {
      */
     @TableField(value = "products_id")
     @ApiModelProperty(value="商品id")
-    private String productsId;
+    private Integer productsId;
 
     /**
      * sku图片

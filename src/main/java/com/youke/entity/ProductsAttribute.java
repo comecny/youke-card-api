@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
@@ -37,6 +38,7 @@ public class ProductsAttribute implements Serializable {
     /**
      * 创建时间
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(value = "create_time")
     @ApiModelProperty(value="创建时间")
     private String createTime;
@@ -44,6 +46,7 @@ public class ProductsAttribute implements Serializable {
     /**
      * 最后修改时间
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(value = "update_time")
     @ApiModelProperty(value="最后修改时间")
     private String updateTime;
@@ -51,6 +54,7 @@ public class ProductsAttribute implements Serializable {
     /**
      * 表状态
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(value = "status")
     @ApiModelProperty(value="表状态")
     private String status;

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class InsertProductsVO implements Serializable {
+public class ReqProductsVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
