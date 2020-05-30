@@ -131,4 +131,17 @@ public class ProductsServiceImpl  implements ProductsService {
         ResqProductsVO  map = productsMapper.getProductsById(productsId);
         return map;
     }
+
+    @Override
+    public ProductsStocks getProductsStocks(ReqOptionsVO optionsVO) {
+        List<ProductsOptions> optionsList = optionsVO.getOptionsList();
+        List<ProductsOptionsRelStocks> productsOptionsRelStocks = new ArrayList<>();
+        for (ProductsOptions productsOptions : optionsList) {
+            ProductsOptionsRelStocks optionsRelStocks = new ProductsOptionsRelStocks();
+            optionsRelStocks.setOptionId(productsOptions.getId());
+            productsOptionsRelStocks.add(optionsRelStocks);
+        }
+
+       return stocksMapper.getProductsStocks(productsOptionsRelStocks);
+    }
 }

@@ -5,16 +5,25 @@
     <!--@mbg.generated-->
     <!--@Table products_stocks-->
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="products_id" jdbcType="VARCHAR" property="productsId" />
-    <result column="picture" jdbcType="VARCHAR" property="picture" />
-    <result column="price" jdbcType="DECIMAL" property="price" />
-    <result column="stocks" jdbcType="VARCHAR" property="stocks" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
-    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="products_id"  property="productsId" />
+    <result column="picture"  property="picture" />
+    <result column="price"  property="price" />
+    <result column="stocks"  property="stocks" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, products_id, picture, price, stocks, create_time, update_time, `status`
+    id, products_id, picture, price, stocks
   </sql>
+
+  <select id="getProductsStocks" resultType="com.youke.entity.ProductsStocks">
+    SELECT
+       <include refid="Base_Column_List" />
+    FROM products_options_rel_stocks AS a
+    LEFT JOIN products_stocks AS b ON a.stock_id=b.id
+    WHERE
+        a.option_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+          #{item.optionId,jdbcType=INTEGER}
+        </foreach>
+  </select>
 </mapper>

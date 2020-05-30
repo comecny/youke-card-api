@@ -14,4 +14,5 @@
     <!--@mbg.generated-->
     id, attribute_name, create_time, update_time, `status`
   </sql>
+
 </mapper>
