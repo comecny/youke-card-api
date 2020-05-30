@@ -8,6 +8,7 @@
     <result column="products_id" jdbcType="INTEGER" property="productsId" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="major_type" jdbcType="INTEGER" property="majorType" />
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">

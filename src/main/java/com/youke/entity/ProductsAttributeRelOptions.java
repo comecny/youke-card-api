@@ -20,6 +20,12 @@ public class ProductsAttributeRelOptions implements Serializable {
     @ApiModelProperty(value = "属性选项id")
     private Integer optionsId;
 
+    /**
+     * 商品id
+     */
+    @ApiModelProperty(value = "商品id")
+    private Integer productsId;
+
     private static final long serialVersionUID = 1L;
 }
 

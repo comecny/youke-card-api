@@ -48,6 +48,10 @@ public class ProductsResources implements Serializable {
     @ApiModelProperty(value="资源类型  0是图片 1是视频")
     private Integer type;
 
+
+    @TableField(value = "major_type")
+    @ApiModelProperty(value="主图标识 0是普通 1是主图")
+    private Integer majorType;
     /**
      * 创建时间
      */
@@ -64,6 +68,8 @@ public class ProductsResources implements Serializable {
     public static final String COL_URL = "url";
 
     public static final String COL_TYPE = "type";
+
+    public static final String COL_MAJOR_TYPE = "major_type";
 
     public static final String COL_CREATE_TIME = "create_time";
 }

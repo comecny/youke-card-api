@@ -21,7 +21,10 @@ public class ProductsController {
     @PostMapping("insertProducts")
     @ApiOperation("新增商品信息")
     public Result<Void> insertProducts(@RequestBody InsertProductsVO productsVO){
-       int success = productsService.insertProducts(productsVO);
-        return new Result<Void>(null, MsgCode.IINSERT_SUCCESS);
+       boolean success = productsService.insertProducts(productsVO);
+       if (success){
+           return new Result<Void>(null, MsgCode.IINSERT_SUCCESS);
+       }
+       return new Result<Void>(null,MsgCode.INSERT_FAIL);
     }
 }

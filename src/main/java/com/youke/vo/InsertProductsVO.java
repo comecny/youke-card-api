@@ -21,15 +21,10 @@ public class InsertProductsVO implements Serializable {
     /**
      *商品资源
      */
-    private List<ProductsResources> productsResourcesList;
+    private List<ProductsResources> productsResources;
 
     /**
      * 属性以及属性选项列表
      */
-    private List<AttributeListVO> attributeListVOS;
-
-    /**
-     * 库存关系
-     */
-    private List<ProductsStocks> productsStocks;
+    private List<AttributeRelOptionsVO> attributeRelOptionsVOS;
 }
