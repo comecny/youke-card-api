@@ -21,7 +21,7 @@ public class AddressController {
     @ApiOperation("新增用户地址")
     public Result<Void> insertAddress(@RequestBody Address address){
        int success = addressService.insertAddress(address);
-       if (success >0){
+        if (success >0){
            return new Result<Void>(null, MsgCode.IINSERT_SUCCESS);
        }
        return new Result<Void>(null,MsgCode.INSERT_FAIL);

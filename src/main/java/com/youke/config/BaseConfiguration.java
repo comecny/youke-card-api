@@ -44,4 +44,12 @@ public class BaseConfiguration {
     //微信小程序secret
     @Value("${wx.secret}")
     private String secret;
+
+    //微信小程序测试appid
+    @Value("${wx.dev.appid}")
+    private String devAppid;
+
+    //微信小程序测试secret
+    @Value("${wx.dev.secret}")
+    private String devSecret;
 }

@@ -40,6 +40,7 @@
     max_picture, scribe_picture, delive_place, products_status, create_time, update_time, 
     `status`
   </sql>
+
     <select id="getProductsById" resultMap="BaseResultMap">
     SELECT
         a.id AS pid,
@@ -73,4 +74,5 @@
         AND
         a.id=e.products_id
     </select>
+
 </mapper>

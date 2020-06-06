@@ -30,7 +30,8 @@ public class OpenIdController {
     @ResponseBody
     public Map getOpenId(@PathVariable("code") String code) {
         logger.info(code);
-        String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+ configuration.getAppid() +"&secret="+ configuration.getSecret()+"&js_code=" + code + "&grant_type=authorization_code";
+       // String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+ configuration.getAppid() +"&secret="+ configuration.getSecret()+"&js_code=" + code + "&grant_type=authorization_code";
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+ configuration.getDevAppid() +"&secret="+ configuration.getDevSecret()+"&js_code=" + code + "&grant_type=authorization_code";
         //获取openId
         Map map =  OpenidUtil.get(url);
         return map;
