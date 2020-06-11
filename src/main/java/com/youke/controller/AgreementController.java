@@ -20,7 +20,7 @@ public class AgreementController {
     private AgreementService agreementService;
 
     @PostMapping("insertAgreement")
-    @ApiOperation("新增协议表内容")
+    @ApiOperation(value = "新增协议表内容")
     public Result<Void> insertAgreement(@RequestBody Agreement agreement){
         agreement.setCreateTime(DateUtil.nowDate());
         boolean success = agreementService.save(agreement);
