@@ -37,7 +37,7 @@ public class ShopsController {
         return new Result<Void>(null,MsgCode.INSERT_FAIL);
     }
 
-    @GetMapping("listShopsPanging/{page}/{length}/industryId")
+    @GetMapping("listShopsPanging/{page}/{length}/{industryId}")
     @ApiOperation("小程序分页查询店铺")
     public Result<IPage<Map<String, Object>>> listShopsPanging(@PathVariable("page")Integer page ,
                                                                @PathVariable("length") Integer length,
@@ -65,6 +65,8 @@ public class ShopsController {
         }
         return new Result<Void>(null,MsgCode.FAIL);
     }
+
+
 
 
 }

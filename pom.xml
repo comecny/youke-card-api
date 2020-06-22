@@ -128,10 +128,17 @@
         </dependency>
 
         <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -157,6 +164,28 @@
             <version>4.5.12</version>
         </dependency>
     </dependencies>
+
+    <licenses>
+        <license>
+            <name>The BSD 3-Clause License</name>
+            <url>https://opensource.org/licenses/BSD-3-Clause</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url></url>
+        <connection></connection>
+        <developerConnection></developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>wxpay</name>
+            <email></email>
+            <url>https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=11_1</url>
+        </developer>
+    </developers>
 
     <build>
         <plugins>
