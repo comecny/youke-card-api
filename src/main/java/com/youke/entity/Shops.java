@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @ApiModel(value="com-youke-entity-Shops")
 @Data
@@ -123,7 +124,7 @@ public class Shops implements Serializable {
      */
     @TableField(value = "shops_score")
     @ApiModelProperty(value="店铺评分")
-    private String shopsScore;
+    private Integer shopsScore;
 
     /**
      * 权重
@@ -152,6 +153,9 @@ public class Shops implements Serializable {
     @TableField(value = "status")
     @ApiModelProperty(value="表状态")
     private String status;
+
+    @TableField(exist = false)
+    private List<Images> imagesList;
 
     private static final long serialVersionUID = 1L;
 
