@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.ShopsScoreMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.ShopsScore">
+    <!--@mbg.generated-->
+    <!--@Table shops_score-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="score_start" jdbcType="VARCHAR" property="scoreStart" />
+    <result column="score_end" jdbcType="VARCHAR" property="scoreEnd" />
+    <result column="grade_describe" jdbcType="VARCHAR" property="gradeDescribe" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, score_start, score_end, grade_describe, create_time, update_time
+  </sql>
+</mapper>

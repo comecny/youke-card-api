@@ -14,6 +14,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @ApiModel(value="com-youke-entity-ShopsFeeOrder")
 @Data
 @Builder
@@ -40,7 +42,7 @@ public class ShopsFeeOrder implements Serializable {
      */
     @TableField(value = "shops_fee_no")
     @ApiModelProperty(value="订单编号")
-    private Integer shopsFeeNo;
+    private String shopsFeeNo;
 
     /**
      * 总金额
@@ -82,18 +84,30 @@ public class ShopsFeeOrder implements Serializable {
      */
     @TableField(value = "create_time")
     @ApiModelProperty(value="创建时间")
-    private Date createTime;
+    private String createTime;
 
     /**
      * 最后修改时间
      */
     @TableField(value = "update_time")
     @ApiModelProperty(value="最后修改时间")
-    private Date updateTime;
+    private String updateTime;
+
+    @TableField(exist = false)
+    private List<ShopsRelIndustry> shopsRelIndustryList;
+
+    /**
+     * 行业名
+     */
+    @TableField(value = "industry_name_list")
+    @ApiModelProperty(value="行业名")
+    private String industryNameList;
 
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";
+
+    public static final String SHOPS_REL_INDUSTRY_LIST = "shopsRelIndustryList";
 
     public static final String COL_SHOP_ID = "shop_id";
 

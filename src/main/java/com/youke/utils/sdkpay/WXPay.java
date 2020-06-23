@@ -1,6 +1,6 @@
 package com.youke.utils.sdkpay;
 
-import com.sdkpay.WXPayConstants.SignType;
+import com.youke.utils.sdkpay.WXPayConstants.SignType;
 
 import java.util.HashMap;
 import java.util.Map;

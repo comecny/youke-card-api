@@ -12,12 +12,22 @@
     <result column="nonce_str" jdbcType="VARCHAR" property="nonceStr" />
     <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
     <result column="fee_pay_status" jdbcType="INTEGER" property="feePayStatus" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+      <result column="industry_name_list" jdbcType="VARCHAR" property="industryNameList" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, shop_id, shops_fee_no, total_price, transaction_id, nonce_str, out_trade_no, 
     fee_pay_status, create_time, update_time
   </sql>
+    <select id="listShopsFeeOrderpangingByShopsId" resultMap="BaseResultMap">
+        SELECT *
+        FROM shops_fee_order
+        WHERE
+        status="true"
+        AND
+        shop_id=#{shopsId}
+    </select>
 </mapper>

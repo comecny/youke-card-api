@@ -1,8 +1,6 @@
 package com.youke.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,6 +30,10 @@ public class ShopsRelIndustry implements Serializable {
     @TableField(value = "shops_id")
     @ApiModelProperty(value="店铺id")
     private Integer shopsId;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="行业名字")
+    private String industryName;
 
     private static final long serialVersionUID = 1L;
 

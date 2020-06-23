@@ -22,7 +22,15 @@
     <result column="weight" jdbcType="DOUBLE" property="weight" />
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
+
+    <association property="user" javaType="com.youke.entity.User" >
+      <id column="uid" property="id" />
+      <result column="avatar_url" property="avatarUrl" />
+    </association>
+
+    <collection property="industryList" javaType="java.util.ArrayList" ofType="com.youke.entity.Industry">
+      <result column="industry_name" property="industryName" />
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
@@ -30,4 +38,16 @@
     business_license, introduction, iamges, auth_status, member_fee_status, shops_status, 
     shops_score, weight, create_time, update_time, `status`
   </sql>
+  <select id="listShopsPaging" resultMap="BaseResultMap">
+    SELECT a.* ,b.avatar_url,b.id AS uid,d.industry_name
+    FROM shops AS a
+    LEFT JOIN user AS b ON a.user_id=b.id
+    LEFT JOIN shops_rel_industry AS c ON a.id=c.shops_id
+    LEFT JOIN industry AS d ON c.industry_id=d.id
+    WHERE
+    a.status="0"
+      <if test="industryId != null" >
+        AND industry_id=#{industryId,jdbcType=INTEGER}
+      </if>
+  </select>
 </mapper>

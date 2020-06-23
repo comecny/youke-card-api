@@ -1,6 +1,6 @@
 package com.youke.utils.sdkpay;
 
-import com.sdkpay.WXPayConstants.SignType;
+import com.youke.utils.sdkpay.WXPayConstants.SignType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;

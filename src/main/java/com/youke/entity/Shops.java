@@ -157,6 +157,12 @@ public class Shops implements Serializable {
     @TableField(exist = false)
     private List<Images> imagesList;
 
+    @TableField(exist = false)
+    private List<Industry> industryList;
+
+    @TableField(exist = false)
+    private User user;
+
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";

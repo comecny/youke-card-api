@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.youke.dao.ShopsRelIndustryMapper">
+
+    <insert id="insertBatchShopsRelIndustry" parameterType="java.util.List" useGeneratedKeys="true">
+
+    INSERT INTO
+    shops_rel_industry
+    (industry_id,shops_id)
+    VALUE
+        <foreach collection="list" item="item" index="item" separator=",">
+            (#{item.industryId,jdbcType=INTEGER},#{item.shopsId,jdbcType=INTEGER})
+        </foreach>
+
+    </insert>
+</mapper>

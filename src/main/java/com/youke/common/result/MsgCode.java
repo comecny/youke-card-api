@@ -9,6 +9,7 @@ public enum MsgCode {
     DELETE_SUCCESS(true,"删除成功"),
     SUBMIT_SUCEESS(true,"提交成功"),
     LOGIN_SUCCESS(true, "登录成功"),
+    CREATE_SUCCESS(true,"创建成功"),
     REGISTER_SUCCESS(true,"注册成功"),
     SUBMIT_SUCCESS(true,"提交成功"),
     USER_EXIST(true,"用户已存在"),
@@ -29,6 +30,7 @@ public enum MsgCode {
     PRINT_COUNT_FIAL(false,"请输入账号"),
     PASSWORD_NULL_FIAL(false,"密码不能为空"),
     DEFUALT_FAIL(false, "请选择默认地址类型"),
+    CREATE_FAIL(true,"创建失败"),
     SUBMIT_FAIL(false,"提交失败"),
     EXPORT_FAIL(false,"导出失败"),
     FAIL(false, "失败");

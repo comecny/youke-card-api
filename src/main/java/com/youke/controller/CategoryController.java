@@ -5,6 +5,7 @@ import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.entity.Industry;
 import com.youke.entity.ProductsAttribute;
+import com.youke.entity.ShopsScore;
 import com.youke.service.IndustryService;
 import com.youke.service.ProductsAttributeService;
 import com.youke.utils.DateUtil;
@@ -71,4 +72,6 @@ public class CategoryController {
     public Result<Void> insertAttribute(){
         return new Result<Void>(null,MsgCode.IINSERT_SUCCESS);
     }
+
+
 }

@@ -7,6 +7,8 @@ import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.entity.Images;
 import com.youke.entity.Shops;
+import com.youke.entity.ShopsFeeOrder;
+import com.youke.service.ShopsFeeOrderService;
 import com.youke.service.ShopsService;
 import com.youke.utils.DateUtil;
 import io.swagger.annotations.ApiOperation;
@@ -37,12 +39,12 @@ public class ShopsController {
         return new Result<Void>(null,MsgCode.INSERT_FAIL);
     }
 
-    @GetMapping("listShopsPanging/{page}/{length}/{industryId}")
+    @GetMapping(value = "listShopsPanging")
     @ApiOperation("小程序分页查询店铺")
-    public Result<IPage<Map<String, Object>>> listShopsPanging(@PathVariable("page")Integer page ,
-                                                               @PathVariable("length") Integer length,
-                                                               @PathVariable("industryId")Integer industryId){
-        return null;
+    public Result<IPage<Shops>> listShopsPaging(Integer page,Integer length,Integer industryId){
+
+       IPage<Shops> listShopsPaging = shopsService.listShopsPaging(page,length,industryId);
+        return new Result<IPage<Shops>>(listShopsPaging,MsgCode.FIND_SUCCESS);
     }
 
     @GetMapping("getShopsById/{id}")
@@ -66,7 +68,24 @@ public class ShopsController {
         return new Result<Void>(null,MsgCode.FAIL);
     }
 
+    @PostMapping("createShopsOrder")
+    @ApiOperation("创建商铺会费订单")
+    public Result<Void> createShopsOrder(@RequestBody ShopsFeeOrder shopsFeeOrder){
+       int success = shopsService.createShopsOrder(shopsFeeOrder);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.CREATE_SUCCESS);
+       }
+       return new Result<Void>(null,MsgCode.CREATE_FAIL);
+    }
 
+    @GetMapping("listShopsFeeOrderpangingByShopsId/{page}/{length}/{shopsId}")
+    @ApiOperation("查询会费订单列表")
+    public Result<IPage<ShopsFeeOrder>> listShopsFeeOrderpagingByShopsId(@PathVariable("page") Integer page,
+                                                                               @PathVariable("length") Integer length,
+                                                                               @PathVariable("shopsId") Integer shopsId){
 
+        IPage<ShopsFeeOrder> paging = shopsService.listShopsFeeOrderpangingByShopsId(page,length,shopsId);
+        return new Result<IPage<ShopsFeeOrder>>(paging,MsgCode.FIND_SUCCESS);
+    }
 
 }
