@@ -40,7 +40,7 @@ public class ScoreController {
         return new Result<Void>(null,MsgCode.UPDATE_FAIL);
     }
 
-    @DeleteMapping("deleteScoreBYId")
+    @DeleteMapping("deleteScoreById")
     @ApiOperation("删除评分信息")
     public Result<Void> deleteScoreBYId(Integer id){
         boolean success = shopsScoreService.removeById(id);
