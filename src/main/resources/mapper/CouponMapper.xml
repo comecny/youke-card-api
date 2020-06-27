@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.CouponMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.Coupon">
+    <!--@mbg.generated-->
+    <!--@Table coupon-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="use_start" jdbcType="VARCHAR" property="useStart" />
+    <result column="use_end" jdbcType="VARCHAR" property="useEnd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, start_time, end_time, `number`, create_time, use_start, use_end
+  </sql>
+</mapper>

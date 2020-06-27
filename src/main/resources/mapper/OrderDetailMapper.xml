@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.OrderDetailMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.OrderDetail">
+    <!--@mbg.generated-->
+    <!--@Table order_detail-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="products_id" jdbcType="INTEGER" property="productsId" />
+    <result column="stocks_id" jdbcType="INTEGER" property="stocksId" />
+    <result column="products_name" jdbcType="VARCHAR" property="productsName" />
+    <result column="major_picture" jdbcType="VARCHAR" property="majorPicture" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="attr_opt_content" jdbcType="VARCHAR" property="attrOptContent" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="OTHER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_id, products_id, stocks_id, products_name, major_picture, `number`, price, 
+    attr_opt_content, create_time, update_time, `status`
+  </sql>
+</mapper>

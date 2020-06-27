@@ -32,11 +32,9 @@ public class BackgroundLoginController {
         }catch (IncorrectCredentialsException e){
             //错误返回消息
             return new Result(null, MsgCode.PASSWORD_FAIL);
-        }catch (LockedAccountException e){
+        }catch (LockedAccountException | UnknownAccountException e){
             return new Result(null,MsgCode.COUNT_FIAL);
-        }catch (UnknownAccountException e){
-            return new Result(null,MsgCode.COUNT_FIAL);
-        }catch (AuthenticationException e){
+        } catch (AuthenticationException e){
             return new Result(null,MsgCode.PASSWORD_NULL_FIAL);
         }
     }

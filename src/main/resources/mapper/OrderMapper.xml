@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.youke.entity.Order">
+    <!--@mbg.generated-->
+    <!--@Table `order`-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_no" jdbcType="INTEGER" property="orderNo" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="nonce_str" jdbcType="VARCHAR" property="nonceStr" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
+    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+    <result column="coupon_id" jdbcType="INTEGER" property="couponId" />
+    <result column="coupon_flag" jdbcType="INTEGER" property="couponFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="OTHER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_no, user_id, total_price, transaction_id, nonce_str, out_trade_no, pay_status, 
+    order_status, coupon_id, coupon_flag, create_time, update_time, `status`
+  </sql>
+</mapper>

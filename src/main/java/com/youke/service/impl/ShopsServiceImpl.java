@@ -4,28 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.core.JsonParser;
 import com.youke.common.exception.db.InsertException;
-import com.youke.dao.ShopsFeeOrderMapper;
-import com.youke.dao.ShopsRelIndustryMapper;
-import com.youke.entity.Images;
-import com.youke.entity.ShopsFeeOrder;
-import com.youke.entity.ShopsRelIndustry;
+import com.youke.dao.*;
+import com.youke.entity.*;
 import com.youke.utils.DateUtil;
 import com.youke.utils.OrderUUIDtil;
-import com.youke.vo.BackgroudUserVO;
+import com.youke.vo.ReqShopsScoreVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.youke.entity.Shops;
-import com.youke.dao.ShopsMapper;
 import com.youke.service.ShopsService;
 import org.springframework.transaction.annotation.Transactional;
-import springfox.documentation.spring.web.json.Json;
 
 @Service
 public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements ShopsService{
@@ -38,6 +29,15 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
 
     @Autowired
     private ShopsMapper shopsMapper;
+
+    @Autowired
+    private ShopsScoreMapper shopsScoreMapper;
+
+    @Autowired
+    private ShopsFansMapper shopsFansMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     @Transactional
@@ -73,5 +73,62 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
     public IPage<Shops> listShopsPaging(Integer page, Integer length, Integer industryId) {
        IPage<Shops> ipage = shopsMapper.listShopsPaging(new Page<Object>(page,length),industryId);
        return ipage;
+    }
+
+    @Override
+    @Transactional
+    public int createShopsScore(ReqShopsScoreVO shopsScoreVO) {
+
+        //1.先判断判断当前用户是否已经评分过了.如果评分过，则不能进行评分
+        QueryWrapper<ShopsFans> shopsFansQueryWrapper =
+                new QueryWrapper<ShopsFans>()
+                        .setEntity(ShopsFans.builder().shopsId(shopsScoreVO.getShopsId()).userId(shopsScoreVO.getUserId()).build());
+        Integer count = shopsFansMapper.selectCount(shopsFansQueryWrapper);
+        if (count > 0) return -10;
+
+        //2.先将评分表数据取到
+        List<ShopsScore> shopsScores = shopsScoreMapper.selectList(null);
+
+        //3.取到当前店铺的信息，从里面取到分数
+        Shops shops = shopsMapper.selectById(shopsScoreVO.getShopsId());
+        Integer shopsScore = shops.getShopsScore();
+        Integer score = shopsScoreVO.getScore();
+
+        //4.得到一个新的分数
+       Integer newScore = score+shopsScore;
+
+       //5.将新的分数插入到店铺信息当中
+        int shopsSuccess = shopsMapper.updateById(Shops
+                        .builder()
+                        .id(shopsScoreVO.getShopsId())
+                        .shopsScore(newScore)
+                        .updateTime(DateUtil.nowDate())
+                        .build());
+
+        //6.将此条信息加入粉丝表
+        int success = shopsFansMapper.insert(ShopsFans
+                .builder().userId(shopsScoreVO.getUserId())
+                .shopsId(shopsScoreVO.getShopsId())
+                .createTime(DateUtil.nowDate())
+                .fansScore(shopsScoreVO.getScore())
+                .build());
+
+        return success;
+    }
+
+    @Override
+    public IPage<Shops> listBackShops(Integer page, Integer length) {
+        Page<Shops> shopsPage =
+                shopsMapper.selectPage(new Page<Shops>(page, length), new QueryWrapper<Shops>().setEntity(Shops.builder().status("0").build()));
+
+        return shopsPage;
+    }
+
+    @Override
+    public Shops getBackShopsInfo(Integer shopsId, Integer userId) {
+        Shops shops = shopsMapper.selectById(shopsId);
+        User user = userMapper.getUser(userId);
+        shops.setUser(user);
+        return shops;
     }
 }

@@ -9,6 +9,7 @@ import com.youke.entity.Shops;
 import com.youke.entity.ShopsFeeOrder;
 import com.youke.service.ShopsService;
 import com.youke.utils.DateUtil;
+import com.youke.vo.ReqShopsScoreVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -85,4 +86,42 @@ public class ShopsController {
         return new Result<IPage<ShopsFeeOrder>>(paging,MsgCode.FIND_SUCCESS);
     }
 
+    @PostMapping("createShopsScore")
+    @ApiOperation("创建店铺评分")
+    public Result<Void> createShopsScore(@RequestBody ReqShopsScoreVO shopsScoreVO){
+       int success = shopsService.createShopsScore(shopsScoreVO);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.IINSERT_SUCCESS);
+       }
+       if (success == -10){
+           return new Result<Void>(null,MsgCode.SCORE_FAIL);
+       }
+       return new Result<Void>(null,MsgCode.INSERT_FAIL);
+    }
+
+    @GetMapping("listBackShops")
+    @ApiOperation("后台分页查询店铺列表")
+    public Result<IPage<Shops>> listBackShops(Integer page,Integer length){
+
+       IPage<Shops> paging = shopsService.listBackShops(page,length);
+       return new Result<IPage<Shops>>(paging,MsgCode.FIND_SUCCESS);
+    }
+
+    @GetMapping("getBackShopsInfo")
+    @ApiOperation("后台查询店铺详情")
+    public Result<Shops> getBackShopsInfo(Integer shopsId, Integer userId){
+        Shops shops = shopsService.getBackShopsInfo(shopsId,userId);
+        return new Result<Shops>(shops,MsgCode.FIND_SUCCESS);
+    }
+
+    @PutMapping("updateBackShops")
+    @ApiOperation("后台修改店铺信息")
+    public Result<Void> updateBackShops(@RequestBody Shops shops){
+        shops.setUpdateTime(DateUtil.nowDate());
+        boolean success = shopsService.updateById(shops);
+        if (success){
+            return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
+        }
+        return new Result<Void>(null,MsgCode.UPDATE_FAIL);
+    }
 }
