@@ -7,6 +7,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+<<<<<<< Updated upstream
+=======
+import java.math.BigDecimal;
+import java.util.Date;
+
+import io.swagger.annotations.ApiOperation;
+>>>>>>> Stashed changes
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -63,14 +70,21 @@ public class Coupon implements Serializable {
      */
     @TableField(value = "use_start")
     @ApiModelProperty(value="开始金额区间")
-    private String useStart;
+    private BigDecimal useStart;
 
     /**
      * 结束金额区间
      */
     @TableField(value = "use_end")
     @ApiModelProperty(value="结束金额区间")
-    private String useEnd;
+    private BigDecimal useEnd;
+
+    /**
+     * 删除标志
+     */
+    @TableField(value = "status")
+    @ApiModelProperty(value = "删除状态")
+    private String status;
 
     private static final long serialVersionUID = 1L;
 

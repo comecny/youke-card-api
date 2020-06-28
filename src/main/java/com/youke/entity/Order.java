@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +35,7 @@ public class Order implements Serializable {
      */
     @TableField(value = "order_no")
     @ApiModelProperty(value="订单号")
-    private Integer orderNo;
+    private String orderNo;
 
     /**
      * 用户id
@@ -118,6 +120,20 @@ public class Order implements Serializable {
     @TableField(value = "status")
     @ApiModelProperty(value="表状态")
     private String status;
+
+    /**
+     * 使用优惠券后总金额
+     */
+    @TableField(value = "coupon_price")
+    @ApiModelProperty(value="订单总金额")
+    private BigDecimal couponprice;
+
+    /**
+     * 订单详情
+     */
+    @TableField(value = "orderDetails",exist = false)
+    @ApiModelProperty(value="订单详情")
+    private List<OrderDetail> orderDetails;
 
     private static final long serialVersionUID = 1L;
 

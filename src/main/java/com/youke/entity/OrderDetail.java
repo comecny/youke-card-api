@@ -33,7 +33,7 @@ public class OrderDetail implements Serializable {
      */
     @TableField(value = "order_id")
     @ApiModelProperty(value="订单id")
-    private Integer orderId;
+    private String orderId;
 
     /**
      * 商品id

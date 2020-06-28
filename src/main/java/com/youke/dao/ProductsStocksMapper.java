@@ -13,4 +13,5 @@ import java.util.List;
 public interface ProductsStocksMapper extends BaseMapper<ProductsStocks> {
 
     ProductsStocks getProductsStocks(List<ProductsOptionsRelStocks> productsOptionsRelStocks);
+
 }
