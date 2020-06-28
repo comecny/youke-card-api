@@ -54,21 +54,21 @@ public class CashOut implements Serializable {
      */
     @TableField(value = "create_time")
     @ApiModelProperty(value="创建时间")
-    private Date createTime;
+    private String createTime;
 
     /**
      * 最后更新时间
      */
     @TableField(value = "update_time")
     @ApiModelProperty(value="最后更新时间")
-    private Date updateTime;
+    private String updateTime;
 
     /**
      * 表状态
      */
     @TableField(value = "status")
     @ApiModelProperty(value="表状态")
-    private Object status;
+    private String status;
 
     private static final long serialVersionUID = 1L;
 
