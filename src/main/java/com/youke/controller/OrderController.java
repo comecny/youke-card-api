@@ -5,6 +5,8 @@ import com.youke.common.result.Result;
 import com.youke.entity.Order;
 import com.youke.service.OrderService;
 import com.youke.utils.DateUtil;
+import com.youke.vo.ReqOptionsVO;
+import com.youke.vo.ReqOrderVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,14 +20,16 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    private com.youke.vo.ReqOrderVo reqOrderVo;
+
     @PostMapping("insertOrder")
     @ApiOperation("新增订单")
-    public Result<Void> insertOrder(@RequestBody Order order){
+    public Result<ReqOrderVo> insertOrder(@RequestBody Order order){
         order.setCreateTime(DateUtil.nowDate());
-        boolean success = orderService.save(order);
-        if (success){
-            return new Result<Void>(null, MsgCode.IINSERT_SUCCESS);
-        }
-        return new Result<Void>(null,MsgCode.INSERT_FAIL);
+        ReqOrderVo success = orderService.insert(order);
+        if (success != null){
+            return new Result<ReqOrderVo>(success,MsgCode.IINSERT_SUCCESS);
+        }else
+        return new Result<ReqOrderVo>(null,MsgCode.INSERT_FAIL);
     }
 }
