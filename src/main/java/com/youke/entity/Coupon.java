@@ -7,13 +7,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
-<<<<<<< Updated upstream
-=======
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 import io.swagger.annotations.ApiOperation;
->>>>>>> Stashed changes
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

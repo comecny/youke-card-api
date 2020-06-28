@@ -27,5 +27,4 @@ public class CashOutController {
        }
       return new Result<Void>(null,MsgCode.INSERT_FAIL);
     }
-
 }
