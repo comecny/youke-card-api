@@ -1,7 +1,9 @@
 package com.youke.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
+import com.youke.entity.Products;
 import com.youke.entity.ProductsStocks;
 import com.youke.service.ProductsService;
 import com.youke.vo.ReqOptionsVO;
@@ -52,5 +54,22 @@ public class ProductsController {
     public Result<ProductsStocks> getProductsStocks(@RequestBody ReqOptionsVO optionsVO){
         ProductsStocks info = productsService.getProductsStocks(optionsVO);
         return new Result<ProductsStocks>(info,MsgCode.FIND_SUCCESS);
+    }
+
+    @GetMapping("listProductsPaging")
+    @ApiOperation("分页查询商品列表")
+    public Result<IPage<Products>> listProductsPaging(Integer page,Integer length,Integer shopsId){
+       IPage<Products> productsIPage = productsService.listProductsPaging(page,length,shopsId);
+        return new Result<IPage<Products>>(productsIPage,MsgCode.FIND_SUCCESS);
+    }
+
+    @DeleteMapping("deleteProducts")
+    @ApiOperation("删除商品")
+    public Result<Void> deleteProducts(@RequestBody Products products){
+      int success = productsService.deleteProducts(products);
+      if (success > 0){
+          return new Result<Void>(null,MsgCode.DELETE_SUCCESS);
+      }
+      return new Result<Void>(null,MsgCode.DELETE_FAIL);
     }
 }

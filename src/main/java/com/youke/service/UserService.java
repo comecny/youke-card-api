@@ -1,13 +1,11 @@
 package com.youke.service;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.entity.User;
-
-import java.util.List;
 
 public interface UserService  {
 
-    List<User> findAll();
+    IPage<User> findAll(Integer page, Integer length, String phone,String nickName);
 
     int insertUser(User user);
 
@@ -18,4 +16,6 @@ public interface UserService  {
     int register(User user);
 
     User wxLogin(User user);
+
+    User getUserById(Integer userId);
 }

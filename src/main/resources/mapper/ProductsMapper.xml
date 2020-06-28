@@ -75,4 +75,11 @@
         a.id=e.products_id
     </select>
 
+    <select id="listProductsPaging" resultType="com.youke.entity.Products">
+    SELECT * FROM products WHERE status="0"
+    <if test="shopsId != null" >
+        AND shops_id=#{shopsId,jdbcType=INTEGER}
+    </if>
+    </select>
+
 </mapper>

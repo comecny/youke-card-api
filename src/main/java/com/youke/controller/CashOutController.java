@@ -1,10 +1,9 @@
 package com.youke.controller;
 
-
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
-import com.youke.entity.Refund;
-import com.youke.service.RefundService;
+import com.youke.entity.CashOut;
+import com.youke.service.CashOutService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("refund")
-public class RefundController {
+@RequestMapping("cashOut")
+public class CashOutController {
 
     @Autowired
-    private RefundService refundService;
+    private CashOutService cashOutService;
 
-    @PostMapping("insertRefund")
-    @ApiOperation("提交退款")
-    public Result<Void> insertRefund(@RequestBody Refund refund){
-       int success = refundService.insertRefund(refund);
+    @PostMapping("insertCashOut")
+    @ApiOperation("新增提现申请")
+    public Result<Void> insertCashOut(@RequestBody CashOut cashOut){
+       int success = cashOutService.insertCashOut(cashOut);
        if (success > 0){
            return new Result<Void>(null, MsgCode.IINSERT_SUCCESS);
        }
-       return new Result<Void>(null,MsgCode.INSERT_FAIL);
+      return new Result<Void>(null,MsgCode.INSERT_FAIL);
     }
 
 }

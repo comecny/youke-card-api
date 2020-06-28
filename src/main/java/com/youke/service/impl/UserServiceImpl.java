@@ -1,8 +1,12 @@
 package com.youke.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.common.exception.db.UpdateException;
+import com.youke.dao.AddressMapper;
 import com.youke.dao.UserMapper;
+import com.youke.entity.Address;
 import com.youke.entity.User;
 import com.youke.service.UserService;
 import com.youke.utils.JWTUtils;
@@ -19,9 +23,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private AddressMapper addressMapper;
+
     @Override
-    public List<User> findAll() {
-       return userMapper.findAll();
+    public IPage<User> findAll(Integer page, Integer length, String phone, String nickName) {
+       return userMapper.findAll(new Page<User>(page,length),null,phone,nickName);
     }
 
     @Override
@@ -78,5 +85,13 @@ public class UserServiceImpl implements UserService {
         String token = JWTUtils.jwtSign(String.valueOf(userInfo.getId()), userInfo.getPhone());
         userInfo.setToken(token);
         return userInfo;
+    }
+
+    @Override
+    public User getUserById(Integer userId) {
+        User user = userMapper.selectById(userId);
+        List<Address> addressList = addressMapper.selectList(new QueryWrapper<Address>().setEntity(Address.builder().userId(userId).build()));
+        user.setAddressList(addressList);
+        return user;
     }
 }

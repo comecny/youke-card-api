@@ -17,6 +17,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youke.entity.Order;
 import com.youke.dao.OrderMapper;
 import com.youke.service.OrderService;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService{
     @Autowired
@@ -26,7 +28,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     private ProductsStocksMapper productsStocksMapper;
 
     @Override
-    public boolean insert(Order order) {
+    @Transactional
+    public synchronized boolean insert(Order order) {
         //生成订单id
         order.setOrderNo(OrderUUIDtil.getOrderIdByUUId());
         System.out.println(order.getOrderNo());

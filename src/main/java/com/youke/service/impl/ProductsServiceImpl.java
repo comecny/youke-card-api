@@ -1,5 +1,8 @@
 package com.youke.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.common.exception.db.InsertException;
 import com.youke.dao.ProductsOptionsMapper;
 import com.youke.dao.ProductsRelAttributeMapper;
@@ -143,5 +146,17 @@ public class ProductsServiceImpl  implements ProductsService {
         }
 
        return stocksMapper.getProductsStocks(productsOptionsRelStocks);
+    }
+
+    @Override
+    public IPage<Products> listProductsPaging(Integer page, Integer length, Integer shopsId) {
+      return   productsMapper.listProductsPaging(new Page<Products>(page,length),
+                null,shopsId);
+    }
+
+    @Override
+    public int deleteProducts(Products products) {
+        Products info = Products.builder().status("1").id(products.getId()).build();
+       return productsMapper.updateById(info);
     }
 }

@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
+import java.util.List;
+
 import java.io.Serializable;
 
 @Data
@@ -36,5 +38,8 @@ public class User implements Serializable {
     private Integer backUserSign;
     @TableField(exist = false)
     private String token;
+    @TableField(exist = false)
+    private List<Address> addressList;
+
 
 }

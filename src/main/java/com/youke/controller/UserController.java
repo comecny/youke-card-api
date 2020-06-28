@@ -1,5 +1,6 @@
 package com.youke.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.entity.User;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
@@ -20,9 +21,9 @@ public class UserController {
 
     @GetMapping("listUser")
     @ApiOperation("查询用户列表")
-    public Result<List<User>> listUser(){
-       List<User> list = userService.findAll();
-        return new Result<List<User>>(list, MsgCode.FIND_SUCCESS);
+    public Result<IPage<User>> listUser(Integer page, Integer length,String phone,String nickName){
+        IPage<User> list = userService.findAll(page,length,phone,nickName);
+        return new Result<IPage<User>>(list, MsgCode.FIND_SUCCESS);
     }
 
     @GetMapping("getUser/{id}")
@@ -32,6 +33,12 @@ public class UserController {
        return new Result<User>(user,MsgCode.FIND_SUCCESS);
     }
 
+    @GetMapping("getUserById/{userId}")
+    @ApiOperation("后台使用的查询用户信息")
+    public Result<User> getUserById(@PathVariable("userId")Integer userId){
+      User user = userService.getUserById(userId);
+      return new Result<User>(user,MsgCode.FIND_SUCCESS);
+    }
     @PostMapping("insetUser")
     @ApiOperation("新增用户")
     public Result<Void> insertUser(@RequestBody User user){
@@ -77,4 +84,5 @@ public class UserController {
       }
       return new Result<User>(null,MsgCode.LOGIN_FAIL);
     }
+
 }
