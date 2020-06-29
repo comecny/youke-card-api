@@ -20,6 +20,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youke.entity.Order;
 import com.youke.dao.OrderMapper;
 import com.youke.service.OrderService;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
     @Autowired
@@ -34,6 +36,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     private OrderDetailMapper orderDetailMapper;
 
     @Override
+    @Transactional
     public ReqOrderVo insert(Order order) {
         //生成订单id
         order.setOrderNo(OrderUUIDtil.getOrderIdByUUId());
@@ -50,6 +53,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 order.setCouponFlag(1);
             }
         }
+        orderMapper.insert(order);
         //根据订单id去生成订单详情的数据
         for (OrderDetail orderDetail : order.getOrderDetails()
         ) {
@@ -67,10 +71,30 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             productsStocksMapper.updateById(productsStocks);
             orderDetailMapper.insert(orderDetail);
         }
-        orderMapper.insert(order);
         ReqOrderVo reqOrderVo = new ReqOrderVo();
         reqOrderVo.setOrderId(order.getId());
         return reqOrderVo;
 
+    }
+
+    @Override
+    public Order getOrderById(Integer id) {
+        Order order = orderMapper.selectById(id);
+        List<OrderDetail> list = orderDetailMapper.selectList(new QueryWrapper<OrderDetail>()
+                .setEntity(OrderDetail.builder().orderId(id).build()));
+        order.setOrderDetails(list);
+        return order;
+    }
+
+    @Override
+    public List<Order> getOrderByUserId(Integer userId) {
+        List<Order> list =orderMapper.selectList(new QueryWrapper<Order>()
+                .setEntity(Order.builder().userId(userId).build()));
+        for (Order listOrder:list) {
+            List<OrderDetail> listOrderDetail = orderDetailMapper.selectList(new QueryWrapper<OrderDetail>()
+                    .setEntity(OrderDetail.builder().orderId(listOrder.getId()).build()));
+            listOrder.setOrderDetails(listOrderDetail);
+        }
+        return list;
     }
 }
