@@ -13,7 +13,9 @@ public enum MsgCode {
     REGISTER_SUCCESS(true,"注册成功"),
     SUBMIT_SUCCESS(true,"提交成功"),
     USER_EXIST(true,"用户已存在"),
+    HANDLE_SUCCESS(true,"处理成功"),
 
+    HANDLE_FAIL(false,"处理失败"),
     SCORE_FAIL(false,"该用户不可重复评分"),
     LOGIN_FAIL(false,"用户或密码错误"),
     REGISTER_FAIL(false,"注册失败"),

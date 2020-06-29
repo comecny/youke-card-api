@@ -13,7 +13,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@ApiModel(value="com-youke-entity-ProductsEvaluate")
+@ApiModel(value = "com-youke-entity-ProductsEvaluate")
 @Data
 @Builder
 @AllArgsConstructor
@@ -24,77 +24,77 @@ public class ProductsEvaluate implements Serializable {
      * 商品评论表id
      */
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value="商品评论表id")
+    @ApiModelProperty(value = "商品评论表id")
     private Integer id;
 
     /**
      * 商铺id
      */
     @TableField(value = "shops_id")
-    @ApiModelProperty(value="商铺id")
+    @ApiModelProperty(value = "商铺id")
     private Integer shopsId;
 
     /**
      * 商品id
      */
     @TableField(value = "products_id")
-    @ApiModelProperty(value="商品id")
+    @ApiModelProperty(value = "商品id")
     private Integer productsId;
 
     /**
      * 用户id
      */
     @TableField(value = "user_id")
-    @ApiModelProperty(value="用户id")
+    @ApiModelProperty(value = "用户id")
     private Integer userId;
 
     /**
      * 审核人id
      */
     @TableField(value = "backgroud_user_id")
-    @ApiModelProperty(value="审核人id")
+    @ApiModelProperty(value = "审核人id")
     private Integer backgroudUserId;
 
     /**
      * 评价内容
      */
     @TableField(value = "content")
-    @ApiModelProperty(value="评价内容")
+    @ApiModelProperty(value = "评价内容")
     private String content;
 
     /**
      * 审核 0是为通过，1是为通过
      */
     @TableField(value = "pass")
-    @ApiModelProperty(value="审核 0是为通过，1是为通过")
+    @ApiModelProperty(value = "审核 0是为通过，1是为通过")
     private Integer pass;
 
     /**
      * 审核类型 0是人工 1是自动
      */
     @TableField(value = "pass_type")
-    @ApiModelProperty(value="审核类型 0是人工 1是自动")
+    @ApiModelProperty(value = "审核类型 0是人工 1是自动")
     private Integer passType;
 
     /**
      * 创建时间
      */
     @TableField(value = "create_time")
-    @ApiModelProperty(value="创建时间")
+    @ApiModelProperty(value = "创建时间")
     private String createTime;
 
     /**
      * 最后更新时间
      */
     @TableField(value = "update_time")
-    @ApiModelProperty(value="最后更新时间")
+    @ApiModelProperty(value = "最后更新时间")
     private String updateTime;
 
     /**
      * 表状态
      */
     @TableField(value = "status")
-    @ApiModelProperty(value="表状态")
+    @ApiModelProperty(value = "表状态")
     private String status;
 
     private static final long serialVersionUID = 1L;
@@ -120,4 +120,8 @@ public class ProductsEvaluate implements Serializable {
     public static final String COL_UPDATE_TIME = "update_time";
 
     public static final String COL_STATUS = "status";
+
+    public static ProductsEvaluateBuilder builder() {
+        return new ProductsEvaluateBuilder();
+    }
 }

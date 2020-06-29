@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.common.exception.db.InsertException;
-import com.youke.dao.ProductsOptionsMapper;
-import com.youke.dao.ProductsRelAttributeMapper;
-import com.youke.dao.ProductsStocksMapper;
+import com.youke.dao.*;
 import com.youke.entity.*;
 
 import com.youke.service.ProductsAttributeRelOptionsService;
@@ -23,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.youke.dao.ProductsMapper;
 import com.youke.service.ProductsService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +49,9 @@ public class ProductsServiceImpl  implements ProductsService {
 
     @Autowired
     private ProductsOptionsRelStocksService optionsRelStocksService;
+
+    @Autowired
+    private ProductsEvaluateMapper evaluateMapper;
 
     @Override
     @Transactional
@@ -158,5 +158,11 @@ public class ProductsServiceImpl  implements ProductsService {
     public int deleteProducts(Products products) {
         Products info = Products.builder().status("1").id(products.getId()).build();
        return productsMapper.updateById(info);
+    }
+
+    @Override
+    public int insertProductsEvaluate(ProductsEvaluate productsEvaluate) {
+        productsEvaluate.setCreateTime(DateUtil.nowDate());
+       return evaluateMapper.insert(productsEvaluate);
     }
 }

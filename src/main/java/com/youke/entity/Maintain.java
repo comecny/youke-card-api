@@ -7,26 +7,34 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
+
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@ApiModel(value="com-youke-entity-CashOut")
+@ApiModel(value="com-youke-entity-Maintain")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "cash_out")
-public class CashOut implements Serializable {
+@TableName(value = "maintain")
+public class Maintain implements Serializable {
     /**
-     * 提现表
+     * 用户维权表
      */
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value="提现表")
+    @ApiModelProperty(value="用户维权表")
     private Integer id;
+
+    /**
+     * 商铺id
+     */
+    @TableField(value = "shorps_id")
+    @ApiModelProperty(value="商铺id")
+    private Integer shorpsId;
 
     /**
      * 用户id
@@ -36,18 +44,25 @@ public class CashOut implements Serializable {
     private Integer userId;
 
     /**
-     * 提现金额
+     * 原因
      */
-    @TableField(value = "price")
-    @ApiModelProperty(value="提现金额")
-    private BigDecimal price;
+    @TableField(value = "reson")
+    @ApiModelProperty(value="原因")
+    private String reson;
 
     /**
-     * 提现状态，0是提现中 1是完成
+     * 维权处理状态
      */
-    @TableField(value = "cash_out_status")
-    @ApiModelProperty(value="提现状态，0是提现中 1是完成")
-    private Integer cashOutStatus;
+    @TableField(value = "maintain_status")
+    @ApiModelProperty(value="维权处理状态")
+    private Integer maintainStatus;
+
+    /**
+     * 维权处理结果
+     */
+    @TableField(value = "end")
+    @ApiModelProperty(value="维权处理结果")
+    private String end;
 
     /**
      * 创建时间
@@ -70,19 +85,39 @@ public class CashOut implements Serializable {
     @ApiModelProperty(value="表状态")
     private String status;
 
+    @TableField(value = "orderId")
+    @ApiModelProperty(value="订单id")
+    private Integer orderId;
+
+    @TableField(value = "remarks")
+    @ApiModelProperty(value="备注")
+    private String remarks;
+
     @TableField(exist = false)
-    @ApiModelProperty(value="审核类型，0为通过，1为未通过")
-    private String type;
+    private String orderNO;
+
+    @TableField(exist = false)
+    private String phone;
+
+    @TableField(exist = false)
+    private String nickName;
+
+    @TableField(exist = false)
+    private String shopsName;
 
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";
 
+    public static final String COL_SHORPS_ID = "shorps_id";
+
     public static final String COL_USER_ID = "user_id";
 
-    public static final String COL_PRICE = "price";
+    public static final String COL_RESON = "reson";
 
-    public static final String COL_CASH_OUT_STATUS = "cash_out_status";
+    public static final String COL_MAINTAIN_STATUS = "maintain_status";
+
+    public static final String COL_END = "end";
 
     public static final String COL_CREATE_TIME = "create_time";
 

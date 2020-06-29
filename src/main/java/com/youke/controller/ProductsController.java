@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.entity.Products;
+import com.youke.entity.ProductsEvaluate;
 import com.youke.entity.ProductsStocks;
 import com.youke.service.ProductsService;
 import com.youke.vo.ReqOptionsVO;
@@ -71,5 +72,15 @@ public class ProductsController {
           return new Result<Void>(null,MsgCode.DELETE_SUCCESS);
       }
       return new Result<Void>(null,MsgCode.DELETE_FAIL);
+    }
+
+    @PostMapping("insertProductsEvaluate")
+    @ApiOperation("新增商品评价")
+    public Result<Void> insertProductsEvaluate(@RequestBody ProductsEvaluate productsEvaluate){
+       int success = productsService.insertProductsEvaluate(productsEvaluate);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.IINSERT_SUCCESS);
+       }
+       return new Result<Void>(null,MsgCode.INSERT_FAIL);
     }
 }
