@@ -20,12 +20,11 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    private com.youke.vo.ReqOrderVo reqOrderVo;
-
     @PostMapping("insertOrder")
     @ApiOperation("新增订单")
     public Result<ReqOrderVo> insertOrder(@RequestBody Order order){
         order.setCreateTime(DateUtil.nowDate());
+        order.setUpdateTime(DateUtil.nowDate());
         ReqOrderVo success = orderService.insert(order);
         if (success != null){
             return new Result<ReqOrderVo>(success,MsgCode.IINSERT_SUCCESS);

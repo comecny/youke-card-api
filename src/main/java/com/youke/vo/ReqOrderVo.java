@@ -15,6 +15,6 @@ public class ReqOrderVo {
      * 订单主体
      */
     @ApiModelProperty(value="订单编号")
-    private String orderNo;
+    private Integer orderId;
 
 }

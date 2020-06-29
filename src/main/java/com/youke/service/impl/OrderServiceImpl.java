@@ -37,7 +37,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public ReqOrderVo insert(Order order) {
         //生成订单id
         order.setOrderNo(OrderUUIDtil.getOrderIdByUUId());
-        System.out.println(order.getOrderNo());
         //先查找有无合适的优惠券
         List<Coupon> list = couponService.list(new QueryWrapper<Coupon>()
                 .setEntity(Coupon.builder().status("0").build()));
@@ -54,8 +53,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         //根据订单id去生成订单详情的数据
         for (OrderDetail orderDetail : order.getOrderDetails()
         ) {
-            orderDetail.setOrderId(order.getOrderNo());
+            orderDetail.setOrderId(order.getId());
             orderDetail.setCreateTime(DateUtil.nowDate());
+            orderDetail.setUpdateTime(DateUtil.nowDate());
             ProductsStocks productsStocks = productsStocksMapper.selectById(orderDetail.getStocksId());
             Integer num = Integer.valueOf(productsStocks.getStocks());
             productsStocks.setStocks((String.valueOf(num - orderDetail.getNumber())));
@@ -63,12 +63,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 return null;
             }
             productsStocks.setCreateTime(DateUtil.nowDate());
+            productsStocks.setUpdateTime(DateUtil.nowDate());
             productsStocksMapper.updateById(productsStocks);
             orderDetailMapper.insert(orderDetail);
         }
         orderMapper.insert(order);
-        ReqOrderVo reqOrderVo = null;
-        reqOrderVo.setOrderNo(order.getOrderNo());
+        ReqOrderVo reqOrderVo = new ReqOrderVo();
+        reqOrderVo.setOrderId(order.getId());
         return reqOrderVo;
 
     }
