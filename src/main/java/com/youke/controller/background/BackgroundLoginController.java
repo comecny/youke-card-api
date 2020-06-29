@@ -3,16 +3,22 @@ package com.youke.controller.background;
 import com.youke.entity.BackgroundLogin;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
+import com.youke.entity.Shops;
+import com.youke.service.ShopsService;
 import com.youke.vo.BackgroudUserVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("background")
 public class BackgroundLoginController {
+
+    @Autowired
+    private ShopsService shopsService;
 
     @PostMapping("login")
     @ApiOperation("后台管理系统登录")
@@ -27,6 +33,8 @@ public class BackgroundLoginController {
             UsernamePasswordToken token = new UsernamePasswordToken(username,password);
             subject.login(token);
             BackgroudUserVO userInfo =(BackgroudUserVO) SecurityUtils.getSubject().getPrincipal();
+            Shops shops = shopsService.getById(userInfo.getUserId());
+            userInfo.setShops(shops);
             userInfo.setBcakgroudUserPassword(null);
             return new Result(userInfo, MsgCode.LOGIN_SUCCESS);
         }catch (IncorrectCredentialsException e){
