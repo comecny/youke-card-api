@@ -1,6 +1,7 @@
 package com.youke.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.entity.Industry;
@@ -69,8 +70,32 @@ public class CategoryController {
 
     @PostMapping("insertAttribute")
     @ApiOperation("新增属性")
-    public Result<Void> insertAttribute(){
+    public Result<Void> insertAttribute(@RequestBody ProductsAttribute attribute){
+        attribute.setCreateTime(DateUtil.nowDate());
+        attributeService.save(attribute);
         return new Result<Void>(null,MsgCode.IINSERT_SUCCESS);
+    }
+
+    @PutMapping("updateAttribute")
+    @ApiOperation("修改属性")
+    public Result<Void> updateAttribute(@RequestBody ProductsAttribute attribute){
+        attribute.setUpdateTime(DateUtil.nowDate());
+        attributeService.updateById(attribute);
+        return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
+    }
+
+    @GetMapping("getAttribute")
+    @ApiOperation("查询属性")
+    public Result<IPage<ProductsAttribute>> getAttribute(Integer page, Integer length){
+       IPage<ProductsAttribute> iPage = attributeService.getAttribute(page,length);
+       return new Result<IPage<ProductsAttribute>>(iPage,MsgCode.FIND_SUCCESS);
+    }
+
+    @DeleteMapping("deleteAttribure")
+    @ApiOperation("删除属性")
+    public Result<Void> deleteAttribure(Integer id){
+        boolean b = attributeService.removeById(id);
+        return new Result<Void>(null,MsgCode.DELETE_SUCCESS);
     }
 
 

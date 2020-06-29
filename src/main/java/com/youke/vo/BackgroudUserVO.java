@@ -1,6 +1,7 @@
 package com.youke.vo;
 
 import com.youke.entity.BackgroudPermissions;
+import com.youke.entity.Shops;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -66,4 +67,6 @@ public class BackgroudUserVO implements Serializable {
      * 权限列表
      */
     private List<BackgroudPermissions> listPermissins;
+
+    private Shops shops;
 }
