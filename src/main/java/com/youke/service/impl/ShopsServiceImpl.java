@@ -65,6 +65,8 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
             String industryNameList = record.getIndustryNameList();
             List<ShopsRelIndustry> shopsRelIndustries = JSON.parseArray(industryNameList, ShopsRelIndustry.class);
             record.setShopsRelIndustryList(shopsRelIndustries);
+            Shops shops = shopsMapper.selectById(record.getShopId());
+            record.setShops(shops);
         }
         return mapIPage;
     }

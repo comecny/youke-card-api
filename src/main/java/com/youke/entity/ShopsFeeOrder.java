@@ -96,6 +96,9 @@ public class ShopsFeeOrder implements Serializable {
     @TableField(exist = false)
     private List<ShopsRelIndustry> shopsRelIndustryList;
 
+    @TableField(exist = false)
+    private Shops shops;
+
     /**
      * 行业名
      */
