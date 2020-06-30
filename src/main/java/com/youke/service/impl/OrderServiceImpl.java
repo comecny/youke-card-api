@@ -29,6 +29,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Autowired
     private ProductsStocksMapper productsStocksMapper;
+
     @Autowired
     private OrderMapper orderMapper;
 

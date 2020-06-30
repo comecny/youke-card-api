@@ -131,7 +131,7 @@ public class Order implements Serializable {
     /**
      * 订单详情
      */
-    @TableField(value = "orderDetails",exist = false)
+    @TableField(exist = false)
     @ApiModelProperty(value="订单详情")
     private List<OrderDetail> orderDetails;
 
