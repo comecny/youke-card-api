@@ -42,6 +42,8 @@ public class User implements Serializable {
     private List<Address> addressList;
     @TableField(exist = false)
     private String createTime;
+    @TableField(exist = false)
+    private String status;
 
 
 }
