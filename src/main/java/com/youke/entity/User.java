@@ -40,6 +40,8 @@ public class User implements Serializable {
     private String token;
     @TableField(exist = false)
     private List<Address> addressList;
+    @TableField(exist = false)
+    private String createTime;
 
 
 }

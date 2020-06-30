@@ -17,6 +17,7 @@
         <result column="unionid" property="unionid" />
         <result column="balance" property="balance" />
         <result column="back_user_sign" property="backUserSign" />
+        <result column="create_time" property="createTime" />
     </resultMap>
 
     <select id="findAll" resultMap="UserResultMap" parameterType="Map">
