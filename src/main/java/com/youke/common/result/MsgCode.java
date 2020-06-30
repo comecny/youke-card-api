@@ -12,7 +12,7 @@ public enum MsgCode {
     CREATE_SUCCESS(true,"创建成功"),
     REGISTER_SUCCESS(true,"注册成功"),
     SUBMIT_SUCCESS(true,"提交成功"),
-    USER_EXIST(true,"用户已存在"),
+    USER_EXIST(false,"用户已存在"),
     HANDLE_SUCCESS(true,"处理成功"),
 
     HANDLE_FAIL(false,"处理失败"),
