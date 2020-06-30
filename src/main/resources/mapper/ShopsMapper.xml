@@ -52,4 +52,13 @@
         AND industry_id=#{industryId,jdbcType=INTEGER}
       </if>
   </select>
+
+    <select id="listIndustry" resultType="com.youke.entity.Industry">
+    SELECT b.*
+    FROM
+    shops_rel_industry AS a
+    LEFT JOIN industry AS b ON a.industry_id=b.id
+    WHERE
+    shops_id=#{id,jdbcType=INTEGER}
+    </select>
 </mapper>

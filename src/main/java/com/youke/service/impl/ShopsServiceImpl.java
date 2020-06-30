@@ -120,7 +120,16 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
     public IPage<Shops> listBackShops(Integer page, Integer length) {
         Page<Shops> shopsPage =
                 shopsMapper.selectPage(new Page<Shops>(page, length), new QueryWrapper<Shops>().setEntity(Shops.builder().status("0").build()));
-
+        List<Shops> records = shopsPage.getRecords();
+        for (Shops record : records) {
+            User user = userMapper.getUser(record.getUserId());
+            String avatarUrl = user.getAvatarUrl();
+            record.setLogo(avatarUrl);
+           List<Industry> list = shopsMapper.listIndustry(record.getId());
+            String s = JSON.toJSONString(list);
+            record.setIndustrys(s);
+            record.setIndustryList(list);
+        }
         return shopsPage;
     }
 
@@ -129,6 +138,10 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
         Shops shops = shopsMapper.selectById(shopsId);
         User user = userMapper.getUser(userId);
         shops.setUser(user);
+        List<Industry> list = shopsMapper.listIndustry(shopsId);
+        shops.setIndustryList(list);
+        String s = JSON.toJSONString(list);
+        shops.setIndustrys(s);
         return shops;
     }
 }

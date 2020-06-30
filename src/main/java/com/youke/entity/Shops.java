@@ -155,10 +155,17 @@ public class Shops implements Serializable {
     private String status;
 
     @TableField(exist = false)
+    @ApiModelProperty(value="logo")
+    private String logo;
+
+    @TableField(exist = false)
     private List<Images> imagesList;
 
     @TableField(exist = false)
     private List<Industry> industryList;
+
+    @TableField(exist = false)
+    private String industrys;
 
     @TableField(exist = false)
     private User user;
