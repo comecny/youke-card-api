@@ -76,11 +76,11 @@ public class ShopsController {
        return new Result<Void>(null,MsgCode.CREATE_FAIL);
     }
 
-    @GetMapping("listShopsFeeOrderpangingByShopsId/{page}/{length}/{shopsId}")
+    @GetMapping("listShopsFeeOrderpangingByShopsId")
     @ApiOperation("查询会费订单列表")
-    public Result<IPage<ShopsFeeOrder>> listShopsFeeOrderpagingByShopsId(@PathVariable("page") Integer page,
-                                                                               @PathVariable("length") Integer length,
-                                                                               @PathVariable("shopsId") Integer shopsId){
+    public Result<IPage<ShopsFeeOrder>> listShopsFeeOrderpagingByShopsId(Integer page,
+                                                                         Integer length,
+                                                                         Integer shopsId){
 
         IPage<ShopsFeeOrder> paging = shopsService.listShopsFeeOrderpangingByShopsId(page,length,shopsId);
         return new Result<IPage<ShopsFeeOrder>>(paging,MsgCode.FIND_SUCCESS);

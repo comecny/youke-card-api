@@ -27,7 +27,9 @@
         FROM shops_fee_order
         WHERE
         status="true"
+        <if test="shopsId != null" >
         AND
         shop_id=#{shopsId}
+        </if>
     </select>
 </mapper>
