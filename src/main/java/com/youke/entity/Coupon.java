@@ -84,6 +84,10 @@ public class Coupon implements Serializable {
     @ApiModelProperty(value = "删除状态")
     private String status;
 
+    @TableField(value = "update_time")
+    @ApiModelProperty("更新时间")
+    private String updateTime;
+
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";
