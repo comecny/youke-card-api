@@ -123,6 +123,7 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
         Page<Shops> shopsPage =
                 shopsMapper.selectPage(new Page<Shops>(page, length), new QueryWrapper<Shops>().setEntity(Shops.builder().status("0").build()));
         List<Shops> records = shopsPage.getRecords();
+
         for (Shops record : records) {
             User user = userMapper.getUser(record.getUserId());
             String avatarUrl = user.getAvatarUrl();
