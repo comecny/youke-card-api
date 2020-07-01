@@ -9,6 +9,8 @@ import com.youke.vo.ReqProductsVO;
 import com.youke.vo.ReqStocksVO;
 import com.youke.vo.ResqProductsVO;
 
+import java.util.concurrent.ExecutionException;
+
 public interface ProductsService {
 
     boolean insertProducts(ReqProductsVO productsVO);
@@ -24,5 +26,10 @@ public interface ProductsService {
     int deleteProducts(Products products);
 
     int insertProductsEvaluate(ProductsEvaluate productsEvaluate);
+
+    ProductsEvaluate getProductsEcaluetre(Integer shopsId, Integer ecaluetreId,Integer productsId,Integer userId)
+            throws InterruptedException, ExecutionException;
+
+    int examineEcaluetre(ProductsEvaluate productsEvaluate);
 
 }

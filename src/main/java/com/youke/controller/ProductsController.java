@@ -15,6 +15,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 
 @RestController
 @RequestMapping("products")
@@ -82,5 +84,24 @@ public class ProductsController {
            return new Result<Void>(null,MsgCode.IINSERT_SUCCESS);
        }
        return new Result<Void>(null,MsgCode.INSERT_FAIL);
+    }
+
+    @GetMapping("getProductsEcaluetre")
+    @ApiOperation("查询商品评论详情")
+    public Result<ProductsEvaluate> getProductsEcaluetre(Integer shopsId,Integer ecaluetreId,
+                                                         Integer productsId,Integer userId) throws ExecutionException,
+            InterruptedException {
+       ProductsEvaluate info = productsService.getProductsEcaluetre(shopsId,ecaluetreId,productsId,userId);
+       return new Result<ProductsEvaluate>(info,MsgCode.FIND_SUCCESS);
+    }
+
+    @PostMapping("examineEcaluetre")
+    @ApiOperation("审核评论")
+    public Result<Void> examineEcaluetre(@RequestBody ProductsEvaluate productsEvaluate){
+       int success = productsService.examineEcaluetre(productsEvaluate);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.SUCCESS);
+       }
+       return new Result<Void>(null,MsgCode.FAIL);
     }
 }

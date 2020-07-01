@@ -97,6 +97,15 @@ public class ProductsEvaluate implements Serializable {
     @ApiModelProperty(value = "表状态")
     private String status;
 
+    @TableField(exist = false)
+    private Shops shops;
+
+    @TableField(exist = false)
+    private Products products;
+
+    @TableField(exist = false)
+    private User user;
+
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";

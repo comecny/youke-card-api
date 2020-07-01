@@ -1,6 +1,6 @@
 package com.youke.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.common.exception.db.InsertException;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.*;
 
 import com.youke.service.ProductsService;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +52,12 @@ public class ProductsServiceImpl  implements ProductsService {
 
     @Autowired
     private ProductsEvaluateMapper evaluateMapper;
+
+    @Autowired
+    private ShopsMapper shopsMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     @Transactional
@@ -164,5 +170,73 @@ public class ProductsServiceImpl  implements ProductsService {
     public int insertProductsEvaluate(ProductsEvaluate productsEvaluate) {
         productsEvaluate.setCreateTime(DateUtil.nowDate());
        return evaluateMapper.insert(productsEvaluate);
+    }
+
+    @Override
+    public ProductsEvaluate getProductsEcaluetre(Integer shopsId, Integer ecaluetreId,Integer productsId,Integer userId)
+            throws InterruptedException,
+            ExecutionException {
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        CountDownLatch countDownLatch = new CountDownLatch(3);
+
+        Future<Shops> shopsFuture = executorService.submit(() -> {
+            try {
+                Shops shops = shopsMapper.selectById(shopsId);
+                logger.info("shops:" + shops);
+                return shops;
+            } finally {
+                countDownLatch.countDown();
+            }
+
+        });
+
+        Future<ProductsEvaluate> ProductsEvaluateFuture = executorService.submit(() -> {
+            try {
+                ProductsEvaluate productsEvaluate = evaluateMapper.selectById(ecaluetreId);
+                logger.info("productsEvaluate:" + productsEvaluate);
+                return productsEvaluate;
+            } finally {
+                countDownLatch.countDown();
+            }
+
+        });
+
+        Future<Products> ProductsFuture  = executorService.submit(() -> {
+            try {
+
+                Products products = productsMapper.selectById(productsId);
+                logger.info("products:" + products);
+                return products;
+            } finally {
+                countDownLatch.countDown();
+            }
+
+        });
+
+        Future<User> userFuture  = executorService.submit(() -> {
+            try {
+
+                User user = userMapper.selectById(userId);
+                logger.info("user:" + user);
+                return user;
+            } finally {
+                countDownLatch.countDown();
+            }
+
+        });
+
+        countDownLatch.await();
+
+        ProductsEvaluate productsEvaluate = ProductsEvaluateFuture.get();
+        productsEvaluate.setShops(shopsFuture.get());
+        productsEvaluate.setProducts(ProductsFuture.get());
+        productsEvaluate.setUser(userFuture.get());
+        return productsEvaluate;
+    }
+
+    @Override
+    public int examineEcaluetre(ProductsEvaluate productsEvaluate) {
+        productsEvaluate.setUpdateTime(DateUtil.nowDate());
+       return evaluateMapper.updateById(productsEvaluate);
     }
 }
