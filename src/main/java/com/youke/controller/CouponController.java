@@ -46,15 +46,20 @@ public class CouponController {
         return new Result<Coupon>(info,MsgCode.FIND_SUCCESS);
     }
 
-    @PutMapping("updateConponById/{id}")
+    @PutMapping("updateConponById")
     @ApiOperation("修改优惠券信息")
     public Result<Void> updateConponById(@RequestBody Coupon coupon){
-        coupon.setCreateTime(DateUtil.nowDate());
         boolean success = couponService.updateById(coupon);
         if (success){
             return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
         }
         return new Result<Void>(null,MsgCode.UPDATE_FAIL);
+    }
+
+    @DeleteMapping("deleteConpon")
+    @ApiOperation("删除优惠卷")
+    public Result<Void> deleteConpon(@RequestBody Coupon coupon){
+        return null;
     }
 
 
