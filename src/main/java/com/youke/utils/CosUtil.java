@@ -93,7 +93,7 @@ public class CosUtil {
                 e.printStackTrace();
             } finally {
             //删除本地文件并关闭客户端
-          /*  DeleteFileUtil.delete(new File(filename).getAbsolutePath());*/
+          DeleteFileUtil.delete(new File(filename).getAbsolutePath());
             cosclient.shutdown();
             //返回文件的网络访问url
             return rtValue;
