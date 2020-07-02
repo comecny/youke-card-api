@@ -7,7 +7,9 @@ import com.youke.common.result.Result;
 import com.youke.entity.Images;
 import com.youke.entity.Shops;
 import com.youke.entity.ShopsFeeOrder;
+import com.youke.entity.User;
 import com.youke.service.ShopsService;
+import com.youke.service.UserService;
 import com.youke.utils.DateUtil;
 import com.youke.vo.ReqShopsScoreVO;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +24,9 @@ public class ShopsController {
 
     @Autowired
     private ShopsService shopsService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("insertShops")
     @ApiOperation("新增店铺")
@@ -51,6 +56,8 @@ public class ShopsController {
         Shops info = shopsService.getById(id);
         String iamges = info.getIamges();
         List<Images> images = JSON.parseArray(iamges, Images.class);
+        User user = userService.getUser(info.getUserId());
+        info.setUser(user);
         info.setImagesList(images);
         return new Result<Shops>(info,MsgCode.FIND_SUCCESS);
     }
