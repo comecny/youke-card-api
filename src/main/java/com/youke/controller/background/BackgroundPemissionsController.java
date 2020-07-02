@@ -25,7 +25,7 @@ public class BackgroundPemissionsController {
     }
 
     @PostMapping("insertPemissionsRelRole")
-    @ApiOperation("新增权限和角色的关系")
+    @ApiOperation("的关系")
     public Result<Void> insertPemissionsRelRole(@RequestBody BackgroundRoleRelPemissions roleRelPemissions){
        int success = permissionsService.insertPemissionsRelRole(roleRelPemissions);
        if (success > 0){

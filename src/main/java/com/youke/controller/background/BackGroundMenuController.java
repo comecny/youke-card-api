@@ -4,10 +4,12 @@ import com.youke.entity.BackgroundMenuRelRole;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.service.BackgroundMenuService;
+import com.youke.vo.BackgroundMenuRelRoleVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +29,10 @@ public class BackGroundMenuController {
 
     @PostMapping("insertRoleRelMenu")
     @ApiOperation("新增角色喝菜单列表关联")
-    public Result<Void> insertRoleRelMenu(@RequestBody BackgroundMenuRelRole menuRelRole){
-       int success = menuService.insertRoleRelMenu(menuRelRole);
-       if (success > 0){
+    public Result<Void> insertRoleRelMenu(@RequestBody BackgroundMenuRelRoleVO menuRelRole){
+        List<BackgroundMenuRelRole> list = menuRelRole.getList();
+        boolean success = menuService.saveBatch(list);
+        if (success){
            return new Result<Void>(null,MsgCode.IINSERT_SUCCESS);
        }
        return new Result<Void>(null,MsgCode.INSERT_FAIL);
@@ -37,7 +40,7 @@ public class BackGroundMenuController {
 
     @DeleteMapping("deleteRoleRelMenu")
     @ApiOperation("删除角色和菜单的关联")
-    public Result<Void> deleteRoleRelMenu(@RequestBody BackgroundMenuRelRole backgroundMenuRelRole){
+    public Result<Void> deleteRoleRelMenu(@RequestBody BackgroundMenuRelRoleVO backgroundMenuRelRole){
        int success = menuService.deleteRoleRelMenu(backgroundMenuRelRole);
        if (success > 0){
            return new Result<Void>(null,MsgCode.DELETE_SUCCESS);

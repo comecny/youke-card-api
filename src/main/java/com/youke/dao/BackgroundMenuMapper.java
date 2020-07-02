@@ -15,4 +15,6 @@ public interface BackgroundMenuMapper extends BaseMapper<BackgroundMenuRelRole> 
 
     List<BackgroundMenu> listMneu(@Param("roleId")Integer roleId);
 
+    int deleteBatch(List<BackgroundMenuRelRole> list);
+
 }

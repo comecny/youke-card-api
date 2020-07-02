@@ -2,10 +2,12 @@ package com.youke.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youke.dao.BackgroundMenuMapper;
 import com.youke.entity.BackgroundMenu;
 import com.youke.entity.BackgroundMenuRelRole;
 import com.youke.service.BackgroundMenuService;
+import com.youke.vo.BackgroundMenuRelRoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import java.util.Map;
 import java.util.List;
 
 @Service
-public class BackgroundMenuServiceImpl implements BackgroundMenuService {
+public class BackgroundMenuServiceImpl extends ServiceImpl<BackgroundMenuMapper, BackgroundMenuRelRole> implements BackgroundMenuService {
 
     @Autowired
     private BackgroundMenuMapper backgroundMenuMapper;
@@ -49,10 +51,9 @@ public class BackgroundMenuServiceImpl implements BackgroundMenuService {
     }
 
     @Override
-    public int deleteRoleRelMenu(BackgroundMenuRelRole backgroundMenuRelRole) {
-        Wrapper<BackgroundMenuRelRole> Wrapper =
-                new QueryWrapper<BackgroundMenuRelRole>().setEntity(backgroundMenuRelRole);
-        return backgroundMenuMapper.delete(Wrapper);
+    public int deleteRoleRelMenu(BackgroundMenuRelRoleVO backgroundMenuRelRole) {
+        List<BackgroundMenuRelRole> list = backgroundMenuRelRole.getList();
+       return backgroundMenuMapper.deleteBatch(list);
     }
 
     @Override
