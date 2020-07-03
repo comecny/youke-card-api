@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youke.dao.BackgroudLogsMapper;
 import com.youke.entity.BackgroudLogs;
 import com.youke.service.impl.BackgroudLogsService;
+
 @Service
 public class BackgroudLogsServiceImpl extends ServiceImpl<BackgroudLogsMapper, BackgroudLogs> implements BackgroudLogsService{
 

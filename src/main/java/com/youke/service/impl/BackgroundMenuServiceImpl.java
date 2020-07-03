@@ -53,7 +53,15 @@ public class BackgroundMenuServiceImpl extends ServiceImpl<BackgroundMenuMapper,
     @Override
     public int deleteRoleRelMenu(BackgroundMenuRelRoleVO backgroundMenuRelRole) {
         List<BackgroundMenuRelRole> list = backgroundMenuRelRole.getList();
-       return backgroundMenuMapper.deleteBatch(list);
+        for (BackgroundMenuRelRole menuRelRole : list) {
+            QueryWrapper<BackgroundMenuRelRole> backgroundMenuRelRoleQueryWrapper =
+                    new QueryWrapper<BackgroundMenuRelRole>()
+                    .setEntity(BackgroundMenuRelRole.builder()
+                            .bUserRoleId(menuRelRole.getBUserRoleId())
+                            .bMenuId(menuRelRole.getBMenuId()).build());
+            backgroundMenuMapper.delete(backgroundMenuRelRoleQueryWrapper);
+        }
+       return 1;
     }
 
     @Override

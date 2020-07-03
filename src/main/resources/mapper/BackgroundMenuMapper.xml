@@ -23,10 +23,14 @@
 
     <delete id="deleteBatch" parameterType="java.util.List">
           delete from backgroud_menu_rel_role
+
             where (b_menu_id, b_user_role_id) in
         <foreach collection="list" item="item" index="index" separator=","  open="(" close=")" >
-            #{item.bMenuId,jdbcType=INTEGER} , #{item.bUserRoleId,jdbcType=INTEGER}
+           (
+            #{item.bMenuId},#{item.bUserRoleId}
+            )
     </foreach>
+
     </delete>
 
 </mapper>
