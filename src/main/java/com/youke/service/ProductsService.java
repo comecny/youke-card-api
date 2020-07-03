@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.entity.Products;
 import com.youke.entity.ProductsEvaluate;
 import com.youke.entity.ProductsStocks;
-import com.youke.vo.ReqOptionsVO;
-import com.youke.vo.ReqProductsVO;
-import com.youke.vo.ReqStocksVO;
-import com.youke.vo.ResqProductsVO;
+import com.youke.vo.*;
 
 import java.util.concurrent.ExecutionException;
 
@@ -31,5 +28,7 @@ public interface ProductsService {
             throws InterruptedException, ExecutionException;
 
     int examineEcaluetre(ProductsEvaluate productsEvaluate);
+
+    IPage<BackProductsVo> listBackProductsPagingById(Integer page, Integer length, Integer shopsId);
 
 }

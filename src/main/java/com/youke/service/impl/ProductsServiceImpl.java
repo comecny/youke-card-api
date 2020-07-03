@@ -17,9 +17,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.Stream;
 
 import com.youke.service.ProductsService;
 import org.springframework.transaction.annotation.Transactional;
@@ -238,5 +240,18 @@ public class ProductsServiceImpl  implements ProductsService {
     public int examineEcaluetre(ProductsEvaluate productsEvaluate) {
         productsEvaluate.setUpdateTime(DateUtil.nowDate());
        return evaluateMapper.updateById(productsEvaluate);
+    }
+
+    @Override
+    public IPage<BackProductsVo> listBackProductsPagingById(Integer page, Integer length, Integer shopsId) {
+
+       IPage<BackProductsVo> iPage = productsMapper.listBackProductsPagingById(new Page<Object>(page,length),null,shopsId);
+        List<BackProductsVo> records = iPage.getRecords();
+        for (BackProductsVo record : records) {
+            ArrayList<ProductsStocks> productsStocks = record.getProductsStocks();
+         //  productsStocks.stream().mapToInt(ProductsStocks::getStocks).sum();
+
+        }
+        return iPage;
     }
 }

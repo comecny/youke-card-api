@@ -1,4 +1,4 @@
-package com.youke.service;
+package com.youke.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

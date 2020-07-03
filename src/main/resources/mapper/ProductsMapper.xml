@@ -82,4 +82,33 @@
     </if>
     </select>
 
+    <resultMap id="BackBaseResultMap" type="com.youke.vo.BackProductsVo" autoMapping="true">
+        <id column="pid"  property="id" />
+        <result column="products_no"  property="productsNo" />
+        <result column="shops_id" property="shopsId" />
+        <result column="products_name"  property="productsName" />
+        <result column="major_picture"  property="majorPicture" />
+        <result column="min_picture"  property="minPicture" />
+        <result column="max_picture"  property="maxPicture" />
+        <result column="products_status" property="productsStatus" />
+
+        <collection property="productsStocks" ofType="com.youke.entity.ProductsStocks" javaType="java.util.ArrayList">
+            <id column="sid"  property="id" />
+            <result column="stocks" property="stocks" />
+        </collection>
+    </resultMap>
+
+    <select id="listBackProductsPagingById" resultMap="BackBaseResultMap">
+        SELECT
+        a.*,
+        b.id AS sid,
+        b.stocks
+        FROM products AS a
+        LEFT JOIN products_stocks AS b ON a.id=b.products_id
+        WHERE
+        a.shops_id=#{shopsId,jdbcType=INTEGER}
+        AND
+        a.status="0"
+    </select>
+
 </mapper>

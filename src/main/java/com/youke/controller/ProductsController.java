@@ -7,10 +7,7 @@ import com.youke.entity.Products;
 import com.youke.entity.ProductsEvaluate;
 import com.youke.entity.ProductsStocks;
 import com.youke.service.ProductsService;
-import com.youke.vo.ReqOptionsVO;
-import com.youke.vo.ReqProductsVO;
-import com.youke.vo.ReqStocksVO;
-import com.youke.vo.ResqProductsVO;
+import com.youke.vo.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -103,5 +100,13 @@ public class ProductsController {
            return new Result<Void>(null,MsgCode.SUCCESS);
        }
        return new Result<Void>(null,MsgCode.FAIL);
+    }
+
+    @GetMapping("listBackProductsPagingById")
+    @ApiOperation("分页查询后台商品列表")
+    public Result<IPage<BackProductsVo>> listBackProductsPagingById(Integer page,Integer length,Integer shopsId){
+       IPage<BackProductsVo> iPage = productsService.listBackProductsPagingById(page,length,shopsId);
+       return new Result<IPage<BackProductsVo>>(iPage,MsgCode.FIND_SUCCESS);
+
     }
 }
