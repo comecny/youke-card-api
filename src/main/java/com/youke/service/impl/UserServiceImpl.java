@@ -62,6 +62,9 @@ public class UserServiceImpl implements UserService {
         //将用户名和密码新增进数据库，秘密加密
         String md5pwd = new Md5Hash(user.getPassword(), "youke_20200525DIchK487WCXRAQ", 2).toString();
         user.setPassword(md5pwd);
+        user.setBalance("0.00");
+        user.setBackUserSign(0);
+        user.setShopsSign("0");
         return userMapper.insertUser(user);
     }
 
@@ -80,6 +83,7 @@ public class UserServiceImpl implements UserService {
         //在通过user中的id，去讲其他用户数据落数据库
         userInfo.setPassword(null);
         user.setId(userInfo.getId());
+        user.setPassword(null);
         int isSuccess = userMapper.updateUser(user);
         if (isSuccess < 0) throw new UpdateException("登录时传入用户信息异常");
 
