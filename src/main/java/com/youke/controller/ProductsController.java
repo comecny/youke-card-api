@@ -107,6 +107,12 @@ public class ProductsController {
     public Result<IPage<BackProductsVo>> listBackProductsPagingById(Integer page,Integer length,Integer shopsId){
        IPage<BackProductsVo> iPage = productsService.listBackProductsPagingById(page,length,shopsId);
        return new Result<IPage<BackProductsVo>>(iPage,MsgCode.FIND_SUCCESS);
+    }
 
+    @GetMapping("getBackProductsById")
+    @ApiOperation("后台查询商品详情")
+    public Result<ResqProductsVO> getBackProductsById(Integer id){
+        ResqProductsVO info = productsService.getBackProductsById(id);
+        return new Result<ResqProductsVO>(info,MsgCode.FIND_SUCCESS);
     }
 }

@@ -74,6 +74,9 @@ public class CashOut implements Serializable {
     @ApiModelProperty(value="审核类型，0为通过，1为未通过")
     private String type;
 
+    @TableField(exist = false)
+    private BigDecimal blacne;
+
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";

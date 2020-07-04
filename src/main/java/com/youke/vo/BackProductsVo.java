@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Data
 public class BackProductsVo {
 
-    private Integer id;
+    private Integer ProductsId;
 
     private String productsNo;
 
@@ -26,4 +26,6 @@ public class BackProductsVo {
     private Integer productsStatus;
 
     private ArrayList<ProductsStocks> productsStocks;
+
+    private Integer totalStocks;
 }

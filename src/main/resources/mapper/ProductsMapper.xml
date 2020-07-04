@@ -83,7 +83,7 @@
     </select>
 
     <resultMap id="BackBaseResultMap" type="com.youke.vo.BackProductsVo" autoMapping="true">
-        <id column="pid"  property="id" />
+        <id column="id"  property="ProductsId" />
         <result column="products_no"  property="productsNo" />
         <result column="shops_id" property="shopsId" />
         <result column="products_name"  property="productsName" />

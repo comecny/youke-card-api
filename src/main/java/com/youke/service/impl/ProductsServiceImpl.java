@@ -1,6 +1,7 @@
 package com.youke.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.common.exception.db.InsertException;
@@ -12,14 +13,14 @@ import com.youke.service.ProductsOptionsRelStocksService;
 import com.youke.service.ProductsResourcesService;
 import com.youke.utils.DateUtil;
 import com.youke.vo.*;
+import javafx.beans.property.MapProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Stream;
 
@@ -245,13 +246,33 @@ public class ProductsServiceImpl  implements ProductsService {
     @Override
     public IPage<BackProductsVo> listBackProductsPagingById(Integer page, Integer length, Integer shopsId) {
 
-       IPage<BackProductsVo> iPage = productsMapper.listBackProductsPagingById(new Page<Object>(page,length),null,shopsId);
+        List<ReqStocksIntegerVO> listStocks = new ArrayList<ReqStocksIntegerVO>();
+        IPage<BackProductsVo> iPage = productsMapper.listBackProductsPagingById(new Page<Object>(page,length),null,shopsId);
         List<BackProductsVo> records = iPage.getRecords();
         for (BackProductsVo record : records) {
             ArrayList<ProductsStocks> productsStocks = record.getProductsStocks();
-         //  productsStocks.stream().mapToInt(ProductsStocks::getStocks).sum();
+            for (ProductsStocks productsStock : productsStocks) {
+                Integer stocks = Integer.valueOf(productsStock.getStocks());
+                ReqStocksIntegerVO reqStocksIntegerVO = new ReqStocksIntegerVO();
+                reqStocksIntegerVO.setStocks(stocks);
+                listStocks.add(reqStocksIntegerVO);
+
+            }
+
+            int sum = listStocks.stream().mapToInt(ReqStocksIntegerVO::getStocks).sum();
+            record.setTotalStocks(sum);
 
         }
         return iPage;
+    }
+
+    @Override
+    public ResqProductsVO getBackProductsById(Integer id) {
+        ResqProductsVO  map = productsMapper.getProductsById(id);
+        //查一个stocK列表
+        List<ProductsStocks> productsStocks = stocksMapper.selectList(new QueryWrapper<ProductsStocks>()
+                .setEntity(ProductsStocks.builder().productsId(id).build()));
+
+        return map;
     }
 }

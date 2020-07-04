@@ -31,4 +31,5 @@ public interface ProductsService {
 
     IPage<BackProductsVo> listBackProductsPagingById(Integer page, Integer length, Integer shopsId);
 
+    ResqProductsVO getBackProductsById(Integer id);
 }
