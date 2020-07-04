@@ -1,4 +1,4 @@
-package com.youke.service.impl;
+package com.youke.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.entity.BackgroudLogs;

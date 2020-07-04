@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youke.entity.Maintain;
 import com.youke.dao.MaintainMapper;
-import com.youke.service.impl.MaintainService;
+import com.youke.service.MaintainService;
 
 @Service
 public class MaintainServiceImpl extends ServiceImpl<MaintainMapper, Maintain> implements MaintainService{
