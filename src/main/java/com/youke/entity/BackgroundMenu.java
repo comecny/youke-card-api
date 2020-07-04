@@ -33,11 +33,13 @@ public class BackgroundMenu implements Serializable {
     /**
      *图标
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String icon;
 
     /**
      *跳转路径
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String path;
 
     /**
