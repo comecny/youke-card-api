@@ -1,5 +1,6 @@
 package com.youke.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -44,6 +45,7 @@ public class BackgroundMenu implements Serializable {
      */
     private Integer weight;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<BackgroundMenu> childList;
 
 }
