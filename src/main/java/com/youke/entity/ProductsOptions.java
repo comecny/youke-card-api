@@ -62,6 +62,9 @@ public class ProductsOptions implements Serializable {
     @ApiModelProperty(value="表状态")
     private String status;
 
+
+
+
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";

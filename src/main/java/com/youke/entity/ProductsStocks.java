@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -80,6 +80,9 @@ public class ProductsStocks implements Serializable {
     @TableField(value = "status")
     @ApiModelProperty(value="表状态")
     private String status;
+
+    @TableField(value = "status")
+    private List<ProductsOptions> optionsList;
 
     private static final long serialVersionUID = 1L;
 

@@ -26,4 +26,13 @@
           #{item.optionId,jdbcType=INTEGER}
         </foreach>
   </select>
+
+    <select id="getOptionsListBystockId" resultType="com.youke.entity.ProductsOptions">
+    SELECT b.*
+    FROM
+    products_options_rel_stocks AS a
+    LEFT JOIN products_options AS b ON a.option_id=b.id
+    WHERE
+    a.stock_id=#{stockId,jdbcType=INTEGER}
+    </select>
 </mapper>

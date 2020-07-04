@@ -85,7 +85,7 @@ public class Maintain implements Serializable {
     @ApiModelProperty(value="表状态")
     private String status;
 
-    @TableField(value = "orderId")
+    @TableField(value = "order_id")
     @ApiModelProperty(value="订单id")
     private Integer orderId;
 

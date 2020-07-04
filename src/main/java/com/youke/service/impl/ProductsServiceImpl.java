@@ -78,6 +78,7 @@ public class ProductsServiceImpl  implements ProductsService {
 
         //先增加商品主体
         products.setCreateTime(DateUtil.nowDate());
+        products.setProductsStatus(0);
         products.setMajorPicture(url);
         int isProducts = productsMapper.insert(products);
         if (isProducts <= 0) throw new InsertException("新增商品表异常");
@@ -261,7 +262,6 @@ public class ProductsServiceImpl  implements ProductsService {
 
             int sum = listStocks.stream().mapToInt(ReqStocksIntegerVO::getStocks).sum();
             record.setTotalStocks(sum);
-
         }
         return iPage;
     }
@@ -272,7 +272,13 @@ public class ProductsServiceImpl  implements ProductsService {
         //查一个stocK列表
         List<ProductsStocks> productsStocks = stocksMapper.selectList(new QueryWrapper<ProductsStocks>()
                 .setEntity(ProductsStocks.builder().productsId(id).build()));
+        for (ProductsStocks productsStock : productsStocks) {
+            Integer stocksId = productsStock.getId();
+          List<ProductsOptions>  OPtions = stocksMapper.getOptionsListBystockId(stocksId);
+          productsStock.setOptionsList(OPtions);
+        }
 
+        map.setProductsStocks(productsStocks);
         return map;
     }
 }

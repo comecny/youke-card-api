@@ -1,9 +1,11 @@
 package com.youke.vo;
 
+import com.youke.entity.ProductsStocks;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -37,7 +39,7 @@ public class ResqProductsVO implements Serializable {
 
     private ArrayList<ResqAttributesVO> attributesVOS;
 
-    private ReqStocksVO reqStocksVO;
+    private List<ProductsStocks> ProductsStocks;
 
 
 }

@@ -1,5 +1,6 @@
 package com.youke.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
@@ -47,5 +48,15 @@ public class MaintainController {
             return new Result<Void>(null,MsgCode.HANDLE_SUCCESS);
         }
         return new Result<Void>(null,MsgCode.HANDLE_FAIL);
+    }
+
+    @GetMapping("getMaintainByOderId/{userId}/{orderId}")
+    @ApiOperation("获取当前订单的维权信息")
+    public Result<Maintain> getMaintainByOderId(@PathVariable("userId") Integer userId,@PathVariable("orderId")Integer orderId){
+        QueryWrapper<Maintain> maintainQueryWrapper =
+                new QueryWrapper<Maintain>()
+                        .setEntity(Maintain.builder().orderId(orderId).userId(userId).build());
+        Maintain info = maintainService.getOne(maintainQueryWrapper);
+        return new Result<Maintain>(info,MsgCode.FIND_SUCCESS);
     }
 }
