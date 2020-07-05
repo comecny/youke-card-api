@@ -1,6 +1,7 @@
 package com.youke.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
@@ -130,5 +131,12 @@ public class ShopsController {
             return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
         }
         return new Result<Void>(null,MsgCode.UPDATE_FAIL);
+    }
+
+    @GetMapping("getshopsIByUserId/{userId}")
+    @ApiOperation("查询当前用户是否有店铺信息")
+    public Result<Shops> getshopsIByUserId(@PathVariable("userId")Integer userId){
+        Shops info = shopsService.getOne(new QueryWrapper<Shops>(Shops.builder().userId(userId).build()));
+        return new Result<Shops>(info,MsgCode.FIND_SUCCESS);
     }
 }
