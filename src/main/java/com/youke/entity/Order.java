@@ -115,6 +115,22 @@ public class Order implements Serializable {
     private String updateTime;
 
     /**
+     * 支付时间
+     */
+    @TableField(value = "pay_time")
+    @ApiModelProperty(value="支付时间")
+    private String payTime;
+
+    /**
+     * 支付时间
+     */
+    @TableField(value = "send_time")
+    @ApiModelProperty(value="发货时间")
+    private String sendTime;
+
+
+
+    /**
      * 表状态
      */
     @TableField(value = "status")
@@ -128,12 +144,23 @@ public class Order implements Serializable {
     @ApiModelProperty(value="订单总金额")
     private BigDecimal couponprice;
 
+    @TableField(value = "address_info")
+    @ApiModelProperty(value="地址详情")
+    private String addressInfo;
+
     /**
      * 订单详情
      */
     @TableField(exist = false)
     @ApiModelProperty(value="订单详情")
     private List<OrderDetail> orderDetails;
+
+    /**
+     * 商品信息
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value="商铺信息")
+    private Shops shops;
 
     private static final long serialVersionUID = 1L;
 

@@ -285,4 +285,16 @@ public class ProductsServiceImpl  implements ProductsService {
         map.setProductsStocks(productsStocks);
         return map;
     }
+
+    @Override
+    public int updateProductsStock(ProductsStocks productsStocks) {
+        productsStocks.setUpdateTime(DateUtil.nowDate());
+       return stocksMapper.updateById(productsStocks);
+    }
+
+    @Override
+    public int updateProiducts(Products products) {
+
+        return  0;
+    }
 }

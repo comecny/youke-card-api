@@ -1,5 +1,6 @@
 package com.youke.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.entity.Address;
@@ -7,6 +8,7 @@ import com.youke.entity.Order;
 import com.youke.service.OrderService;
 import com.youke.utils.DateUtil;
 import com.youke.vo.ReqOptionsVO;
+import com.youke.vo.ReqOrderStatusVO;
 import com.youke.vo.ReqOrderVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +46,30 @@ public class OrderController {
     public Result<List<Order>> getOrderByUserId(@PathVariable("userId")Integer userId){
         List<Order> info = orderService.getOrderByUserId(userId);
         return new Result<List<Order>>(info,MsgCode.FIND_SUCCESS);
+    }
+
+    @GetMapping("listOrderPagingByShopsId")
+    @ApiOperation("后台分页查询订单列表")
+    public Result<IPage<Order>> listOrderPagingByShopsId(Integer shopsId,String orderNo,Integer page,Integer length){
+       IPage<Order> iPage = orderService.listOrderPagingByShopsId(shopsId,orderNo,page,length);
+       return new Result<IPage<Order>>(iPage,MsgCode.FIND_SUCCESS);
+    }
+
+    @GetMapping("getOrderDetailById")
+    @ApiOperation("后台查订单详情")
+    public Result<Order> getOrderDetailById(Integer orderId){
+      Order order = orderService.getOrderDetailById(orderId);
+      return new Result<Order>(order,MsgCode.FIND_SUCCESS);
+    }
+
+    @PutMapping("updateOrderStatus")
+    @ApiOperation("修改订单状态")
+    public Result<Void> updateOrderStatus(@RequestBody ReqOrderStatusVO orderStatusVO){
+       int success = orderService.updateOrderStatus(orderStatusVO);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
+       }
+       return new Result<Void>(null,MsgCode.UPDATE_FAIL);
+
     }
 }

@@ -115,4 +115,25 @@ public class ProductsController {
         ResqProductsVO info = productsService.getBackProductsById(id);
         return new Result<ResqProductsVO>(info,MsgCode.FIND_SUCCESS);
     }
+
+    @PutMapping("updateProductsStock")
+    @ApiOperation("修改商品库存")
+    public Result<Void> updateProductsStock(@RequestBody ProductsStocks productsStocks){
+       int success = productsService.updateProductsStock(productsStocks);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
+       }
+       return new Result<Void>(null,MsgCode.UPDATE_FAIL);
+    }
+
+    @PutMapping("updateProiducts")
+    @ApiOperation("后台修改商品信息")
+    public Result<Void> updateProiducts(@RequestBody Products products){
+       int success = productsService.updateProiducts(products);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
+       }
+       return new Result<Void>(null,MsgCode.UPDATE_FAIL);
+    }
+
 }

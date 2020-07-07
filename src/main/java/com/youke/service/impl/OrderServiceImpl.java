@@ -1,15 +1,17 @@
 package com.youke.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.dao.OrderDetailMapper;
 import com.youke.dao.ProductsStocksMapper;
-import com.youke.entity.Coupon;
-import com.youke.entity.OrderDetail;
-import com.youke.entity.ProductsStocks;
+import com.youke.dao.ShopsMapper;
+import com.youke.entity.*;
 import com.youke.service.CouponService;
 import com.youke.service.ProductsOptionsRelStocksService;
 import com.youke.utils.DateUtil;
 import com.youke.utils.OrderUUIDtil;
+import com.youke.vo.ReqOrderStatusVO;
 import com.youke.vo.ReqOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,6 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.youke.entity.Order;
 import com.youke.dao.OrderMapper;
 import com.youke.service.OrderService;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+
+    @Autowired
+    private ShopsMapper shopsMapper;
 
     @Override
     @Transactional
@@ -97,5 +101,35 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             listOrder.setOrderDetails(listOrderDetail);
         }
         return list;
+    }
+
+    @Override
+    public IPage<Order> listOrderPagingByShopsId(Integer shopsId, String orderNo, Integer page, Integer length) {
+        Shops shops = shopsMapper.selectById(shopsId);
+        Page<Order> orderPage = new Page<>(page, length);
+        IPage<Order> iPage = orderMapper.listOrderPagingByShopsId(orderPage, shopsId, orderNo);
+        List<Order> records = iPage.getRecords();
+        for (Order record : records) {
+            record.setShops(shops);
+        }
+        return iPage;
+    }
+
+    @Override
+    public Order getOrderDetailById(Integer orderId) {
+        Order order = orderMapper.selectById(orderId);
+        List<OrderDetail> orderDetails = orderDetailMapper.selectList(new QueryWrapper<OrderDetail>(OrderDetail.builder().orderId(orderId).build()));
+        order.setOrderDetails(orderDetails);
+        return order;
+    }
+
+    @Override
+    public int updateOrderStatus(ReqOrderStatusVO orderStatusVO) {
+        Order order = new Order();
+        order.setId(orderStatusVO.getOrderId());
+        order.setOrderStatus(Integer.valueOf(orderStatusVO.getOperate()));
+        order.setSendTime(orderStatusVO.getSendTime());
+        order.setUpdateTime(DateUtil.nowDate());
+        return orderMapper.updateById(order);
     }
 }

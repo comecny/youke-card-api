@@ -32,4 +32,8 @@ public interface ProductsService {
     IPage<BackProductsVo> listBackProductsPagingById(Integer page, Integer length, Integer shopsId);
 
     ResqProductsVO getBackProductsById(Integer id);
+
+    int updateProductsStock(ProductsStocks productsStocks);
+
+    int updateProiducts(Products products);
 }
