@@ -69,6 +69,10 @@ public class Address implements Serializable {
     @ApiModelProperty(value="手机号")
     private String phone;
 
+    @TableField(value = "numbers")
+    @ApiModelProperty(value="门牌号")
+    private String numbers;
+
     /**
      * 创建时间
      */

@@ -4,7 +4,7 @@ import com.youke.entity.ProductsOptions;
 import lombok.Data;
 
 import java.io.Serializable;
-
+import  java.util.*;
 @Data
 public class AttributeRelOptionsVO implements Serializable {
 
@@ -13,4 +13,6 @@ public class AttributeRelOptionsVO implements Serializable {
     private ProductsOptions options;
 
     private Integer attributeId;
+
+    private List<ProductsOptions> optionsList;
 }

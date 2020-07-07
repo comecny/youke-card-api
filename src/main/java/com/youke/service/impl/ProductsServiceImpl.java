@@ -92,22 +92,28 @@ public class ProductsServiceImpl  implements ProductsService {
         //插入关系表
         List<ProductsAttributeRelOptions> productsAttributeRelOptions = new ArrayList<>();
         for (AttributeRelOptionsVO attributeRelOptionsVO : attributeRelOptionsVOS) {
-            ProductsOptions options = attributeRelOptionsVO.getOptions();
-            options.setCreateTime(DateUtil.nowDate());
-            options.setProductsId(productsId);
-            optionsMapper.insert(options);
-            Integer optionsId = options.getId();
-            logger.info("获取选项id：{"+optionsId+"} 已完成");
+
             Integer attributeId = attributeRelOptionsVO.getAttributeId();
-            productsRelAttribute productsRelAttribute = new productsRelAttribute();
-            productsRelAttribute.setAttributeId(attributeId);
-            productsRelAttribute.setProductsId(productsId);
-            productsRelAttributeMapper.insert(productsRelAttribute);
-            ProductsAttributeRelOptions info = new ProductsAttributeRelOptions();
-            info.setAttributeId(attributeId);
-            info.setOptionsId(optionsId);
-            info.setProductsId(productsId);
-            productsAttributeRelOptions.add(info);
+            List<ProductsOptions> optionsList = attributeRelOptionsVO.getOptionsList();
+            for (ProductsOptions productsOptions : optionsList) {
+                productsOptions.setCreateTime(DateUtil.nowDate());
+                productsOptions.setProductsId(productsId);
+                optionsMapper.insert(productsOptions);
+                Integer optionsId = productsOptions.getId();
+                logger.info("获取选项id：{"+optionsId+"} 已完成");
+
+                productsRelAttribute productsRelAttribute = new productsRelAttribute();
+                productsRelAttribute.setAttributeId(attributeId);
+                productsRelAttribute.setProductsId(productsId);
+                productsRelAttributeMapper.insert(productsRelAttribute);
+
+                ProductsAttributeRelOptions info = new ProductsAttributeRelOptions();
+                info.setAttributeId(attributeId);
+                info.setOptionsId(optionsId);
+                info.setProductsId(productsId);
+                productsAttributeRelOptions.add(info);
+
+            }
         }
         boolean success = relOptionsService.saveBatch(productsAttributeRelOptions);
         if (success) logger.info("新增关系表已完成");
