@@ -154,6 +154,10 @@ public class Shops implements Serializable {
     @ApiModelProperty(value="表状态")
     private String status;
 
+    @TableField(value = "scope_business")
+    @ApiModelProperty(value="业务员范围")
+    private String scopeBusiness;
+
     @TableField(exist = false)
     @ApiModelProperty(value="logo")
     private String logo;
