@@ -24,6 +24,7 @@ import java.util.concurrent.*;
 
 import com.youke.service.ProductsService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Service
 public class ProductsServiceImpl  implements ProductsService {
@@ -296,5 +297,23 @@ public class ProductsServiceImpl  implements ProductsService {
     public int updateProiducts(Products products) {
 
         return  0;
+    }
+
+    @Override
+    public Map<String,Object>  listProductsEcaluetre(Integer productsId) {
+        QueryWrapper<ProductsEvaluate> productsEvaluateQueryWrapper =
+                new QueryWrapper<>(ProductsEvaluate.builder().productsId(productsId).pass(2).build());
+        List<ProductsEvaluate> productsEvaluates = evaluateMapper.selectList(productsEvaluateQueryWrapper);
+        for (ProductsEvaluate productsEvaluate : productsEvaluates) {
+            Integer userId = productsEvaluate.getUserId();
+            User user = userMapper.getUser(userId);
+            productsEvaluate.setUser(user);
+        }
+        Integer count = evaluateMapper.selectCount(productsEvaluateQueryWrapper);
+        Map<String, Object> map = new HashMap<>();
+        map.put("evaluateList",productsEvaluates);
+        map.put("count",count);
+
+        return map;
     }
 }

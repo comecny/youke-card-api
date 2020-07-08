@@ -6,6 +6,8 @@ import com.youke.entity.ProductsEvaluate;
 import com.youke.entity.ProductsStocks;
 import com.youke.vo.*;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public interface ProductsService {
@@ -36,4 +38,7 @@ public interface ProductsService {
     int updateProductsStock(ProductsStocks productsStocks);
 
     int updateProiducts(Products products);
+
+    Map<String,Object> listProductsEcaluetre(Integer productsId);
+
 }

@@ -106,6 +106,9 @@ public class ProductsEvaluate implements Serializable {
     @TableField(exist = false)
     private User user;
 
+    @TableField(exist = false)
+    private Integer count;
+
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";

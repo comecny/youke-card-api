@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
+import java.util.*;
 
 
 @RestController
@@ -135,5 +136,13 @@ public class ProductsController {
        }
        return new Result<Void>(null,MsgCode.UPDATE_FAIL);
     }
+
+    @GetMapping("listProductsEcaluetre/{productsId}")
+    @ApiOperation("查询商品评论列表")
+    public Result<Map<String,Object>> listProductsEcaluetre(@PathVariable("productsId")Integer productsId){
+        Map<String,Object> map = productsService.listProductsEcaluetre(productsId);
+      return new Result<Map<String,Object>>(map,MsgCode.FIND_SUCCESS);
+    }
+
 
 }
