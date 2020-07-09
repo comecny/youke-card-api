@@ -84,6 +84,10 @@ public class OrderDetail implements Serializable {
     @ApiModelProperty(value="属性，属性选项，关联出来的json字符串")
     private String attrOptContent;
 
+    @TableField(value = "introduction")
+    @ApiModelProperty(value="商品简介")
+    private String introduction;
+
     /**
      * 创建时间
      */
