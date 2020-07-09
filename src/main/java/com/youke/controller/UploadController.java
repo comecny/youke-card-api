@@ -23,10 +23,10 @@ public class UploadController {
         Map objectObjectMap = new HashMap();
         String substring = file1.substring(file1.length() - 4, file1.length());
         if (".mp4".equals(substring)){
-            objectObjectMap.put("type",2);
+            objectObjectMap.put("type",1);
             objectObjectMap.put("file",file1);
         }else {
-            objectObjectMap.put("type",1);
+            objectObjectMap.put("type",0);
             objectObjectMap.put("file",file1);
         }
         return new Result<Map>(objectObjectMap,MsgCode.SUCCESS);
