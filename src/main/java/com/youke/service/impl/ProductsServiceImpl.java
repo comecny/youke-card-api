@@ -24,7 +24,6 @@ import java.util.concurrent.*;
 
 import com.youke.service.ProductsService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @Service
 public class ProductsServiceImpl  implements ProductsService {
@@ -290,9 +289,15 @@ public class ProductsServiceImpl  implements ProductsService {
     }
 
     @Override
-    public int updateProductsStock(ProductsStocks productsStocks) {
-        productsStocks.setUpdateTime(DateUtil.nowDate());
-       return stocksMapper.updateById(productsStocks);
+    public int updateProductsStock(ReqStocksVO reqStocksVO) {
+        List<StocksListVO> listVos = reqStocksVO.getListVos();
+        for (StocksListVO listVo : listVos) {
+            ProductsStocks productsStocks = listVo.getProductsStocks();
+            productsStocks.setUpdateTime(DateUtil.nowDate());
+            stocksMapper.updateById(productsStocks);
+        }
+
+        return 1;
     }
 
     @Override

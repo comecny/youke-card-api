@@ -35,8 +35,8 @@ public class ProductsController {
 
     @PostMapping("insertProductsStocks")
     @ApiOperation("新增商品库存")
-    public Result<Void> insertProductsStocks(@RequestBody ReqStocksVO stocksVO){
-       boolean success = productsService.insertProductsStocks(stocksVO);
+    public Result<Void> insertProductsStocks(@RequestBody ReqStocksVO reqStocksVO){
+       boolean success = productsService.insertProductsStocks(reqStocksVO);
        if (success){
            return new Result<Void>(null,MsgCode.IINSERT_SUCCESS);
        }
@@ -119,8 +119,8 @@ public class ProductsController {
 
     @PutMapping("updateProductsStock")
     @ApiOperation("修改商品库存")
-    public Result<Void> updateProductsStock(@RequestBody ProductsStocks productsStocks){
-       int success = productsService.updateProductsStock(productsStocks);
+    public Result<Void> updateProductsStock(@RequestBody ReqStocksVO reqStocksVO){
+       int success = productsService.updateProductsStock(reqStocksVO);
        if (success > 0){
            return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
        }

@@ -6,7 +6,6 @@ import com.youke.entity.ProductsEvaluate;
 import com.youke.entity.ProductsStocks;
 import com.youke.vo.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +34,7 @@ public interface ProductsService {
 
     ResqProductsVO getBackProductsById(Integer id);
 
-    int updateProductsStock(ProductsStocks productsStocks);
+    int updateProductsStock(ReqStocksVO reqStocksVO);
 
     int updateProiducts(Products products);
 

@@ -8,16 +8,17 @@ import com.youke.dao.ProductsStocksMapper;
 import com.youke.dao.ShopsMapper;
 import com.youke.entity.*;
 import com.youke.service.CouponService;
-import com.youke.service.ProductsOptionsRelStocksService;
 import com.youke.utils.DateUtil;
 import com.youke.utils.OrderUUIDtil;
 import com.youke.vo.ReqOrderStatusVO;
 import com.youke.vo.ReqOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
-import java.math.BigDecimal;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youke.dao.OrderMapper;
 import com.youke.service.OrderService;
@@ -92,15 +93,27 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     }
 
     @Override
-    public List<Order> getOrderByUserId(Integer userId) {
-        List<Order> list =orderMapper.selectList(new QueryWrapper<Order>()
-                .setEntity(Order.builder().userId(userId).build()));
-        for (Order listOrder:list) {
-            List<OrderDetail> listOrderDetail = orderDetailMapper.selectList(new QueryWrapper<OrderDetail>()
-                    .setEntity(OrderDetail.builder().orderId(listOrder.getId()).build()));
-            listOrder.setOrderDetails(listOrderDetail);
+    public List<Order> getOrderByUserId(Integer userId,Integer orderStatus ) {
+        List<Order> list = orderMapper.selectList(new QueryWrapper<Order>()
+                .setEntity(Order.builder().userId(userId).status("0").build()));
+        if (orderStatus != null){
+            List<Order> collect = list.stream().filter(u -> u.getOrderStatus().equals(orderStatus)).collect(Collectors.toList());
+            for (Order listOrder:collect) {
+                List<OrderDetail> listOrderDetail = orderDetailMapper.selectList(new QueryWrapper<OrderDetail>()
+                        .setEntity(OrderDetail.builder().orderId(listOrder.getId()).status("0").build()));
+                listOrder.setOrderDetails(listOrderDetail);
+            }
+            return collect;
+        }else {
+
+            for (Order listOrder:list) {
+                List<OrderDetail> listOrderDetail = orderDetailMapper.selectList(new QueryWrapper<OrderDetail>()
+                        .setEntity(OrderDetail.builder().orderId(listOrder.getId()).status("0").build()));
+                listOrder.setOrderDetails(listOrderDetail);
+            }
+            return list;
         }
-        return list;
+
     }
 
     @Override

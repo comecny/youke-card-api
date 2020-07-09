@@ -13,7 +13,7 @@ public interface OrderService extends IService<Order>{
 
         public Order getOrderById(Integer id);
 
-        public List<Order> getOrderByUserId(Integer userId);
+        public List<Order> getOrderByUserId(Integer userId,Integer orderStatus );
 
     IPage<Order> listOrderPagingByShopsId(Integer shopsId, String orderNo, Integer page, Integer length);
 

@@ -1,13 +1,12 @@
 package com.youke.controller;
 
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
-import com.youke.entity.Address;
 import com.youke.entity.Order;
 import com.youke.service.OrderService;
 import com.youke.utils.DateUtil;
-import com.youke.vo.ReqOptionsVO;
 import com.youke.vo.ReqOrderStatusVO;
 import com.youke.vo.ReqOrderVo;
 import io.swagger.annotations.ApiOperation;
@@ -41,10 +40,10 @@ public class OrderController {
         return new Result<Order>(info,MsgCode.FIND_SUCCESS);
     }
 
-    @GetMapping("getOrderByUserId/{userId}")
+    @GetMapping("getOrderByUserId")
     @ApiOperation("根据用户id查询订单")
-    public Result<List<Order>> getOrderByUserId(@PathVariable("userId")Integer userId){
-        List<Order> info = orderService.getOrderByUserId(userId);
+    public Result<List<Order>> getOrderByUserId(Integer userId,Integer orderStatus){
+        List<Order> info = orderService.getOrderByUserId(userId,orderStatus);
         return new Result<List<Order>>(info,MsgCode.FIND_SUCCESS);
     }
 
@@ -70,6 +69,18 @@ public class OrderController {
            return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
        }
        return new Result<Void>(null,MsgCode.UPDATE_FAIL);
+    }
+
+    @PutMapping("updateUserOrderById")
+    @ApiOperation("用户修改订单信息")//可以在创建订单时候修改地址和用于确认订单之类的
+    public Result<Void> updateUserOrderById(@RequestBody Order order){
+        order.setUpdateTime(DateUtil.nowDate());
+        boolean update = orderService.updateById(order);
+        if (update){
+            return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
+        }
+        return new Result<Void>(null,MsgCode.UPDATE_FAIL);
 
     }
+
 }
