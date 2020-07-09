@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 public interface ProductsService {
 
-    boolean insertProducts(ReqProductsVO productsVO);
+    Map<String,Object> insertProducts(ReqProductsVO productsVO);
 
     boolean insertProductsStocks(ReqStocksVO stocksVO);
 

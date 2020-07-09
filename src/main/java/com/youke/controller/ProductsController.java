@@ -25,12 +25,12 @@ public class ProductsController {
 
     @PostMapping("insertProducts")
     @ApiOperation("新增商品信息")
-    public Result<Void> insertProducts(@RequestBody ReqProductsVO productsVO){
-       boolean success = productsService.insertProducts(productsVO);
-       if (success){
-           return new Result<Void>(null, MsgCode.IINSERT_SUCCESS);
+    public Result<Map<String,Object>> insertProducts(@RequestBody ReqProductsVO productsVO){
+        Map<String,Object> map = productsService.insertProducts(productsVO);
+       if (!map.isEmpty()){
+           return new Result<Map<String,Object>>(map, MsgCode.IINSERT_SUCCESS);
        }
-       return new Result<Void>(null,MsgCode.INSERT_FAIL);
+       return new Result<Map<String,Object>>(null,MsgCode.INSERT_FAIL);
     }
 
     @PostMapping("insertProductsStocks")

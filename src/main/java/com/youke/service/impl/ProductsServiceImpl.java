@@ -63,7 +63,7 @@ public class ProductsServiceImpl  implements ProductsService {
 
     @Override
     @Transactional
-    public synchronized boolean insertProducts(ReqProductsVO productsVO) {
+    public synchronized Map<String,Object> insertProducts(ReqProductsVO productsVO) {
         Products products = productsVO.getProducts();
         List<AttributeRelOptionsVO> attributeRelOptionsVOS = productsVO.getAttributeRelOptionsVOS();
         List<ProductsResources> productsResources = productsVO.getProductsResources();
@@ -118,7 +118,9 @@ public class ProductsServiceImpl  implements ProductsService {
         }
         boolean success = relOptionsService.saveBatch(productsAttributeRelOptions);
         if (success) logger.info("新增关系表已完成");
-        return success;
+        Map<String, Object> map = new HashMap<>();
+        map.put("productsId",productsId);
+        return map;
     }
 
     @Override
