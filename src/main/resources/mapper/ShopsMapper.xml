@@ -51,6 +51,7 @@
       <if test="industryId != null" >
         AND industry_id=#{industryId,jdbcType=INTEGER}
       </if>
+    ORDER BY a.shops_score DESC
   </select>
 
     <select id="listIndustry" resultType="com.youke.entity.Industry">
