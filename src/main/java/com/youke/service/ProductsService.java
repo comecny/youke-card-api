@@ -40,4 +40,6 @@ public interface ProductsService {
 
     Map<String,Object> listProductsEcaluetre(Integer productsId);
 
+    int updateProducts(ReqProductsVO productsVO);
+
 }

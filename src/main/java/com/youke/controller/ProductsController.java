@@ -33,6 +33,18 @@ public class ProductsController {
        return new Result<Map<String,Object>>(null,MsgCode.INSERT_FAIL);
     }
 
+    @PutMapping("updateProducts")
+    @ApiOperation("修改商品信息")
+    public Result<Void> updateProducts(@RequestBody ReqProductsVO productsVO){
+       int success = productsService.updateProducts(productsVO);
+       if (success > 0){
+           return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
+       }
+       return new Result<Void>(null,MsgCode.UPDATE_FAIL);
+
+    }
+
+
     @PostMapping("insertProductsStocks")
     @ApiOperation("新增商品库存")
     public Result<Void> insertProductsStocks(@RequestBody ReqStocksVO reqStocksVO){

@@ -323,4 +323,9 @@ public class ProductsServiceImpl  implements ProductsService {
 
         return map;
     }
+
+    @Override
+    public int updateProducts(ReqProductsVO productsVO) {
+        return 0;
+    }
 }
