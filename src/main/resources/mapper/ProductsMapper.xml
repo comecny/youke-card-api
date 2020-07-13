@@ -93,7 +93,6 @@
         <result column="min_picture"  property="minPicture" />
         <result column="max_picture"  property="maxPicture" />
         <result column="products_status" property="productsStatus" />
-        <result column="content" property="content" />
         <collection property="productsStocks" ofType="com.youke.entity.ProductsStocks" javaType="java.util.ArrayList">
             <id column="sid"  property="id" />
             <result column="stocks" property="stocks" />
