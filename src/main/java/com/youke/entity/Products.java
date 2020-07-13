@@ -104,7 +104,7 @@ public class Products implements Serializable {
      */
     @TableField(value = "content")
     @ApiModelProperty(value="商品内容")
-    private Integer content;
+    private String content;
     /**
      * 创建时间
      */
