@@ -25,6 +25,8 @@ public class BackProductsVo {
 
     private Integer productsStatus;
 
+    private String content;
+
     private ArrayList<ProductsStocks> productsStocks;
 
     private Integer totalStocks;

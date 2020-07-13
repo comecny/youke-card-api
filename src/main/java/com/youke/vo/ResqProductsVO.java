@@ -35,6 +35,8 @@ public class ResqProductsVO implements Serializable {
 
     private Integer productsStatus;
 
+    private String content;
+
     private ArrayList<ResqResourcesVO> resourcesVOS;
 
     private ArrayList<ResqAttributesVO> attributesVOS;

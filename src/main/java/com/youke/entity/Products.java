@@ -100,6 +100,12 @@ public class Products implements Serializable {
     private Integer productsStatus;
 
     /**
+     * 商品内容
+     */
+    @TableField(value = "content")
+    @ApiModelProperty(value="商品内容")
+    private Integer content;
+    /**
      * 创建时间
      */
     @TableField(value = "create_time")

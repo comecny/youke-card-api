@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductsServiceImpl  implements ProductsService {
 
-    static Logger logger = LogManager.getLogger(ProductsServiceImpl.class.getName());
+    final static Logger logger = LogManager.getLogger(ProductsServiceImpl.class.getName());
 
     @Autowired
     private ProductsMapper productsMapper;

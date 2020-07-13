@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.ExecutionException;
 import java.util.*;
 
-
 @RestController
 @RequestMapping("products")
 public class ProductsController {
@@ -43,7 +42,6 @@ public class ProductsController {
        return new Result<Void>(null,MsgCode.UPDATE_FAIL);
 
     }
-
 
     @PostMapping("insertProductsStocks")
     @ApiOperation("新增商品库存")

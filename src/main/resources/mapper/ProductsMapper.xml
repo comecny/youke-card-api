@@ -14,6 +14,7 @@
     <result column="scribe_picture"  property="scribePicture" />
     <result column="delive_place"  property="delivePlace" />
     <result column="products_status" property="productsStatus" />
+      <result column="content" property="content" />
 
     <collection property="resourcesVOS" javaType="java.util.ArrayList" ofType="com.youke.vo.ResqResourcesVO">
       <id column="rid"  property="id" />
@@ -54,6 +55,7 @@
         a.scribe_picture,
         a.delive_place,
         a.products_status,
+        a.content,
         b.id AS rid,
         b.products_id,
         b.major_type,
@@ -91,7 +93,7 @@
         <result column="min_picture"  property="minPicture" />
         <result column="max_picture"  property="maxPicture" />
         <result column="products_status" property="productsStatus" />
-
+        <result column="content" property="content" />
         <collection property="productsStocks" ofType="com.youke.entity.ProductsStocks" javaType="java.util.ArrayList">
             <id column="sid"  property="id" />
             <result column="stocks" property="stocks" />
