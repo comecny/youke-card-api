@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        //在通过user中的id，去讲其他用户数据落数据库
+        //在通过user中的id，去讲其他数据数据落数据库
         userInfo.setPassword(null);
         user.setId(userInfo.getId());
         user.setPassword(null);

@@ -1,5 +1,6 @@
 package com.youke.controller.background;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youke.entity.BackgroundLogin;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
@@ -33,7 +34,8 @@ public class BackgroundLoginController {
             UsernamePasswordToken token = new UsernamePasswordToken(username,password);
             subject.login(token);
             BackgroudUserVO userInfo =(BackgroudUserVO) SecurityUtils.getSubject().getPrincipal();
-            Shops shops = shopsService.getById(userInfo.getUserId());
+            QueryWrapper<Shops> shopsQueryWrapper = new QueryWrapper<>(Shops.builder().userId(userInfo.getUserId()).build());
+            Shops shops = shopsService.getOne(shopsQueryWrapper);
             userInfo.setShops(shops);
             userInfo.setBcakgroudUserPassword(null);
             return new Result(userInfo, MsgCode.LOGIN_SUCCESS);

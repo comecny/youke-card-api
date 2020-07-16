@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youke.common.exception.db.InsertException;
+import com.youke.common.exception.db.UpdateException;
 import com.youke.dao.*;
 import com.youke.entity.*;
 
@@ -325,7 +326,65 @@ public class ProductsServiceImpl  implements ProductsService {
     }
 
     @Override
+    @Transactional
     public int updateProducts(ReqProductsVO productsVO) {
+        Products products = productsVO.getProducts();
+        List<AttributeRelOptionsVO> attributeRelOptionsVOS = productsVO.getAttributeRelOptionsVOS();
+        List<ProductsResources> productsResources = productsVO.getProductsResources();
+
+        //获得主图
+        String url = null;
+        for (ProductsResources productsResource : productsResources) {
+            if (productsResource.getType() == 0 && productsResource.getMajorType() == 1){
+                url = productsResource.getUrl();break;
+            }
+        }
+
+        //修改商品主体
+        products.setUpdateTime(DateUtil.nowDate());
+        products.setProductsStatus(0);
+        products.setMajorPicture(url);
+        int isProducts = productsMapper.updateById(products);
+        if (isProducts <= 0) throw new UpdateException("修改商品异常");
+        Integer productsId = products.getId();
+        logger.info("获取商品id：{"+productsId+"} 已经完成");
+        //增资源表
+        for (ProductsResources productsResource : productsResources) {
+            productsResource.setProductsId(productsId);
+            productsResource.setCreateTime(DateUtil.nowDate());
+        }
+        resourcesService.updateBatchById(productsResources);
+        logger.info("更新商品表完成");
+
+        //只能改
+        List<ProductsAttributeRelOptions> productsAttributeRelOptions = new ArrayList<>();
+        for (AttributeRelOptionsVO attributeRelOptionsVO : attributeRelOptionsVOS) {
+
+            Integer attributeId = attributeRelOptionsVO.getAttributeId();
+            List<ProductsOptions> optionsList = attributeRelOptionsVO.getOptionsList();
+            for (ProductsOptions productsOptions : optionsList) {
+                productsOptions.setCreateTime(DateUtil.nowDate());
+                productsOptions.setProductsId(productsId);
+                optionsMapper.insert(productsOptions);
+                Integer optionsId = productsOptions.getId();
+                logger.info("获取选项id：{"+optionsId+"} 已完成");
+
+                productsRelAttribute productsRelAttribute = new productsRelAttribute();
+                productsRelAttribute.setAttributeId(attributeId);
+                productsRelAttribute.setProductsId(productsId);
+                productsRelAttributeMapper.insert(productsRelAttribute);
+
+                ProductsAttributeRelOptions info = new ProductsAttributeRelOptions();
+                info.setAttributeId(attributeId);
+                info.setOptionsId(optionsId);
+                info.setProductsId(productsId);
+                productsAttributeRelOptions.add(info);
+
+            }
+        }
+        boolean success = relOptionsService.saveBatch(productsAttributeRelOptions);
+        if (success) logger.info("新增关系表已完成");
+
         return 0;
     }
 }
