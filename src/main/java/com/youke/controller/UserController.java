@@ -6,6 +6,7 @@ import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import okhttp3.OkHttp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;

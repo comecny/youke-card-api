@@ -1,7 +1,14 @@
 package com.youke.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.youke.dao.ShopsFeeOrderMapper;
+import com.youke.dao.ShopsMapper;
 import com.youke.entity.Order;
+import com.youke.entity.PayInfo;
+import com.youke.entity.Shops;
+import com.youke.entity.ShopsFeeOrder;
 import com.youke.service.OrderService;
+import com.youke.service.ShopsService;
 import com.youke.utils.DateUtil;
 import com.youke.utils.UUIDUtil;
 import com.youke.utils.sdkpay.WXPayUtil;
@@ -17,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -39,20 +47,26 @@ public class PayController {
     @Autowired
     private OrderService orderService;
 
-    @ApiOperation(value = "用户订单支付接口")
-    @PostMapping(value = "/payOrder")
-    public Map payOrder(HttpServletRequest request) throws Exception {
+    @Autowired
+    private ShopsFeeOrderMapper shopsFeeOrderMapper;
+
+    @Autowired
+    private ShopsMapper shopsMapper;
+
+    @ApiOperation(value = "会费支付接口")
+    @PostMapping(value = "/payFeeOrder")
+    public Map payOrder(HttpServletRequest request, @RequestBody PayInfo payInfo) throws Exception {
 
         //抽取前端传递过来的订单信息
-        String openid = null;
-        Integer orderId = null;
-        String totalPrice = null;
+        String openid = payInfo.getOpenId();
+        Integer orderId = payInfo.getOrderId();
+        String totalPrice = payInfo.getTotalPrice();
 
         //微信支付所需要的信息
         String appid = "wx969ddfb12e79f74a";
-        String mch_id = "1566132431";
-        String key = "bgrtuoHkGwefwGIOI1236804jVkfqhqf";
-        String notify_url = ""; //回调URL
+        String mch_id = "1528476701";
+        String key = "JWImIo5mbTGx5p9C8mS4KekLwL1pQNdN";
+        String notify_url = "https://cardapi.tjyouke.cn/pay/payFeeOrderResult"; //回调URL
         String TRADETYPE = "JSAPI";
         String uuid = UUIDUtil.get32UUID();
         String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
@@ -98,12 +112,17 @@ public class PayController {
             map2.put("timeStamp", time);
             String twoSign = WxPaySignatureUtils.signature(map2, key);
             map2.put("paySign", twoSign);
-            orderService.updateById(Order.builder().nonceStr(uuid).transactionId(mch_id).updateTime(DateUtil.nowDate()).id(orderId).build());
+            ShopsFeeOrder shopsFeeOrder = new ShopsFeeOrder();
+            shopsFeeOrder.setId(orderId);
+            shopsFeeOrder.setTransactionId(mch_id);
+            shopsFeeOrder.setNonceStr(uuid);
+            shopsFeeOrderMapper.updateById(shopsFeeOrder);
             logger.info("----------------------订单回调信息-----------------------");
             return map2;
     }
 
-    public String payResult(HttpServletRequest request) throws Exception {
+    @PostMapping(value = "/payFeeOrderResult")
+    public String payFeeOrderResult(HttpServletRequest request) throws Exception {
         request.setCharacterEncoding("utf-8");
         StringBuilder xmlStr = new StringBuilder();
         BufferedReader reader = request.getReader();
@@ -132,7 +151,22 @@ public class PayController {
         String payTime = (String) res.get("time_end");    //支付时间
 
         //回调成功
-        //1. 更新订单，2 加余额
+        //1. 查订单
+        QueryWrapper<ShopsFeeOrder> shopsFeeOrderQueryWrapper =
+                new QueryWrapper<ShopsFeeOrder>().setEntity(ShopsFeeOrder.builder().nonceStr(nonceStr).build());
+        ShopsFeeOrder shopsFeeOrder = shopsFeeOrderMapper.selectOne(shopsFeeOrderQueryWrapper);
+
+        //2、更订单
+        shopsFeeOrder.setUpdateTime(DateUtil.nowDate());
+        shopsFeeOrder.setFeePayStatus(1);
+        shopsFeeOrderMapper.updateById(shopsFeeOrder);
+
+        //3、更新店铺状态
+        Shops shops = new Shops();
+        shops.setUpdateTime(DateUtil.nowDate());
+        shops.setMemberFeeStatus(1);
+        shops.setShopsStatus(1);
+        shopsMapper.updateById(shops);
             return "<xml>   <return_code><![CDATA[SUCCESS]]></return_code>  <return_msg><![CDATA[OK]]></return_msg></xml>     ";
 
          //支付回调失败
@@ -142,7 +176,7 @@ public class PayController {
 
 
     @ApiOperation(value = "会费订单支付接口")
-    @PostMapping(value = "/feePayOrder")
+    @PostMapping(value = "/userPayOrder")
     public Map feePayOrder(HttpServletRequest request) throws Exception {
 
         //抽取前端传递过来的订单信息
