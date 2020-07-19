@@ -3,10 +3,8 @@ package com.youke.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youke.dao.ShopsFeeOrderMapper;
 import com.youke.dao.ShopsMapper;
-import com.youke.entity.Order;
-import com.youke.entity.PayInfo;
-import com.youke.entity.Shops;
-import com.youke.entity.ShopsFeeOrder;
+import com.youke.dao.UserMapper;
+import com.youke.entity.*;
 import com.youke.service.OrderService;
 import com.youke.service.ShopsService;
 import com.youke.utils.DateUtil;
@@ -53,6 +51,9 @@ public class PayController {
     @Autowired
     private ShopsMapper shopsMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @ApiOperation(value = "会费支付接口")
     @PostMapping(value = "/payFeeOrder")
     public Map payOrder(HttpServletRequest request, @RequestBody PayInfo payInfo) throws Exception {
@@ -83,7 +84,7 @@ public class PayController {
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         Map<String, String> map = new TreeMap<String, String>();
         map.put("appid", appid);
-        map.put("body", "鲜的FANr");
+        map.put("body", "优客会展");
         map.put("mch_id", mch_id);
         map.put("nonce_str", uuid); // 随机串
         map.put("notify_url", notify_url); // 通知URL地址
@@ -167,6 +168,7 @@ public class PayController {
         shops.setMemberFeeStatus(1);
         shops.setShopsStatus(1);
         shopsMapper.updateById(shops);
+
             return "<xml>   <return_code><![CDATA[SUCCESS]]></return_code>  <return_msg><![CDATA[OK]]></return_msg></xml>     ";
 
          //支付回调失败
@@ -175,20 +177,20 @@ public class PayController {
     }
 
 
-    @ApiOperation(value = "会费订单支付接口")
+    @ApiOperation(value = "用户订单支付接口")
     @PostMapping(value = "/userPayOrder")
-    public Map feePayOrder(HttpServletRequest request) throws Exception {
+    public Map feePayOrder(HttpServletRequest request,@RequestBody PayInfo payInfo) throws Exception {
 
         //抽取前端传递过来的订单信息
-        String openid = null;
-        Integer orderId = null;
-        String totalPrice = null;
+        String openid = payInfo.getOpenId();
+        Integer orderId = payInfo.getOrderId();
+        String totalPrice = payInfo.getTotalPrice();
 
         //微信支付所需要的信息
         String appid = "wx969ddfb12e79f74a";
-        String mch_id = "1566132431";
-        String key = "bgrtuoHkGwefwGIOI1236804jVkfqhqf";
-        String notify_url = ""; //回调URL
+        String mch_id = "1528476701";
+        String key = "JWImIo5mbTGx5p9C8mS4KekLwL1pQNdN";
+        String notify_url = "https://cardapi.tjyouke.cn/pay/userPayResult"; //回调URL
         String TRADETYPE = "JSAPI";
         String uuid = UUIDUtil.get32UUID();
         String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
@@ -205,7 +207,7 @@ public class PayController {
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         Map<String, String> map = new TreeMap<String, String>();
         map.put("appid", appid);
-        map.put("body", "鲜的FANr");
+        map.put("body", "优客会展");
         map.put("mch_id", mch_id);
         map.put("nonce_str", uuid); // 随机串
         map.put("notify_url", notify_url); // 通知URL地址
@@ -235,10 +237,17 @@ public class PayController {
         String twoSign = WxPaySignatureUtils.signature(map2, key);
         map2.put("paySign", twoSign);
         logger.info("----------------------订单回调信息-----------------------");
+        Order order = new Order();
+        order.setId(orderId);
+        order.setUpdateTime(DateUtil.nowDate());
+        order.setNonceStr(notify_url);
+        order.setTransactionId(mch_id);
+        orderService.updateById(order);
         return map2;
     }
 
-    public String feePayResult(HttpServletRequest request) throws Exception {
+    @PostMapping(value = "/userPayResult")
+    public String userPayResult(HttpServletRequest request) throws Exception {
         request.setCharacterEncoding("utf-8");
         StringBuilder xmlStr = new StringBuilder();
         BufferedReader reader = request.getReader();
@@ -267,14 +276,35 @@ public class PayController {
         String payTime = (String) res.get("time_end");    //支付时间
 
         //回调成功
-        //1. 更新订单，2 加余额
+        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        orderQueryWrapper.setEntity(Order.builder().nonceStr(nonceStr).build());
+        Order order = orderService.getOne(orderQueryWrapper);
+
+        //更订单
+        order.setUpdateTime(DateUtil.nowDate());
+        order.setPayStatus(1);
+        order.setOrderStatus(1);
+        order.setPayTime(DateUtil.nowDate());
+        orderService.updateById(order);
+
+        //通过userid查用户
+        User user = userMapper.selectById(order.getUserId());
+        String balance = user.getBalance();
+        BigDecimal totalPrice = order.getTotalPrice();
+        BigDecimal oldBalance = new BigDecimal(balance);
+        BigDecimal newBalance = totalPrice.multiply(oldBalance);
+
+        //更新金额
+        User info = new User();
+        info.setBalance(String.valueOf(newBalance));
+        info.setId(user.getId());
+        userMapper.updateById(info);
         return "<xml>   <return_code><![CDATA[SUCCESS]]></return_code>  <return_msg><![CDATA[OK]]></return_msg></xml>     ";
 
         //支付回调失败
         // return "<xml>   <return_code><![CDATA[FAIL]]></return_code>  <return_msg><![CDATA订单没有交易单号]></return_msg></xml>     ";
 
     }
-
 
 
     public static Map<String, Object> xmlString2Map(String xmlStr) throws Exception {

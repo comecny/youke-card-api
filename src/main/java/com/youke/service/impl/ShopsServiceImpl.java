@@ -12,7 +12,10 @@ import com.youke.utils.OrderUUIDtil;
 import com.youke.vo.ReqShopsScoreVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youke.service.ShopsService;
@@ -41,7 +44,7 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
 
     @Override
     @Transactional
-    public synchronized int createShopsOrder(ShopsFeeOrder shopsFeeOrder) {
+    public synchronized Map createShopsOrder(ShopsFeeOrder shopsFeeOrder) {
 
         List<ShopsRelIndustry> shopsRelIndustryList = shopsFeeOrder.getShopsRelIndustryList();
         shopsFeeOrder.setCreateTime(DateUtil.nowDate());
@@ -50,8 +53,11 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
         int success = shopsFeeOrderMapper.insert(shopsFeeOrder);
         if (success <= 0) throw new InsertException("新增商铺订单异常");
 
-        return shopsRelIndustryMapper.insertBatchShopsRelIndustry(shopsRelIndustryList);
-
+        shopsRelIndustryMapper.insertBatchShopsRelIndustry(shopsRelIndustryList);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("orderId",shopsFeeOrder.getId());
+        map.put("total",shopsFeeOrder.getTotalPrice());
+        return map;
     }
 
     @Override

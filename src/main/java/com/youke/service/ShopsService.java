@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface ShopsService extends IService<Shops>{
 
-    int createShopsOrder(ShopsFeeOrder shopsFeeOrder);
+    Map createShopsOrder(ShopsFeeOrder shopsFeeOrder);
 
     IPage<ShopsFeeOrder> listShopsFeeOrderpangingByShopsId(Integer page, Integer length, Integer shopsId);
 

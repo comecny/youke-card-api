@@ -15,9 +15,11 @@ import com.youke.utils.DateUtil;
 import com.youke.vo.ReqShopsScoreVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("shops")
@@ -76,12 +78,12 @@ public class ShopsController {
 
     @PostMapping("createShopsOrder")
     @ApiOperation("创建商铺会费订单")
-    public Result<Void> createShopsOrder(@RequestBody ShopsFeeOrder shopsFeeOrder){
-       int success = shopsService.createShopsOrder(shopsFeeOrder);
-       if (success > 0){
-           return new Result<Void>(null,MsgCode.CREATE_SUCCESS);
+    public Result<Map> createShopsOrder(@RequestBody ShopsFeeOrder shopsFeeOrder){
+        Map map = shopsService.createShopsOrder(shopsFeeOrder);
+       if (!ObjectUtils.isEmpty(map)){
+           return new Result<Map>(map,MsgCode.CREATE_SUCCESS);
        }
-       return new Result<Void>(null,MsgCode.CREATE_FAIL);
+       return new Result<Map>(null,MsgCode.CREATE_FAIL);
     }
 
     @GetMapping("listShopsFeeOrderpangingByShopsId")
