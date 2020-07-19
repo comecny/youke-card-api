@@ -8,6 +8,7 @@ import com.youke.dao.ProductsStocksMapper;
 import com.youke.dao.ShopsMapper;
 import com.youke.entity.*;
 import com.youke.service.CouponService;
+import com.youke.service.OrderDetailService;
 import com.youke.utils.DateUtil;
 import com.youke.utils.OrderUUIDtil;
 import com.youke.vo.ReqOrderStatusVO;
@@ -16,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -26,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
+
     @Autowired
     private CouponService couponService;
 
@@ -40,6 +44,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Autowired
     private ShopsMapper shopsMapper;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
 
     @Override
     @Transactional
@@ -144,5 +151,38 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         order.setSendTime(orderStatusVO.getSendTime());
         order.setUpdateTime(DateUtil.nowDate());
         return orderMapper.updateById(order);
+    }
+
+    @Override
+    @Transactional
+    public synchronized Map createOrder(Order order) {
+        order.setCreateTime(DateUtil.nowDate());
+        orderMapper.insert(order);
+        Integer orderId = order.getId();
+        List<OrderDetail> orderDetailList = order.getOrderDetails();
+        for (OrderDetail orderDetail : orderDetailList) {
+            orderDetail.setOrderId(orderId);
+            orderDetail.setCreateTime(DateUtil.nowDate());
+
+            //拿库存表id查
+            Integer newNum = 0;
+            ProductsStocks productsStocks = productsStocksMapper.selectById(orderDetail.getStocksId());
+            Integer stocks = Integer.valueOf(productsStocks.getStocks());
+            if (orderDetail.getNumber() > stocks){
+                throw new RuntimeException("库存不足");
+            }else {
+                newNum = stocks - orderDetail.getNumber();
+            }
+            ProductsStocks newstock = new ProductsStocks();
+            newstock.setUpdateTime(DateUtil.nowDate());
+            newstock.setId(orderDetail.getStocksId());
+            newstock.setStocks(newNum.toString());
+            productsStocksMapper.updateById(newstock);
+        }
+        orderDetailService.saveBatch(orderDetailList);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("orderId",orderId);
+        return map;
     }
 }

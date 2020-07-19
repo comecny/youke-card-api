@@ -7,6 +7,7 @@ import com.youke.vo.ReqOrderStatusVO;
 import com.youke.vo.ReqOrderVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService extends IService<Order>{
         public ReqOrderVo insert(Order order);
@@ -21,4 +22,5 @@ public interface OrderService extends IService<Order>{
 
     int updateOrderStatus(ReqOrderStatusVO orderStatusVO);
 
+    Map createOrder(Order order);
 }

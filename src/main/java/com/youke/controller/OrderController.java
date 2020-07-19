@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("order")
@@ -31,6 +32,13 @@ public class OrderController {
             return new Result<ReqOrderVo>(success,MsgCode.IINSERT_SUCCESS);
         }else
         return new Result<ReqOrderVo>(null,MsgCode.INSERT_FAIL);
+    }
+
+    @PostMapping("createOrder")
+    @ApiOperation("创建订单")
+    public Result<Map> createOrder(@RequestBody Order order){
+       Map map = orderService.createOrder(order);
+       return new Result<Map>(map,MsgCode.CREATE_SUCCESS);
     }
 
     @GetMapping("getOrderById/{id}")
