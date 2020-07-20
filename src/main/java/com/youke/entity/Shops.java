@@ -174,6 +174,9 @@ public class Shops implements Serializable {
     @TableField(exist = false)
     private User user;
 
+    @TableField(exist = false)
+    private String level;
+
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";

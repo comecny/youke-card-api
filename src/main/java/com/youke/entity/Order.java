@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.youke.vo.AddressinfoVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -161,6 +163,13 @@ public class Order implements Serializable {
     @TableField(exist = false)
     @ApiModelProperty(value="商铺信息")
     private Shops shops;
+
+    @TableField(value = "shops_id")
+    @ApiModelProperty(value="商铺id")
+    private Integer shopsId;
+
+    @TableField(exist = false)
+    private AddressinfoVO maps;
 
     private static final long serialVersionUID = 1L;
 

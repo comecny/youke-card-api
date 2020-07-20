@@ -42,6 +42,7 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
     @Autowired
     private UserMapper userMapper;
 
+
     @Override
     @Transactional
     public synchronized Map createShopsOrder(ShopsFeeOrder shopsFeeOrder) {
@@ -80,7 +81,22 @@ public class ShopsServiceImpl extends ServiceImpl<ShopsMapper, Shops> implements
     @Override
     public IPage<Shops> listShopsPaging(Integer page, Integer length, Integer industryId) {
        IPage<Shops> ipage = shopsMapper.listShopsPaging(new Page<Object>(page,length),industryId);
-       return ipage;
+        List<Shops> records = ipage.getRecords();
+        for (Shops record : records) {
+            Integer shopsScore = record.getShopsScore();
+            List<ShopsScore> shopsScores = shopsScoreMapper.selectList(null);
+            for (ShopsScore score : shopsScores) {
+                Integer scorestart = Integer.valueOf(score.getScoreStart());
+                if ( shopsScore <= scorestart){
+
+                    QueryWrapper<ShopsScore> shopsScoreQueryWrapper = new QueryWrapper<ShopsScore>().setEntity(ShopsScore.builder().id(score.getId()-1).build());
+                    ShopsScore finalScore = shopsScoreMapper.selectOne(shopsScoreQueryWrapper);
+                    record.setLevel(finalScore.getGradeDescribe());
+                    break;
+                }
+            }
+        }
+        return ipage;
     }
 
     @Override
