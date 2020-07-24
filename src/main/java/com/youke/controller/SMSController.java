@@ -1,6 +1,6 @@
 package com.youke.controller;
 
-
+import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
 import com.youke.utils.SMSUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +14,10 @@ import java.util.Map;
 @RequestMapping("sms")
 public class SMSController {
     @GetMapping("sendSms")
-    public Map<String,Object> sendSms(String phone){
+    public Result<Map<String,Object>> sendSms(String phone){
         String rev = SMSUtils.send(phone);
         Map<String, Object> map = new HashMap<>();
-        map.put("num",rev);
-        return map;
+        map.put("msg",rev);
+        return new Result<Map<String, Object>>(map, MsgCode.SEND_SUCCESS);
     }
 }

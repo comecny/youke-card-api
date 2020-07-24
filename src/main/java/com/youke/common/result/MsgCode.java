@@ -14,6 +14,7 @@ public enum MsgCode {
     SUBMIT_SUCCESS(true,"提交成功"),
     USER_EXIST(false,"用户已存在"),
     HANDLE_SUCCESS(true,"处理成功"),
+    SEND_SUCCESS(true,"发送成功"),
 
     HANDLE_FAIL(false,"处理失败"),
     SCORE_FAIL(false,"该用户不可重复评分"),

@@ -52,4 +52,16 @@ public class BaseConfiguration {
     //微信小程序测试secret
     @Value("${wx.dev.secret}")
     private String devSecret;
+
+    //短信服务appid
+    @Value("${tencent.sms.smsAppid}")
+    private Integer smsAppid;
+
+    //短信服务appkey
+    @Value("${tencent.sms.smsAppkey}")
+    private String smsAppkey;
+
+    //短信服务签名
+    @Value("${tencent.sms.smsSign}")
+    private String smsSign;
 }

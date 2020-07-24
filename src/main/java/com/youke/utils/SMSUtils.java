@@ -1,9 +1,12 @@
 package com.youke.utils;
 
-
 import com.alibaba.fastjson.JSONException;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
+import com.youke.Application;
+import com.youke.config.BaseConfiguration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
@@ -12,9 +15,8 @@ import java.util.Random;
 
 public class SMSUtils {
 
-    private static final int appid =1400401950;
-    private static final String appkey = "42b3cc2c68a59c395f1d873f7aad60ff";
-
+  private static final BaseConfiguration baseConfiguration = Application.applicationContext.getBean(BaseConfiguration.class);
+    private static final Logger logger = LogManager.getLogger(SMSUtils.class);
     public static String send(String phoneNumbers) {
         int yzm = random();
         String num = Integer.toString(yzm);
@@ -23,32 +25,30 @@ public class SMSUtils {
             ArrayList<String> params = new ArrayList<String>();
             params.add(num);
             params.add("2");
-            String smsSign = "优客网络"; // NOTE: 这里的签名"腾讯云"只是一个示例，真实的签名需要在短信控制台中申请，另外签名参数使用的是`签名内容`，而不是`签名ID
-            SmsSingleSender ssender = new SmsSingleSender(appid, appkey);
+            String smsSign = baseConfiguration.getSmsSign();
+            SmsSingleSender ssender = new SmsSingleSender(baseConfiguration.getSmsAppid(), baseConfiguration.getSmsAppkey());
+            logger.info("send ："+"{ phone:"+phoneNumbers+","+"num ："+num+" }");
              result = ssender.sendWithParam("86", phoneNumbers, 632944, params, smsSign, null, null);
-            //   result = ssender.send(0,"86", phoneNumbers,smsSign, "", "");
             if (result.result == 0) {
-                //发送成功返回验证码
+                logger.info("recv ："+"{ "+"num ："+num+" }");
                 return num;
             }
         } catch (HTTPException e) {
-            //System.out.println("HTTP响应码错误");
+            logger.error(e);
             return result.toString();
         } catch (JSONException e) {
-            //System.out.println("json解析错误");
+            logger.error(e);
             return result.toString();
         } catch (IOException e) {
-            //System.out.println(" 网络IO错误");
+            logger.error(e);
             return result.toString();
         } catch (com.github.qcloudsms.httpclient.HTTPException e) {
+            logger.error(e);
             e.printStackTrace();
         }
         return result.toString();
     }
 
-    /*
-      生成6位验证码
-   */
     private static int random() {
         Random r = new Random();
         StringBuffer sb = new StringBuffer();
@@ -58,6 +58,5 @@ public class SMSUtils {
             sb.append(c[i]);
         }
         return Integer.parseInt(sb.toString());
-
     }
 }

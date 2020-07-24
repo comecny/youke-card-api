@@ -37,7 +37,7 @@ import java.util.TreeMap;
 
 public class CosUtil {
 
-    static Logger logger = LogManager.getLogger(com.youke.utils.CosUtil.class.getName());
+    private static final Logger logger = LogManager.getLogger(com.youke.utils.CosUtil.class.getName());
     static BaseConfiguration baseConfiguration = Application.applicationContext.getBean(BaseConfiguration.class);
 
     public static String upload(MultipartFile file)  {
