@@ -88,8 +88,8 @@ public class UserServiceImpl implements UserService {
         if (isSuccess < 0) throw new UpdateException("登录时传入用户信息异常");
 
         String token = JWTUtils.jwtSign(String.valueOf(userInfo.getId()), userInfo.getPhone());
-        userInfo.setToken(token);
-        return userInfo;
+        user.setToken(token);
+        return user;
     }
 
     @Override
