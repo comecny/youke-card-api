@@ -58,11 +58,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 .setEntity(Coupon.builder().status("0").build()));
         for (Coupon coupon : list) {
             if (((coupon.getUseStart()).compareTo(order.getTotalPrice())) != 1) {
-                order.setCouponprice(order.getTotalPrice().subtract(coupon.getUseEnd()));
+                order.setCouponPrice(order.getTotalPrice().subtract(coupon.getUseEnd()));
                 order.setCouponId(coupon.getId());
                 order.setCouponFlag(0);
             } else {
-                order.setCouponprice(order.getTotalPrice());
+                order.setCouponPrice(order.getTotalPrice());
                 order.setCouponFlag(1);
             }
         }
