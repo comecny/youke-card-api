@@ -4,7 +4,6 @@ import com.youke.entity.BackgroudPermissions;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.youke.entity.BackgroundRoleRelPemissions;
 
-import java.util.List;
 import java.util.Map;
 
 public interface BackgroudPermissionsService extends IService<BackgroudPermissions>{

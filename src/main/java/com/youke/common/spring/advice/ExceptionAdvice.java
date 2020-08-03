@@ -79,7 +79,6 @@ public class ExceptionAdvice {
 	public ErrorExcution handleException(Exception e, HttpServletResponse response) {
 		logger.error(errorMsg(),e);
 		if (!logger.isDebugEnabled()) {
-			int status = response.getStatus();
 			return getErrors();
 		}
 		return new ErrorExcution(e.getMessage());
@@ -89,6 +88,8 @@ public class ExceptionAdvice {
 			public ErrorExcution(String msg) {
 				this.msg = msg;
 			}
+
+		
 	}
 	
 	private ErrorExcution getErrors() {

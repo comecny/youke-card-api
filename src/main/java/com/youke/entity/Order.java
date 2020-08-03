@@ -9,9 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

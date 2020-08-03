@@ -1,8 +1,10 @@
 package com.youke.service;
 
+import java.util.List;
+
 import com.youke.entity.BackgroudUserRole;
 
-import java.util.List;
+
 
 public interface BackgroudUserRoleService{
 
@@ -10,7 +12,7 @@ public interface BackgroudUserRoleService{
 
     int updateByPrimaryKeySelective(BackgroudUserRole record);
 
-    List listRole();
+    List<Object> listRole();
 
     int deleteRoleById(BackgroudUserRole userRole);
 }

@@ -8,8 +8,6 @@ import com.youke.vo.ResqOptionsVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Map;
 import java.util.List;
 
 import lombok.AllArgsConstructor;

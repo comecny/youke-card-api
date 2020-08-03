@@ -1,7 +1,6 @@
 package com.youke.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.youke.entity.BackgroudPermissions;
 import com.youke.entity.BackgroundMenuRelRole;
 import com.youke.vo.BackgroundMenuRelRoleVO;
 

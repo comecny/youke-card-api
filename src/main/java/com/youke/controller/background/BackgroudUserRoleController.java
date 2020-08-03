@@ -19,8 +19,8 @@ public class BackgroudUserRoleController {
 
     @PostMapping("insertRole")
     @ApiOperation("新增后台角色")
-    public Result<Void> insertRole(@RequestBody BackgroudUserRole userRole){
-        int success = roleService.insert(userRole);
+    public Result<Void> insertRole(@RequestBody final BackgroudUserRole userRole){
+        final int success = roleService.insert(userRole);
         if (success > 0){
             return new Result<Void>(null, MsgCode.IINSERT_SUCCESS);
         }
@@ -30,14 +30,14 @@ public class BackgroudUserRoleController {
     @GetMapping("listRole")
     @ApiOperation("查询角色列表")
     public Result<List<BackgroudUserRole>> listRole(){
-        List list = roleService.listRole();
+         List list = roleService.listRole();
         return new Result<List<BackgroudUserRole>>(list,MsgCode.FIND_SUCCESS);
     }
 
     @PutMapping("updateRole")
     @ApiOperation("修改角色信息")
-    public Result<Void> updateRole(@RequestBody BackgroudUserRole userRole){
-        int success = roleService.updateByPrimaryKeySelective(userRole);
+    public Result<Void> updateRole(@RequestBody final BackgroudUserRole userRole){
+         int success = roleService.updateByPrimaryKeySelective(userRole);
         if (success > 0){
             return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
         }
@@ -51,8 +51,8 @@ public class BackgroudUserRoleController {
      */
     @DeleteMapping("deleteRole")
     @ApiOperation("删除角色")
-    public Result<Void> deleteRoleById(@RequestBody BackgroudUserRole userRole){
-      int success = roleService.deleteRoleById(userRole);
+    public Result<Void> deleteRoleById(@RequestBody final BackgroudUserRole userRole){
+      final int success = roleService.deleteRoleById(userRole);
       if (success > 0){
           return new Result<Void>(null,MsgCode.DELETE_SUCCESS);
       }if (success == -10){
