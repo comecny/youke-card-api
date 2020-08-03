@@ -142,7 +142,7 @@ public class Order implements Serializable {
      */
     @TableField(value = "coupon_price")
     @ApiModelProperty(value="订单总金额")
-    private BigDecimal couponprice;
+    private BigDecimal couponPrice;
 
     @TableField(value = "address_info")
     @ApiModelProperty(value="地址详情")
