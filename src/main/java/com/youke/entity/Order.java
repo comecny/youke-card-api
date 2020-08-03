@@ -152,8 +152,15 @@ public class Order implements Serializable {
      * 订单详情
      */
     @TableField(exist = false)
-    @ApiModelProperty(value="订单详情")
+    @ApiModelProperty(value="订单详情列表")
     private List<OrderDetail> orderDetails;
+
+    /**
+     * 订单详情
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value="订单详情")
+    private OrderDetail orderDetail;
 
     /**
      * 商品信息

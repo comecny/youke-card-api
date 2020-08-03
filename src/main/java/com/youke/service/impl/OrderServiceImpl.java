@@ -191,8 +191,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         Order order = orderMapper.selectById(id);
         QueryWrapper<OrderDetail> orderDetailQueryWrapper =
                 new QueryWrapper<OrderDetail>().setEntity(OrderDetail.builder().orderId(id).build());
-        List<OrderDetail> orderDetails = orderDetailMapper.selectList(orderDetailQueryWrapper);
-        order.setOrderDetails(orderDetails);
+        OrderDetail orderDetail = orderDetailMapper.selectOne(orderDetailQueryWrapper);
+        order.setOrderDetail(orderDetail);
         return order;
     }
 }
