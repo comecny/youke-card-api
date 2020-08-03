@@ -185,4 +185,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         map.put("orderId",orderId);
         return map;
     }
+
+    @Override
+    public Order getCreateOrderInfoById(Integer id) {
+        Order order = orderMapper.selectById(id);
+        QueryWrapper<OrderDetail> orderDetailQueryWrapper =
+                new QueryWrapper<OrderDetail>().setEntity(OrderDetail.builder().orderId(id).build());
+        List<OrderDetail> orderDetails = orderDetailMapper.selectList(orderDetailQueryWrapper);
+        order.setOrderDetails(orderDetails);
+        return order;
+    }
 }

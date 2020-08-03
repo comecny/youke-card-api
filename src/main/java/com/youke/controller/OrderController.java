@@ -88,7 +88,14 @@ public class OrderController {
             return new Result<Void>(null,MsgCode.UPDATE_SUCCESS);
         }
         return new Result<Void>(null,MsgCode.UPDATE_FAIL);
-
     }
+
+    @GetMapping("getCreateOrderInfoById/{id}")
+    @ApiOperation("查询创建订单的时候的信息")
+    public Result<Order> getCreateOrderInfoById(@PathVariable("id")Integer id){
+       Order info = orderService.getCreateOrderInfoById(id);
+       return new Result<Order>(info,MsgCode.FIND_SUCCESS);
+    }
+
 
 }

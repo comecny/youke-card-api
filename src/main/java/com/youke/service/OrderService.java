@@ -23,4 +23,7 @@ public interface OrderService extends IService<Order>{
     int updateOrderStatus(ReqOrderStatusVO orderStatusVO);
 
     Map createOrder(Order order);
+
+    Order getCreateOrderInfoById(Integer id);
+
 }
