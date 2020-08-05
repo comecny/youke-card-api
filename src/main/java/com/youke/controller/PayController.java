@@ -57,12 +57,12 @@ public class PayController {
     @ApiOperation(value = "会费支付接口")
     @PostMapping(value = "/payFeeOrder")
     public Map payOrder(HttpServletRequest request, @RequestBody PayInfo payInfo) throws Exception {
-
+        logger.info("入参： => "+payInfo);
         //抽取前端传递过来的订单信息
-        String openid = payInfo.getOpenId();
+       // String openid = payInfo.getOpenId();
         Integer orderId = payInfo.getOrderId();
         String totalPrice = payInfo.getTotalPrice();
-
+        String openid = "oJHqX5PB6x389s0GD49hsPcEgxhU";
         //微信支付所需要的信息
         String appid = "wx969ddfb12e79f74a";
         String mch_id = "1528476701";

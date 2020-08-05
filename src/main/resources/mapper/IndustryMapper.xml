@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youke.dao.IndustryMapper">
+
+    <select id="listIndustryByShopsId" resultType="com.youke.entity.Industry">
+        SELECT distinct  b.industry_name
+        FROM shops_rel_industry AS a
+        LEFT JOIN industry AS b ON a.industry_id=b.id
+        WHERE a.shops_id=#{shopsId,jdbcType=INTEGER}
+    </select>
+</mapper>

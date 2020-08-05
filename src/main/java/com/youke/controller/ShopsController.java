@@ -5,10 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.youke.common.result.MsgCode;
 import com.youke.common.result.Result;
-import com.youke.entity.Images;
-import com.youke.entity.Shops;
-import com.youke.entity.ShopsFeeOrder;
-import com.youke.entity.User;
+import com.youke.entity.*;
+import com.youke.service.IndustryService;
 import com.youke.service.ShopsService;
 import com.youke.service.UserService;
 import com.youke.utils.DateUtil;
@@ -30,6 +28,9 @@ public class ShopsController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private IndustryService industryService;
 
     @PostMapping("insertShops")
     @ApiOperation("新增店铺")
@@ -56,12 +57,17 @@ public class ShopsController {
     @GetMapping("getShopsById/{id}")
     @ApiOperation("通过商铺id查询")
     public Result<Shops> getShopsById(@PathVariable("id")Integer id){
+        //查店铺
         Shops info = shopsService.getById(id);
         String iamges = info.getIamges();
         List<Images> images = JSON.parseArray(iamges, Images.class);
+        //查用户
         User user = userService.getUser(info.getUserId());
         info.setUser(user);
         info.setImagesList(images);
+        //通过店铺id查行业
+       List<Industry> industryList = industryService.listIndusytyByShopsId(info.getId());
+       info.setIndustryList(industryList);
         return new Result<Shops>(info,MsgCode.FIND_SUCCESS);
     }
 
